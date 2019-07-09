@@ -12,5 +12,5 @@ public abstract interface SendClassName {
     /**
      * @return NULL if no args used, else JSONArray (StringFormat) is returned.
      */
-    public String getArgsRequest();
+    public JSONArray getArgsRequest();
 }

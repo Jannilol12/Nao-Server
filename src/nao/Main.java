@@ -110,8 +110,8 @@ public class Main {
 						myjson.add("type", "ProgAdd");
 						myjson.add("name", prog.name());
 						
-						String args = prog.getArgsRequest();
-						if(args != null && !args.isEmpty())
+						JSONArray args = prog.getArgsRequest();
+						if(args != null)
 							myjson.add("inputs", args);
 						
 						dataOutputStream.writeUTF(myjson.toJSONString());

@@ -4,7 +4,7 @@ import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
 import components.json.JSONArray;
-import nao.moves.SendClassName;
+import components.json.parser.JSONParser;
 
 public class say implements SendClassName {
     public Application application;
@@ -44,8 +44,8 @@ public class say implements SendClassName {
     }
 
 	@Override
-	public String getArgsRequest() {
-		// TODO Auto-generated method stub
-		return null;
+	public JSONArray getArgsRequest() {
+		// ["id":"say", "type":"text", "prompt":"speech message"]
+		return (JSONArray) JSONParser.parse("[{\"id\":\"say\", \"type\":\"text\", \"prompt\":\"speech message\"}]");
 	}
 }

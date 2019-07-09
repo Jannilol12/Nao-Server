@@ -66,7 +66,7 @@ public class speech_recognition implements SendClassName {
     }
 
 	@Override
-	public String getArgsRequest() {
+	public JSONArray getArgsRequest() {
 		return null;
 	}
 }

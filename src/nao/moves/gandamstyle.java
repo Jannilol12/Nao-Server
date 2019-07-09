@@ -610,7 +610,7 @@ public class gandamstyle implements SendClassName {
     }
 
 	@Override
-	public String getArgsRequest() {
+	public JSONArray getArgsRequest() {
 		return null;
 	}
 }

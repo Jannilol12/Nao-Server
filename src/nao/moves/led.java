@@ -33,7 +33,7 @@ public class led implements SendClassName {
     }
 
 	@Override
-	public String getArgsRequest() {
+	public JSONArray getArgsRequest() {
 		// TODO Auto-generated method stub
 		return null;
 	}
