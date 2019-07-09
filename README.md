@@ -1,9 +1,9 @@
 # Nao-Server
-# Beschreibung
+## Beschreibung
 P-Seminar Projekt des Gym.-Roth
 
-# TODO
-# Bewegungen
+## TODO
+### Bewegungen
   - Winken
   - Eye rollen
   - manuelle Sprachausgabe
