@@ -3,6 +3,8 @@ package nao.moves;
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALLeds;
 
+import components.json.JSONArray;
+
 public class led implements SendClassName {
     public Application application;
 
@@ -12,7 +14,7 @@ public class led implements SendClassName {
     }
 
     @Override
-    public void start(Application application){
+    public void start(Application application, JSONArray args){
         this.application = application;
 
         try {

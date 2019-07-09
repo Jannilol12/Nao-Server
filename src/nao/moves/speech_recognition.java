@@ -1,13 +1,14 @@
 package nao.moves;
 
+import java.util.ArrayList;
+
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.EventCallback;
-import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 import com.aldebaran.qi.helper.proxies.ALMemory;
-import nao.moves.SendClassName;
+import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 
-import java.util.ArrayList;
+import components.json.JSONArray;
 
 public class speech_recognition implements SendClassName {
     public Application application;
@@ -16,7 +17,7 @@ public class speech_recognition implements SendClassName {
     public ALMemory memory;
 
     @Override
-    public void start(Application application){
+    public void start(Application application, JSONArray args){
         this.application = application;
 
         try {

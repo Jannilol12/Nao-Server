@@ -2,7 +2,8 @@ package nao.moves;
 
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALMotion;
-import nao.currentApplication;
+
+import components.json.JSONArray;
 import nao.motors;
 
 public class gandamstyle implements SendClassName {
@@ -10,7 +11,7 @@ public class gandamstyle implements SendClassName {
     public Application application;
 
     @Override
-    public void start(Application application){
+    public void start(Application application, JSONArray args){
         this.application = application;
 
         try{

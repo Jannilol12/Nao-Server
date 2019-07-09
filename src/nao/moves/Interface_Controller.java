@@ -1,8 +1,13 @@
 package nao.moves;
 
-import nao.currentApplication;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+import components.json.JSONArray;
+import nao.currentApplication;
 
 public class Interface_Controller {
     private static Map<String, SendClassName> map = Collections.synchronizedMap(new HashMap<>());
@@ -29,7 +34,7 @@ public class Interface_Controller {
         map.clear();
     }
 
-    public synchronized static void ausfuehren(String name){
+    public synchronized static void ausfuehren(String name, JSONArray args){
         SendClassName sendClassName = map.get(name);
 
         if(currentRunning != null)
@@ -38,7 +43,7 @@ public class Interface_Controller {
         currentClassNameRunning = sendClassName;
         if(sendClassName != null && currentRunning == null){
             currentRunning = new Thread(() -> {
-                sendClassName.start(currentApplication.getApplication());
+                sendClassName.start(currentApplication.getApplication(), args);
             });
             currentRunning.start();
         }
@@ -62,19 +67,19 @@ public class Interface_Controller {
         }
     }
 
-//    public static List<String> getProgs(){
-//        List<String> list = new LinkedList<>();
-//
-//        synchronized (map){
-//            for(String prog : map.keySet()){
-//                list.add(prog);
-//            }
-//        }
-//
-//        return list;
-//    }
+    public static List<String> getProgsName(){
+        List<String> list = new LinkedList<>();
 
-    public static List<SendClassName> getClassName(){
+        synchronized (map){
+            for(String prog : map.keySet()){
+                list.add(prog);
+            }
+        }
+
+        return list;
+    }
+
+    public static List<SendClassName> getSendClassNames(){
         List<SendClassName> list = new LinkedList<>();
 
         synchronized (map){

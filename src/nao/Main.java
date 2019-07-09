@@ -3,6 +3,7 @@ package nao;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import components.json.JSONArray;
 import components.json.JSONObject;
 import components.json.abstractJSON;
 import components.json.finder.JSONFinder;
@@ -20,7 +21,6 @@ public class Main {
 
 	    r = new receiver();
 	    r.start();
-//	      gandamstyle dance = new gandamstyle(args);
 //        say say = new say(args);
 //        say.saytext("Hallo");
 //        speech_recognition speech = new speech_recognition(args);
@@ -93,14 +93,19 @@ public class Main {
 				move.rotate(Integer.parseInt(JSONFinder.getString("value", json)));
 				break;
 			case "RunP":
-				Interface_Controller.ausfuehren(JSONFinder.getString("value", json));
+				if(!(json instanceof JSONObject))return;
+				
+				abstractJSON abstractArgs = ((JSONObject) json).get("inputs");
+				if(abstractArgs != null && !(abstractArgs instanceof JSONArray)) return;
+				
+				Interface_Controller.ausfuehren(JSONFinder.getString("value", json), (JSONArray) abstractArgs);
 				break;
 			case "StopP":
 				Interface_Controller.stop();
 				break;
 			case "ListP":
 				try {
-					for(SendClassName prog : Interface_Controller.getClassName()) {
+					for(SendClassName prog : Interface_Controller.getSendClassNames()) {
 						JSONObject myjson = new JSONObject();
 						myjson.add("type", "ProgAdd");
 						myjson.add("name", prog.name());
