@@ -1,6 +1,5 @@
 package nao;
 
-import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 
 public class move {

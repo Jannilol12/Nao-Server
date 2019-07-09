@@ -1,8 +1,8 @@
 package nao;
 
-import com.aldebaran.qi.Application;
-import com.aldebaran.qi.helper.proxies.ALMotion;
-import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import components.json.JSONObject;
 import components.json.abstractJSON;
 import components.json.finder.JSONFinder;
@@ -10,15 +10,12 @@ import components.json.parser.JSONParser;
 import nao.moves.Interface_Controller;
 import nao.moves.SendClassName;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-
 public class Main {
 	public static move move;
 	public static receiver r;
 	
 	public static void main(String[] args) {
-		currentApplication.load("127.0.0.1", 49848);
+		currentApplication.load("127.0.0.1", 5373);
 		Interface_Controller.load();
 
 	    r = new receiver();

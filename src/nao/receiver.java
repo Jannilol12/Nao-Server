@@ -1,7 +1,5 @@
 package nao;
 
-import nao.moves.Interface_Controller;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -16,7 +14,9 @@ public class receiver extends Thread {
         final ServerSocket ss;//port auf den Server hört
 
         try {
-            ss = new ServerSocket(7777);
+        	int port = 7777;
+            ss = new ServerSocket(port);
+            System.out.println("Start Server on port: " + port);
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -47,6 +47,8 @@ public class receiver extends Thread {
                 e.printStackTrace();
             }
         }
+        
+        System.out.println("Stop Server");
 
         try {
             ss.close();
