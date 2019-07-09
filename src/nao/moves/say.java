@@ -4,6 +4,7 @@ import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
 import components.json.JSONArray;
+import components.json.finder.JSONFinder;
 import components.json.parser.JSONParser;
 
 public class say implements SendClassName {
@@ -14,6 +15,11 @@ public class say implements SendClassName {
         this.application = application;
 
         try {
+        	//Eingabe des Text
+        	String speechText = JSONFinder.getString("[0].value", args);
+//        	if(speechText != null)
+//        		System.out.println(speechText);
+        	
             ALTextToSpeech tts = new ALTextToSpeech(application.session());
             tts.setLanguage("English");
 
