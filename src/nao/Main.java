@@ -109,7 +109,11 @@ public class Main {
 						JSONObject myjson = new JSONObject();
 						myjson.add("type", "ProgAdd");
 						myjson.add("name", prog.name());
-						myjson.add("useArgs", prog.useArgs());
+						
+						String args = prog.getArgsRequest();
+						if(args != null && !args.isEmpty())
+							myjson.add("inputs", args);
+						
 						dataOutputStream.writeUTF(myjson.toJSONString());
 					}
 				} catch (IOException e) {

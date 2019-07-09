@@ -9,5 +9,8 @@ public abstract interface SendClassName {
     public abstract void start(Application application, JSONArray args);
     public abstract void stop();
 
-    public boolean useArgs();
+    /**
+     * @return NULL if no args used, else JSONArray (StringFormat) is returned.
+     */
+    public String getArgsRequest();
 }

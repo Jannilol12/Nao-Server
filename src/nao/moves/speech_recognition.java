@@ -65,8 +65,8 @@ public class speech_recognition implements SendClassName {
 
     }
 
-    @Override
-    public boolean useArgs() {
-        return false;
-    }
+	@Override
+	public String getArgsRequest() {
+		return null;
+	}
 }

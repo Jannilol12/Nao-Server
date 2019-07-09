@@ -32,8 +32,9 @@ public class led implements SendClassName {
 
     }
 
-    @Override
-    public boolean useArgs() {
-        return true;
-    }
+	@Override
+	public String getArgsRequest() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
