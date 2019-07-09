@@ -15,14 +15,12 @@ public class say implements SendClassName {
         this.application = application;
 
         try {
-        	//Eingabe des Text
-        	String speechText = JSONFinder.getString("[0].value", args);
-//        	if(speechText != null)
-//        		System.out.println(speechText);
-        	
             ALTextToSpeech tts = new ALTextToSpeech(application.session());
             tts.setLanguage("English");
 
+            String speechText = JSONFinder.getString("[0].value", args);
+        	if(speechText != null)
+        		saytext(speechText);
         }
         catch (Exception err) {
             err.printStackTrace();

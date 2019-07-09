@@ -1,11 +1,11 @@
 package components.json.finder;
 
-import java.time.LocalDateTime;
-
 import components.json.JSONArray;
 import components.json.JSONObject;
 import components.json.JSONValue;
 import components.json.abstractJSON;
+
+import java.time.LocalDateTime;
 
 public class JSONFinder {
 	
@@ -100,8 +100,18 @@ public class JSONFinder {
 		return o.toString();
 	}
 	
+	public static Boolean getBoolean(String key, abstractJSON ajson) {
+		Object o = getObject(key, ajson);
+		if(o == null) return null;
+		
+		if(o instanceof Boolean) return (boolean) o;
+		return false;
+	}
+	
 	public static int getInt(String key, abstractJSON ajson) {
 		Object o = getObject(key, ajson);
+		if(o == null) return 0;
+		
 		if(o instanceof Integer)return (int) o;
 		if(o instanceof Long)return (int) ((long) o);
 		
@@ -111,12 +121,19 @@ public class JSONFinder {
 		
 		return 0;
 	}
-
-	public static boolean getBoolean(String key, abstractJSON ajson) {
+	
+	public static double getDouble(String key, abstractJSON ajson) {
 		Object o = getObject(key, ajson);
-		if(o instanceof Boolean)return (Boolean) o;
-
-		return false;
+		if(o == null) return 0;
+		
+		if(o instanceof Float)return (double) ((float) o);
+		if(o instanceof Double)return (double) o;
+		
+		try {
+			return Double.parseDouble(o.toString());
+		}catch(Exception e) {}
+		
+		return 0;
 	}
 
 	public static LocalDateTime getLocalDateTime(String key, abstractJSON ajson) {

@@ -16,7 +16,7 @@ public class Main {
 	public static receiver r;
 	
 	public static void main(String[] args) {
-		currentApplication.load("127.0.0.1", 5373);
+		currentApplication.load("127.0.0.1",50736 );
 		Interface_Controller.load();
 
 	    r = new receiver();
@@ -25,8 +25,9 @@ public class Main {
 //        say.saytext("Hallo");
 //        speech_recognition speech = new speech_recognition(args);
 //        speech.addvocabulary("Hallo");
+
 		move = new move();
-		move.stop();
+		move.test();
 	}
 
 	public static void receiveText(String text, DataOutputStream dataOutputStream){
@@ -118,6 +119,14 @@ public class Main {
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
+				}
+				break;
+			case "LShoulderPitch_Down":
+				try{
+					float speed_value = (float)JSONFinder.getDouble("value",json);
+					move.motors(motors.LShoulderPitch.name, move.getangle(motors.LShoulderPitch.name) + 0.1f, speed_value);
+				}catch (Exception err){
+					err.printStackTrace();
 				}
 				break;
 			default:
