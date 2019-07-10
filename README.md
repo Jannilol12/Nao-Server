@@ -4,8 +4,8 @@ P-Seminar Projekt des Gym.-Roth
 
 ## Benutzung
 ### SendClassName
-####getArgsRequest()
-    \["id":"@a", "type":"@b", "prompt":"@c"\, "min":@d, "max":@d, "def":@d\]<br/>
+#### getArgsRequest
+      \["id":"@a", "type":"@b", "prompt":"@c"\, "min":@d, "max":@d, "def":@d\]<br/>
       <br/>
       <tab>\@a: Einzeige Name (beim Client) und eindeutige ID zur identifizierung<br/>
       \@b: [text, color, boolean, int, double] sind mögliche Input Types.<br/>
