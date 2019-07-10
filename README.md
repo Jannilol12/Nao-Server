@@ -5,9 +5,9 @@ P-Seminar Projekt des Gym.-Roth
 ## Benutzung
 ### SendClassName
 ### start
-\["id":"@a", "value":?\]
+\["id":"@a", "value":?\]<br/>
 @a: Einzeige Name (beim Client) und eindeutige ID zur identifizierung<br/>
-@b: Value der vom Client eingegeben wurde. Kann ein String, Int, Double, etc. sein
+@b: Value der vom Client eingegeben wurde. Kann ein String, Int, Double, etc. sein<br/>
 
 #### getArgsRequest
 
