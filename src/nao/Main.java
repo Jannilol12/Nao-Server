@@ -252,7 +252,9 @@ public class Main {
 					
 				
 				break;
-				
+            case "Wakeup":
+                move.wakeup();
+                break;
 			default:
 				System.out.println("Nothing to do!");
 				break;

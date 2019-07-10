@@ -90,4 +90,13 @@ public class move {
         }
         return 0;
     }
+
+    public void wakeup(){
+        try{
+            ALMotion p = new ALMotion(currentApplication.getApplication().session());
+            p.wakeUp();
+        } catch (Exception err){
+            err.printStackTrace();
+        }
+    }
 }
