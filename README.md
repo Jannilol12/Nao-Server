@@ -20,7 +20,7 @@ P-Seminar Projekt des Gym.-Roth
     
 ### Server Input (Main)
 {"type":"@a", ...}<br/>
-@a: Aktion die Ausgefuert werden sollte
+@a: Aktion die Ausgefuert werden sollte<br/>
 ...: Benötigte sonstige Werte, die die Aktion braucht
 
 
