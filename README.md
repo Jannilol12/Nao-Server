@@ -18,6 +18,13 @@ P-Seminar Projekt des Gym.-Roth
 @c: (optional) In z.B. TextFields werden Prompts (HintergrundText) unterstüzt<br/>
 @d: (optional) Sind Werte die Sliders verwenden können<br/>
     
+### Server Input (Main)
+{"type":"@a", ...}<br/>
+@a: Aktion die Ausgefuert werden sollte
+...: Benötigte sonstige Werte, die die Aktion braucht
+
+
+
 ## TODO
 ### Bewegungen
   - [ ] Winken
