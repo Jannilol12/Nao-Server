@@ -16,7 +16,7 @@ public class Main {
 	public static receiver r;
 	
 	public static void main(String[] args) {
-		currentApplication.load("127.0.0.1",50736 );
+		currentApplication.load("127.0.0.1",50963 );
 		Interface_Controller.load();
 
 	    r = new receiver();
@@ -133,9 +133,9 @@ public class Main {
 				String motorRealName = null;
 				
 				if(addSub == 0) { //Gegebenfalls in switch oder hier nochmals anpassen
-					if(motorName.endsWith("Up") || motorName.startsWith("Left"))
+					if(motorName.endsWith("Down") || motorName.endsWith("Left"))
 						addSub = 2;
-					else if(motorName.endsWith("Down") || motorName.startsWith("Right"))
+					else if(motorName.endsWith("Up") || motorName.endsWith("Right"))
 						addSub = 1;
 				}
 				
@@ -248,7 +248,7 @@ public class Main {
 				if(motorRealName == null)
 					return;
 				
-				move.motors(motorRealName, move.getAngle(motorRealName) + (addSub == 1 ? 0.1f : -0.1f), speed_value);
+				move.motors(motorRealName, move.getAngle(motorRealName) + (addSub == 1 ? -0.1f : 0.1f), speed_value);
 					
 				
 				break;

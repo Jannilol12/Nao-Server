@@ -33,14 +33,19 @@ public class receiver extends Thread {
                 while (running) {
                     String str = dis.readUTF();
                     if(!str.isEmpty()) {
-                        System.out.println(str);
-                        Main.receiveText(str, dos);
+                        try {
+                            System.out.println(str);
+                            Main.receiveText(str, dos);
 
-                        if (str.equalsIgnoreCase("end"))
-                            break;
+                            if (str.equalsIgnoreCase("end"))
+                                break;
 
-                        if (str.equalsIgnoreCase("finalEnd"))
-                            running = false;
+                            if (str.equalsIgnoreCase("finalEnd"))
+                                running = false;
+                        }catch (Exception err){
+                            System.out.println("Programm crash");
+                            err.printStackTrace();
+                        }
                     }
                 }
             } catch (IOException e) {
