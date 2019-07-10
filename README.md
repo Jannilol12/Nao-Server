@@ -4,10 +4,10 @@ P-Seminar Projekt des Gym.-Roth
 
 ## Benutzung
 ### SendClassName
-  getArgsRequest():
+  getArgsRequest():\n
     \["id":"@a", "type":"<text, >", "prompt":"speech message"\]
     
-    a: Einzeige Name (beim Client) und eindeutige ID zur identifizierung
+    @a: Einzeige Name (beim Client) und eindeutige ID zur identifizierung
     
 
 ## TODO
