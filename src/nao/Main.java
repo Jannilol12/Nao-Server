@@ -167,20 +167,20 @@ public class Main {
 						motorRealName = motors.RShoulderRoll.name;
 						break;
 						
-					case "LElbowYaw_Up":
-					case "LElbowYaw_Down":
+					case "LElbowYaw_Left":
+					case "LElbowYaw_Right":
 						motorRealName = motors.LElbowYaw.name;
 						break;
-					case "LElbowRoll_Left":
-					case "LElbowRoll_Right":
+					case "LElbowRoll_Up":
+					case "LElbowRoll_Down":
 						motorRealName = motors.LElbowRoll.name;
 						break;
-					case "RElbowYaw_Up":
-					case "RElbowYaw_Down":
+					case "RElbowYaw_Left":
+					case "RElbowYaw_Right":
 						motorRealName = motors.RElbowYaw.name;
 						break;
-					case "RElbowRoll_Left":
-					case "RElbowRoll_Right":
+					case "RElbowRoll_Up":
+					case "RElbowRoll_Down":
 						motorRealName = motors.RElbowRoll.name;
 						break;
 						
@@ -189,16 +189,20 @@ public class Main {
 						motorRealName = motors.LWristYaw.name;
 						break;
 					case "LHand_Up":
+						move.handopenclose("LHand", "O");
+						break;
 					case "LHand_Down":
-						motorRealName = motors.LHand.name;
+						move.handopenclose("LHand", "C");
 						break;
 					case "RWristYaw_Up":
 					case "RWristYaw_Down":
 						motorRealName = motors.RWristYaw.name;
 						break;
 					case "RHand_Up":
+						move.handopenclose("RHand", "O");
+						break;
 					case "RHand_Down":
-						motorRealName = motors.RHand.name;
+						move.handopenclose("RHand", "C");
 						break;
 						
 					case "LHipPitch_Up":
@@ -206,7 +210,7 @@ public class Main {
 						motorRealName = motors.LHipPitch.name;
 						break;
 					case "LHipRoll_Left":
-					case "LHipRoll_Down":
+					case "LHipRoll_Right":
 						motorRealName = motors.LHipRoll.name;
 						break;
 					case "RHipPitch_Up":
@@ -214,7 +218,7 @@ public class Main {
 						motorRealName = motors.RHipPitch.name;
 						break;
 					case "RHipRoll_Left":
-					case "RHipRoll_Down":
+					case "RHipRoll_Right":
 						motorRealName = motors.RHipRoll.name;
 						break;
 						

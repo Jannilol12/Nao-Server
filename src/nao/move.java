@@ -99,4 +99,18 @@ public class move {
             err.printStackTrace();
         }
     }
+
+    public void handopenclose(String Left_Right, String O_C){
+        try{
+            ALMotion p = new ALMotion(currentApplication.getApplication().session());
+            if(O_C == "O"){
+                p.openHand(Left_Right);
+            }
+            else if(O_C == "C"){
+                p.closeHand(Left_Right);
+            }
+        }catch(Exception err){
+            err.printStackTrace();
+        }
+    }
 }
