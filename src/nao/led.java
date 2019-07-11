@@ -44,4 +44,24 @@ public class led {
         }
     }
 
+    public void randomEyes(float duration){
+        try{
+            if(currentApplication.getAlLeds() != null){
+                currentApplication.getAlLeds().randomEyes(duration);
+            }
+        }catch (Exception err){
+            err.printStackTrace();
+        }
+    }
+
+    public void rotateEyes(int rgb, float timeforroation, float totalduration){
+        try{
+            if(currentApplication.getAlLeds() != null){
+                currentApplication.getAlLeds().rotateEyes(rgb,timeforroation,totalduration);
+            }
+        }catch (Exception err){
+            err.printStackTrace();
+        }
+    }
+
 }

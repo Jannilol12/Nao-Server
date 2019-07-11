@@ -266,6 +266,10 @@ public class Main {
 				float green = (float)JSONFinder.getDouble("green",json);
 				float blue = (float)JSONFinder.getDouble("blue",json);
 				float fade = (float)JSONFinder.getDouble("Fade",json);
+				float random_duration = (float)JSONFinder.getDouble("duration", json);
+				int rotate_rgb = JSONFinder.getInt("rgbe",json);
+				float rotate_time_rotation = (float) JSONFinder.getDouble("timeR", json);
+				float rotate_time_duration = (float) JSONFinder.getDouble("timeD", json);
 
 				switch (method){
 					case"rgb":
@@ -277,11 +281,15 @@ public class Main {
 					case "off":
 						led.offled(ledname);
 						break;
+					case "random":
+						led.randomEyes(random_duration);
+						break;
+					case "rotate":
+						led.rotateEyes(rotate_rgb,rotate_time_rotation,rotate_time_duration);
 					default:
 						System.out.println("Da lief was schief");
 						break;
 				}
-
 				break;
 			default:
 				System.out.println("Nothing to do!");
