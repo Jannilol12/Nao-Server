@@ -48,9 +48,7 @@ public class receiver extends Thread {
                         }
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            } catch (IOException e) {}
         }
         
         System.out.println("Stop Server");

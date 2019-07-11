@@ -10,7 +10,7 @@ public class move {
     private ExecutorService executor;
 
     public move() {
-    	executor = Executors.newFixedThreadPool(10);
+    	executor = Executors.newFixedThreadPool(3);
     }
     
     public void moveinfinity(float forward_backward, float right_left){
