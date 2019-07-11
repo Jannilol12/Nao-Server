@@ -13,10 +13,11 @@ import nao.moves.SendClassName;
 
 public class Main {
 	public static move move;
+	public static led led;
 	public static receiver r;
 	
 	public static void main(String[] args) {
-		currentApplication.load("127.0.0.1",50963 );
+		currentApplication.load("127.0.0.1",50536 );
 		Interface_Controller.load();
 
 	    r = new receiver();
@@ -25,9 +26,8 @@ public class Main {
 //        say.saytext("Hallo");
 //        speech_recognition speech = new speech_recognition(args);
 //        speech.addvocabulary("Hallo");
-
+		led = new led();
 		move = new move();
-		move.test();
 	}
 
 	public static void receiveText(String text, DataOutputStream dataOutputStream){
@@ -259,6 +259,30 @@ public class Main {
             case "Wakeup":
                 move.wakeup();
                 break;
+			case "leds":
+				String ledname = JSONFinder.getString("ledname", json);
+				String method = JSONFinder.getString("method", json);
+				float red = (float)JSONFinder.getDouble("red",json);
+				float green = (float)JSONFinder.getDouble("green",json);
+				float blue = (float)JSONFinder.getDouble("blue",json);
+				float fade = (float)JSONFinder.getDouble("Fade",json);
+
+				switch (method){
+					case"rgb":
+						led.setRGBled(ledname,red,green,blue,fade);
+						break;
+					case"on":
+						led.onled(ledname);
+						break;
+					case "off":
+						led.offled(ledname);
+						break;
+					default:
+						System.out.println("Da lief was schief");
+						break;
+				}
+
+				break;
 			default:
 				System.out.println("Nothing to do!");
 				break;

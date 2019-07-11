@@ -11,7 +11,7 @@ public class receiver extends Thread {
     private DataOutputStream dos;
 
     public void run(){
-        final ServerSocket ss;//port auf den Server hört
+        final ServerSocket ss;//port auf den Server hoert
 
         try {
         	int port = 7777;

@@ -17,8 +17,9 @@ public class move {
         stop();
         executor.execute(() -> {
             try {
-                ALMotion move = new ALMotion(currentApplication.getApplication().session());
-                move.move(forward_backward, right_left, (float) Math.toRadians(0));
+                if(currentApplication.getAlMotion() != null) {
+                    currentApplication.getAlMotion().move(forward_backward, right_left, (float) Math.toRadians(0));
+                }
             }
             catch (Exception err){
                 err.printStackTrace();
@@ -30,8 +31,9 @@ public class move {
         stop();
         executor.execute(() -> {
             try {
-                ALMotion move = new ALMotion(currentApplication.getApplication().session());
-                move.moveTo(foward_backward / 30, right_left / 30, (float) Math.toRadians(0));
+                if(currentApplication.getAlMotion() != null) {
+                    currentApplication.getAlMotion().moveTo(foward_backward / 30, right_left / 30, (float) Math.toRadians(0));
+                }
             }
             catch (Exception err){
                 err.printStackTrace();
@@ -41,9 +43,10 @@ public class move {
 
     public void stop(){
         try{
-            ALMotion move = new ALMotion(currentApplication.getApplication().session());
-            move.stopMove();
-            move.stopWalk();
+            if(currentApplication.getAlMotion() != null) {
+                currentApplication.getAlMotion().stopMove();
+                currentApplication.getAlMotion().stopWalk();
+            }
         }
         catch(Exception err){}
     }
@@ -52,8 +55,9 @@ public class move {
 //        stop();
         executor.execute(() -> {
             try{
-                ALMotion move = new ALMotion(currentApplication.getApplication().session());
-                move.moveTo(0f,0f, (float)Math.toRadians(Degrees));
+                if(currentApplication.getAlMotion() != null) {
+                   currentApplication.getAlMotion().moveTo(0f, 0f, (float) Math.toRadians(Degrees));
+                }
             }catch (Exception err){}
         });
     }
@@ -63,8 +67,9 @@ public class move {
         new Thread(() -> {
             try{
                 Thread.sleep(2_000);
-                ALMotion p = new ALMotion(currentApplication.getApplication().session());
-                p.setAngles(motors.LShoulderPitch.name, -1.0f, 1.0f);
+                if(currentApplication.getAlMotion() != null) {
+                    currentApplication.getAlMotion().setAngles(motors.LShoulderPitch.name, -1.0f, 1.0f);
+                }
                 Thread.sleep(2_000);
             }catch (Exception err){}
         }).start();
@@ -74,17 +79,19 @@ public class move {
 //        stop();
     	executor.execute(() -> {
             try{
-                ALMotion p = new ALMotion(currentApplication.getApplication().session());
-                p.setAngles(motor, angle, speed);
+                if(currentApplication.getAlMotion() != null) {
+                    currentApplication.getAlMotion().setAngles(motor, angle, speed);
+                }
             }catch (Exception err){}
         });
     }
     
     public float getAngle(String motor){
         try {
-            ALMotion p = new ALMotion(currentApplication.getApplication().session());
-            List<Float> list = p.getAngles(motor, true);
-            return list.get(0);
+            if(currentApplication.getAlMotion() != null) {
+                List<Float> list = currentApplication.getAlMotion().getAngles(motor, true);
+                return list.get(0);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,8 +100,9 @@ public class move {
 
     public void wakeup(){
         try{
-            ALMotion p = new ALMotion(currentApplication.getApplication().session());
-            p.wakeUp();
+            if(currentApplication.getAlMotion() != null) {
+                currentApplication.getAlMotion().wakeUp();
+            }
         } catch (Exception err){
             err.printStackTrace();
         }
@@ -102,12 +110,12 @@ public class move {
 
     public void handopenclose(String Left_Right, String O_C){
         try{
-            ALMotion p = new ALMotion(currentApplication.getApplication().session());
-            if(O_C == "O"){
-                p.openHand(Left_Right);
-            }
-            else if(O_C == "C"){
-                p.closeHand(Left_Right);
+            if(currentApplication.getAlMotion() != null) {
+                if (O_C == "O") {
+                    currentApplication.getAlMotion().openHand(Left_Right);
+                } else if (O_C == "C") {
+                    currentApplication.getAlMotion().closeHand(Left_Right);
+                }
             }
         }catch(Exception err){
             err.printStackTrace();

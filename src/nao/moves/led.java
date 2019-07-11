@@ -5,6 +5,8 @@ import com.aldebaran.qi.helper.proxies.ALLeds;
 
 import components.json.JSONArray;
 
+import java.util.List;
+
 public class led implements SendClassName {
     public Application application;
 
@@ -19,6 +21,11 @@ public class led implements SendClassName {
 
         try {
             ALLeds leds = new ALLeds(application.session());
+
+            List<String> led_names = leds.listLEDs();
+            for(int i=0;i<led_names.size();i++){
+                System.out.println(led_names.get(i));
+            }
 
 
         }
