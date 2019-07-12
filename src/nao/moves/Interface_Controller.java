@@ -28,6 +28,13 @@ public class Interface_Controller {
 
         current = new say();
         map.put(current.name(), current);
+
+        current = new winken();
+        map.put(current.name(), current);
+
+
+        current = new FaceDetect();
+        map.put(current.name(), current);
     }
 
     public synchronized static void unload(){

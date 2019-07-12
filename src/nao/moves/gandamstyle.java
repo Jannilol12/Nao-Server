@@ -98,21 +98,21 @@ public class gandamstyle implements SendClassName {
                     case 7:
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(-45), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         linksSchritt(1);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(135), speed);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-90), speed);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
@@ -124,21 +124,21 @@ public class gandamstyle implements SendClassName {
                     case 5:
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(-45), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         rechtsSchritt(1);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(135), speed);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-90), speed);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
@@ -155,21 +155,21 @@ public class gandamstyle implements SendClassName {
                     case 1:
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(-45), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         linksSchritt(1);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-90), speed);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
@@ -180,21 +180,21 @@ public class gandamstyle implements SendClassName {
                     case 3:
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(-45), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         rechtsSchritt(1);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
                         p.waitUntilMoveIsFinished();
-                        Thread.sleep(0_700);
+                        Thread.sleep(700);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-90), speed);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
@@ -206,8 +206,8 @@ public class gandamstyle implements SendClassName {
             }
             armDrehen(2);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_700);
-            int ThreadSleep = 0_700;
+            Thread.sleep(700);
+            int ThreadSleep = 700;
             speed = 0.2f;
             p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
             p.setAngles(motors.RElbowRoll.name, Math.toRadians(45), speed);
@@ -333,7 +333,7 @@ public class gandamstyle implements SendClassName {
             BrustSchlag(3);
 
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_500);
+            Thread.sleep(500);
 
             p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
             p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-30), speed);
@@ -459,7 +459,7 @@ public class gandamstyle implements SendClassName {
 
     public void BrustSchlag(int Anzahl)throws Exception{
         float speed = 0.2f;
-        int Thread_sleep = 0_700;
+        int Thread_sleep = 700;
         ALMotion p = new ALMotion(application.session());
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RElbowRoll.name, Math.toRadians(60), speed);
@@ -475,7 +475,7 @@ public class gandamstyle implements SendClassName {
 
     public void FussDrehen(int Anzahl) throws Exception{
         float speed = 0.2f;
-        int Thread_sleep = 0_700;
+        int Thread_sleep = 700;
         ALMotion p = new ALMotion(application.session());
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RHipRoll.name, Math.toRadians(-20), speed);
@@ -509,7 +509,7 @@ public class gandamstyle implements SendClassName {
 
     public void Kniebeuge(int Anzahl) throws Exception{
         float speed = 0.2f;
-        int Thread_sleep = 0_700;
+        int Thread_sleep = 700;
         ALMotion p = new ALMotion(application.session());
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RKneePitch.name, Math.toRadians(100), speed);
@@ -530,10 +530,10 @@ public class gandamstyle implements SendClassName {
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RHipRoll.name, Math.toRadians(-40), speed);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_700);
+            Thread.sleep(700);
             p.setAngles(motors.RHipRoll.name, -0.4f, speed);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_700);
+            Thread.sleep(700);
         }
     }
 
@@ -543,20 +543,20 @@ public class gandamstyle implements SendClassName {
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_700);
+            Thread.sleep(700);
             p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
             p.setAngles(motors.RElbowRoll.name, Math.toRadians(45), speed);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_700);
+            Thread.sleep(700);
             p.setAngles(motors.RElbowYaw.name, Math.toRadians(-45), speed);
             p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_700);
+            Thread.sleep(700);
             p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
             p.setAngles(motors.RElbowRoll.name, Math.toRadians(135), speed);
             p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_700);
+            Thread.sleep(700);
             p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-90), speed);
             p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
             p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
@@ -570,7 +570,7 @@ public class gandamstyle implements SendClassName {
             p.setAngles(motors.RKneePitch.name, Math.toRadians(35), speed);
             p.setAngles(motors.RHipPitch.name, Math.toRadians(-25), speed);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_600);
+            Thread.sleep(600);
             p.setAngles(motors.RKneePitch.name, Math.toRadians(0), speed);
             p.setAngles(motors.RHipPitch.name, Math.toRadians(0), speed);
             p.waitUntilMoveIsFinished();
@@ -583,7 +583,7 @@ public class gandamstyle implements SendClassName {
             p.setAngles(motors.LKneePitch.name, Math.toRadians(35), speed);
             p.setAngles(motors.LHipPitch.name, Math.toRadians(-25), speed);
             p.waitUntilMoveIsFinished();
-            Thread.sleep(0_600);
+            Thread.sleep(600);
             p.setAngles(motors.LKneePitch.name, Math.toRadians(0), speed);
             p.setAngles(motors.LHipPitch.name, Math.toRadians(0), speed);
             p.waitUntilMoveIsFinished();

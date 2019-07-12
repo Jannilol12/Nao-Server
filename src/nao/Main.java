@@ -15,9 +15,10 @@ public class Main {
 	public static move move;
 	public static led led;
 	public static receiver r;
+	public static commands commands;
 	
 	public static void main(String[] args) {
-		currentApplication.load("127.0.0.1",50536 );
+		currentApplication.load("127.0.0.1",9559 );
 		Interface_Controller.load();
 
 	    r = new receiver();
@@ -28,6 +29,7 @@ public class Main {
 //        speech.addvocabulary("Hallo");
 		led = new led();
 		move = new move();
+		commands = new commands();
 	}
 
 	public static void receiveText(String text, DataOutputStream dataOutputStream){
@@ -40,7 +42,6 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
-
 		String type = JSONFinder.getString("type", json);
 		if(type == null)
 			return;
@@ -289,6 +290,28 @@ public class Main {
 					default:
 						System.out.println("Da lief was schief");
 						break;
+				}
+				break;
+			case "posture":
+				String posture = JSONFinder.getString("position", json);
+				float speed = (float) JSONFinder.getDouble("speed", json);
+				commands.goToPosture(posture, speed);
+				break;
+			case "reboot":
+				commands.reboot();
+				break;
+			case "shutdown":
+				commands.shutdown();
+				break;
+			case "battery":
+				try {
+					JSONObject myjson = new JSONObject();
+					myjson.add("type", "battery");
+					myjson.add("battery", commands.getBatteryCharge());
+
+					dataOutputStream.writeUTF(myjson.toJSONString());
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 				break;
 			default:
