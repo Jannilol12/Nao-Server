@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.aldebaran.qi.helper.proxies.ALMotion;
-
 public class move {
     private ExecutorService executor;
 
