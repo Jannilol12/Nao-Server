@@ -5,13 +5,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class move {
-    private ExecutorService executor;
-
-    public move() {
+    private static ExecutorService executor;
+    
+    static {
     	executor = Executors.newFixedThreadPool(1);
     }
     
-    public void moveinfinity(float forward_backward, float right_left){
+    public static void moveinfinity(float forward_backward, float right_left){
         stop();
         executor.execute(() -> {
             try {
@@ -25,7 +25,7 @@ public class move {
         });
     }
 
-    public void steps(float foward_backward, float right_left ){
+    public static void steps(float foward_backward, float right_left ){
         stop();
         executor.execute(() -> {
             try {
@@ -39,7 +39,7 @@ public class move {
         });
     }
 
-    public void stop(){
+    public static void stop(){
         try{
             if(currentApplication.getAlMotion() != null) {
                 currentApplication.getAlMotion().stopMove();
@@ -49,7 +49,7 @@ public class move {
         catch(Exception err){}
     }
     
-    public void rotate(int Degrees){
+    public static void rotate(int Degrees){
 //        stop();
         executor.execute(() -> {
             try{
@@ -60,20 +60,7 @@ public class move {
         });
     }
     
-    public void test(){
-        stop();
-        new Thread(() -> {
-            try{
-                Thread.sleep(2_000);
-                if(currentApplication.getAlMotion() != null) {
-                    currentApplication.getAlMotion().setAngles(motors.LShoulderPitch.name, -1.0f, 1.0f);
-                }
-                Thread.sleep(2_000);
-            }catch (Exception err){}
-        }).start();
-    }
-    
-    public void motors(String motor, float angle, float speed){
+    public static void motors(String motor, float angle, float speed){
 //        stop();
     	executor.execute(() -> {
             try{
@@ -84,7 +71,7 @@ public class move {
         });
     }
     
-    public float getAngle(String motor){
+    public static float getAngle(String motor){
         try {
             if(currentApplication.getAlMotion() != null) {
                 List<Float> list = currentApplication.getAlMotion().getAngles(motor, true);
@@ -96,7 +83,7 @@ public class move {
         return 0;
     }
 
-    public void wakeup(){
+    public static void wakeup(){
         try{
             if(currentApplication.getAlMotion() != null) {
                 currentApplication.getAlMotion().wakeUp();
@@ -106,7 +93,7 @@ public class move {
         }
     }
 
-    public void handopenclose(String Left_Right, String O_C){
+    public static void handopenclose(String Left_Right, String O_C){
         try{
             if(currentApplication.getAlMotion() != null) {
                 if (O_C == "O") {

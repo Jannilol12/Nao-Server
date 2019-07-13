@@ -39,7 +39,7 @@ public class receiver extends Thread {
                         	if(Debugger.isEnable())
                         		System.out.println(str);
                         	
-                            Main.receiveText(str, dos);
+                            MainReceiver.receiveText(str, dos);
 
                             if (str.equalsIgnoreCase("end"))
                                 break;

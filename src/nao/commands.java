@@ -4,13 +4,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class commands {
-    private ExecutorService executor;
+    private static ExecutorService executor;
     
-    public commands(){
+    static {
         executor = Executors.newFixedThreadPool(3);
     }
 
-    public void goToPosture(String posture, float speed){
+    public static void goToPosture(String posture, float speed){
         try{
 	        if (currentApplication.getAlRobotPosture() != null){
 	            currentApplication.getAlRobotPosture().goToPosture(posture, speed);
@@ -19,7 +19,7 @@ public class commands {
             e.printStackTrace();
         }
     }
-    public int getBatteryCharge(){
+    public static int getBatteryCharge(){
         try {
             if (currentApplication.getAlBattery() != null){
                 return currentApplication.getAlBattery().getBatteryCharge();
@@ -31,7 +31,7 @@ public class commands {
         return -1;
     }
 
-    public void reboot(){
+    public static void reboot(){
         try {
             if (currentApplication.getAlSystem() != null){
                 currentApplication.getAlSystem().reboot();
@@ -41,7 +41,7 @@ public class commands {
             e.printStackTrace();
         }
     }
-    public void shutdown(){
+    public static void shutdown(){
         try {
             if (currentApplication.getAlSystem() != null){
                 currentApplication.getAlSystem().shutdown();
