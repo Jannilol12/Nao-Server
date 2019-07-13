@@ -17,15 +17,39 @@ public class currentApplication {
 	        String[] args = new String[0];
 	        application = new Application(args, "tcp://" + ip + ":" + port);
 	        application.start();
+
             try {
                 alMotion = new ALMotion(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
                 alLeds = new ALLeds(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
                 alBattery = new ALBattery(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
                 alLauncher = new ALLauncher(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
                 alRobotPosture = new ALRobotPosture(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
                 alSystem = new ALSystem(currentApplication.getApplication().session());
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
