@@ -1,34 +1,29 @@
 package nao.moves;
 
-import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
 import components.json.JSONArray;
 import components.json.finder.JSONFinder;
 import components.json.parser.JSONParser;
+import nao.currentApplication;
 
 public class say implements SendClassName {
-    public Application application;
-
     @Override
-    public void start(Application application, JSONArray args){
-        this.application = application;
-
+    public void start(JSONArray args){
         try {
-            ALTextToSpeech tts = new ALTextToSpeech(application.session());
+            ALTextToSpeech tts = new ALTextToSpeech(currentApplication.getApplication().session());
             tts.setLanguage("English");
 
             String speechText = JSONFinder.getString("[0].value", args);
         	if(speechText != null)
-        		saytext(speechText);
+        		saytext(tts, speechText);
         }
         catch (Exception err) {
             err.printStackTrace();
         }
     }
-    public void saytext(String text){
+    public void saytext(ALTextToSpeech tts, String text){
         try{
-           ALTextToSpeech tts = new ALTextToSpeech(application.session());
            tts.say(text);
         }
         catch (Exception err){

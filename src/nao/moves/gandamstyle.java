@@ -1,25 +1,20 @@
 package nao.moves;
 
-import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 
 import components.json.JSONArray;
+import nao.currentApplication;
 import nao.motors;
 
 public class gandamstyle implements SendClassName {
-
-    public Application application;
-
     @Override
-    public void start(Application application, JSONArray args){
-        this.application = application;
-
+    public void start(JSONArray args){
         try{
-            resetMotion();
+        	ALMotion p = currentApplication.getAlMotion();
+            resetMotion(p);
 
             float speed = 0.1f;
-
-            ALMotion p = new ALMotion(application.session());
+            
             p.setAngles(motors.LHipRoll.name, 0.4f, speed);
             p.setAngles(motors.LAnkleRoll.name, -0.4f, speed);
 
@@ -59,14 +54,14 @@ public class gandamstyle implements SendClassName {
                         case 4:
                         case 6:
                         case 7:
-                            linksSchritt(1);
+                            linksSchritt(p, 1);
                             tritt++;
                             break;
                         case 0:
                         case 2:
                         case 3:
                         case 5:
-                            rechtsSchritt(1);
+                            rechtsSchritt(p, 1);
                             tritt++;
                             break;
                         default:
@@ -107,7 +102,7 @@ public class gandamstyle implements SendClassName {
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.waitUntilMoveIsFinished();
                         Thread.sleep(700);
-                        linksSchritt(1);
+                        linksSchritt(p, 1);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(135), speed);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
@@ -133,7 +128,7 @@ public class gandamstyle implements SendClassName {
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.waitUntilMoveIsFinished();
                         Thread.sleep(700);
-                        rechtsSchritt(1);
+                        rechtsSchritt(p, 1);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(135), speed);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
@@ -164,7 +159,7 @@ public class gandamstyle implements SendClassName {
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.waitUntilMoveIsFinished();
                         Thread.sleep(700);
-                        linksSchritt(1);
+                        linksSchritt(p, 1);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
@@ -189,7 +184,7 @@ public class gandamstyle implements SendClassName {
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.waitUntilMoveIsFinished();
                         Thread.sleep(700);
-                        rechtsSchritt(1);
+                        rechtsSchritt(p, 1);
                         p.setAngles(motors.RElbowYaw.name, Math.toRadians(0), speed);
                         p.setAngles(motors.RElbowRoll.name, Math.toRadians(90), speed);
                         p.setAngles(motors.RShoulderRoll.name, Math.toRadians(-45), speed);
@@ -204,7 +199,7 @@ public class gandamstyle implements SendClassName {
                 }
                 durchlauf++;
             }
-            armDrehen(2);
+            armDrehen(p, 2);
             p.waitUntilMoveIsFinished();
             Thread.sleep(700);
             int ThreadSleep = 700;
@@ -250,7 +245,7 @@ public class gandamstyle implements SendClassName {
             p.waitUntilMoveIsFinished();
             Thread.sleep(1_400);
 
-            fussTritt(4);
+            fussTritt(p, 4);
 
             speed = 0.1f;
             p.setAngles(motors.RHipRoll.name, Math.toRadians(-90), speed);
@@ -299,11 +294,11 @@ public class gandamstyle implements SendClassName {
             p.waitUntilMoveIsFinished();
             Thread.sleep(1_400);
 
-            Kniebeuge(4);
+            Kniebeuge(p, 4);
 
-            KnieDrehen(2);
+            KnieDrehen(p, 2);
 
-            FussDrehen(3);
+            FussDrehen(p, 3);
 
             p.moveTo(0f, 0f, (float)Math.toRadians(-45));
             p.setAngles(motors.HeadYaw.name, Math.toRadians(0 ), speed);
@@ -330,7 +325,7 @@ public class gandamstyle implements SendClassName {
             p.waitUntilMoveIsFinished();
             Thread.sleep(2_000);
 
-            BrustSchlag(3);
+            BrustSchlag(p, 3);
 
             p.waitUntilMoveIsFinished();
             Thread.sleep(500);
@@ -343,7 +338,7 @@ public class gandamstyle implements SendClassName {
             p.waitUntilMoveIsFinished();
             Thread.sleep(2_000);
 
-            ElbogenSchlag(3);
+            ElbogenSchlag(p, 3);
 
             p.closeHand("LHand");
             p.setAngles(motors.LShoulderRoll.name, Math.toRadians(-12), speed);
@@ -440,10 +435,10 @@ public class gandamstyle implements SendClassName {
             err.printStackTrace();
         }
     }
-    public void ElbogenSchlag(int Anzahl)throws Exception{
+    public void ElbogenSchlag(ALMotion p, int Anzahl)throws Exception{
         float speed = 0.2f;
         int Thread_sleep = 0_700;
-        ALMotion p = new ALMotion(application.session());
+        
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RShoulderPitch.name, Math.toRadians(-60), speed);
             p.setAngles(motors.LShoulderRoll.name, Math.toRadians(-15), speed);
@@ -457,10 +452,10 @@ public class gandamstyle implements SendClassName {
         }
     }
 
-    public void BrustSchlag(int Anzahl)throws Exception{
+    public void BrustSchlag(ALMotion p, int Anzahl)throws Exception{
         float speed = 0.2f;
         int Thread_sleep = 700;
-        ALMotion p = new ALMotion(application.session());
+
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RElbowRoll.name, Math.toRadians(60), speed);
             p.setAngles(motors.LElbowRoll.name, Math.toRadians(-60), speed);
@@ -473,10 +468,10 @@ public class gandamstyle implements SendClassName {
         }
     }
 
-    public void FussDrehen(int Anzahl) throws Exception{
+    public void FussDrehen(ALMotion p, int Anzahl) throws Exception{
         float speed = 0.2f;
         int Thread_sleep = 700;
-        ALMotion p = new ALMotion(application.session());
+
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RHipRoll.name, Math.toRadians(-20), speed);
             p.waitUntilMoveIsFinished();
@@ -487,10 +482,10 @@ public class gandamstyle implements SendClassName {
         }
     }
 
-    public void KnieDrehen(int Anzahl) throws Exception{
+    public void KnieDrehen(ALMotion p, int Anzahl) throws Exception{
         float speed = 0.15f;
         int Thread_sleep = 1_050;
-        ALMotion p = new ALMotion(application.session());
+
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RHipRoll.name, Math.toRadians(-25), speed);
             p.setAngles(motors.RAnkleRoll.name, Math.toRadians(23), speed);
@@ -507,10 +502,10 @@ public class gandamstyle implements SendClassName {
         }
     }
 
-    public void Kniebeuge(int Anzahl) throws Exception{
+    public void Kniebeuge(ALMotion p, int Anzahl) throws Exception{
         float speed = 0.2f;
         int Thread_sleep = 700;
-        ALMotion p = new ALMotion(application.session());
+
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RKneePitch.name, Math.toRadians(100), speed);
             p.setAngles(motors.LKneePitch.name, Math.toRadians(50), speed);
@@ -524,9 +519,9 @@ public class gandamstyle implements SendClassName {
         }
     }
 
-    public void fussTritt(int Anzahl) throws Exception{
+    public void fussTritt(ALMotion p, int Anzahl) throws Exception{
         float speed = 0.2f;
-        ALMotion p = new ALMotion(application.session());
+
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RHipRoll.name, Math.toRadians(-40), speed);
             p.waitUntilMoveIsFinished();
@@ -537,9 +532,9 @@ public class gandamstyle implements SendClassName {
         }
     }
 
-    public void armDrehen(int Anzahl) throws Exception{
+    public void armDrehen(ALMotion p, int Anzahl) throws Exception{
         float speed = 0.2f;
-        ALMotion p = new ALMotion(application.session());
+
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RElbowYaw.name, Math.toRadians(45), speed);
             p.waitUntilMoveIsFinished();
@@ -563,9 +558,9 @@ public class gandamstyle implements SendClassName {
         }
     }
 
-    public void rechtsSchritt(int Anzahl) throws Exception{
+    public void rechtsSchritt(ALMotion p, int Anzahl) throws Exception{
         float speed = 0.5f;
-        ALMotion p = new ALMotion(application.session());
+
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.RKneePitch.name, Math.toRadians(35), speed);
             p.setAngles(motors.RHipPitch.name, Math.toRadians(-25), speed);
@@ -576,9 +571,9 @@ public class gandamstyle implements SendClassName {
             p.waitUntilMoveIsFinished();
         }
     }
-    public void linksSchritt(int Anzahl) throws Exception{
+    public void linksSchritt(ALMotion p, int Anzahl) throws Exception{
         float speed = 0.5f;
-        ALMotion p = new ALMotion(application.session());
+
         for(int i=0;i<Anzahl;i++) {
             p.setAngles(motors.LKneePitch.name, Math.toRadians(35), speed);
             p.setAngles(motors.LHipPitch.name, Math.toRadians(-25), speed);
@@ -590,8 +585,7 @@ public class gandamstyle implements SendClassName {
         }
     }
 
-    public void resetMotion() throws Exception {
-        ALMotion p = new ALMotion(application.session());
+    public void resetMotion(ALMotion p) throws Exception {
         for(motors nMotors : motors.values()) {
             p.setAngles(nMotors.name, 0f, 1f);
         }

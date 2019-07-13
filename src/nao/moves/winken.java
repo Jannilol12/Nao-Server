@@ -1,12 +1,12 @@
 package nao.moves;
 
-import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALMotion;
+
 import components.json.JSONArray;
+import nao.currentApplication;
 import nao.motors;
 
 public class winken implements SendClassName{
-    public Application application;
 
     @Override
     public String name() {
@@ -14,12 +14,10 @@ public class winken implements SendClassName{
     }
 
     @Override
-    public void start(Application application, JSONArray args) {
-        this.application = application;
+    public void start(JSONArray args) {
         try{
             resetMotion();
             float speed = 0.1f;
-            ALMotion p = new ALMotion(application.session());
 //            p.setAngles(motors.RShoulderRoll.name, Math.toRadians(0), speed);
 
 
@@ -29,7 +27,7 @@ public class winken implements SendClassName{
     }
 
     public void resetMotion() throws Exception {
-        ALMotion p = new ALMotion(application.session());
+        ALMotion p = currentApplication.getAlMotion();
         for(motors nMotors : motors.values()) {
             p.setAngles(nMotors.name, 0f, 1f);
         }

@@ -2,28 +2,25 @@ package nao.moves;
 
 import java.util.ArrayList;
 
-import com.aldebaran.qi.Application;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 
 import components.json.JSONArray;
+import nao.currentApplication;
 
 public class speech_recognition implements SendClassName {
-    public Application application;
     public ArrayList<String> vocabulary = new ArrayList<>();
     public ALSpeechRecognition asr;
     public ALMemory memory;
 
     @Override
-    public void start(Application application, JSONArray args){
-        this.application = application;
-
+    public void start(JSONArray args){
         try {
-            asr = new ALSpeechRecognition(application.session());
+            asr = new ALSpeechRecognition(currentApplication.getApplication().session());
             asr.setLanguage("German");
-            memory = new ALMemory(application.session());
+            memory = new ALMemory(currentApplication.getApplication().session());
             long frontTactilSubscriptionId = 0;
 
             asr.setVocabulary(vocabulary, false);

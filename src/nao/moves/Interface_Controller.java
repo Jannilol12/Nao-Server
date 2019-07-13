@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import components.json.JSONArray;
-import nao.currentApplication;
 
 public class Interface_Controller {
     private static Map<String, SendClassName> map = Collections.synchronizedMap(new HashMap<>());
@@ -50,7 +49,7 @@ public class Interface_Controller {
         currentClassNameRunning = sendClassName;
         if(sendClassName != null && currentRunning == null){
             currentRunning = new Thread(() -> {
-                sendClassName.start(currentApplication.getApplication(), args);
+                sendClassName.start(args);
             });
             currentRunning.start();
         }

@@ -1,20 +1,16 @@
 package nao.moves;
 
-import com.aldebaran.qi.Application;
-
 import components.json.JSONArray;
 
 public abstract interface SendClassName {
     public String name();
     
     /**
-     * 
-     * @param application should never NULL
      * @param input Arguements from the Client: ["id":"a", "value":?]
      * 			a: Einzeige Name (beim Client) und eindeutige ID zur identifizierung
      * 			b: Value der vom Client eingegeben wurde. Kann ein String, Int, Double, etc. sein
      */
-    public abstract void start(Application application, JSONArray args);
+    public abstract void start(JSONArray args);
     public abstract void stop();
 
     /**

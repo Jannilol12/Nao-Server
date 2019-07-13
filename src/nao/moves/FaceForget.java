@@ -1,13 +1,13 @@
 package nao.moves;
 
-import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
+
 import components.json.JSONArray;
 import components.json.finder.JSONFinder;
 import components.json.parser.JSONParser;
+import nao.currentApplication;
 
 public class FaceForget implements SendClassName {
-    public Application application;
 
     @Override
     public String name() {
@@ -15,10 +15,9 @@ public class FaceForget implements SendClassName {
     }
 
     @Override
-    public void start(Application application, JSONArray args) {
-        this.application = application;
+    public void start(JSONArray args) {
         try {
-            ALFaceDetection faceDetection = new ALFaceDetection(application.session());
+            ALFaceDetection faceDetection = new ALFaceDetection(currentApplication.getApplication().session());
             faceDetection.forgetPerson(JSONFinder.getString("[0].value", args));
         } catch (Exception e) {
             e.printStackTrace();
