@@ -1,4 +1,4 @@
-package nao;
+package nao.functions;
 
 import com.aldebaran.qi.CallError;
 

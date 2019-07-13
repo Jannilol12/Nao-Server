@@ -1,6 +1,8 @@
 package nao;
 
 import nao.debugger.Debugger;
+import nao.functions.commands;
+import nao.functions.currentApplication;
 import nao.moves.Interface_Controller;
 
 public class Main {

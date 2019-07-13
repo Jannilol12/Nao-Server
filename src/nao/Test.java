@@ -8,6 +8,8 @@ import com.aldebaran.qi.helper.proxies.ALFaceCharacteristics;
 import com.aldebaran.qi.helper.proxies.ALLeds;
 import com.aldebaran.qi.helper.proxies.ALSonar;
 
+import nao.functions.motors;
+
 public class Test {
 
 		public static Application application;

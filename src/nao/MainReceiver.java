@@ -8,6 +8,10 @@ import components.json.JSONObject;
 import components.json.abstractJSON;
 import components.json.finder.JSONFinder;
 import components.json.parser.JSONParser;
+import nao.functions.commands;
+import nao.functions.led;
+import nao.functions.motors;
+import nao.functions.move;
 import nao.moves.Interface_Controller;
 import nao.moves.SendClassName;
 

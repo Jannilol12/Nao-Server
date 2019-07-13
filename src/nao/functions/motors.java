@@ -1,4 +1,4 @@
-package nao;
+package nao.functions;
 
 public enum motors {
 	HeadYaw("HeadYaw"),

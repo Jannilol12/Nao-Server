@@ -5,7 +5,7 @@ import java.util.List;
 import com.aldebaran.qi.helper.proxies.ALLeds;
 
 import components.json.JSONArray;
-import nao.currentApplication;
+import nao.functions.currentApplication;
 
 public class led implements SendClassName {
     @Override
