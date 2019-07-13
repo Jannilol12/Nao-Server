@@ -8,6 +8,7 @@ import components.json.JSONObject;
 import components.json.abstractJSON;
 import components.json.finder.JSONFinder;
 import components.json.parser.JSONParser;
+import nao.debugger.Debugger;
 import nao.moves.Interface_Controller;
 import nao.moves.SendClassName;
 
@@ -18,6 +19,8 @@ public class Main {
 	public static commands commands;
 	
 	public static void main(String[] args) {
+		Debugger.setEnable(true);
+		
 		currentApplication.load("127.0.0.1",9559 );
 		Interface_Controller.load();
 
@@ -33,7 +36,6 @@ public class Main {
 	}
 
 	public static void receiveText(String text, DataOutputStream dataOutputStream){
-		System.out.println(text);
 		abstractJSON json;
 		try {
 			json = JSONParser.parse(text);

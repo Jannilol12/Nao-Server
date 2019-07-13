@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import nao.debugger.Debugger;
+
 public class receiver extends Thread {
     private Socket s;
     private DataOutputStream dos;
@@ -34,7 +36,9 @@ public class receiver extends Thread {
                     String str = dis.readUTF();
                     if(!str.isEmpty()) {
                         try {
-                            System.out.println(str);
+                        	if(Debugger.isEnable())
+                        		System.out.println(str);
+                        	
                             Main.receiveText(str, dos);
 
                             if (str.equalsIgnoreCase("end"))
