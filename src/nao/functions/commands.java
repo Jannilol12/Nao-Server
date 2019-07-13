@@ -17,6 +17,7 @@ public class commands {
 	        try{
 	        	if (currentApplication.getAlRobotPosture() != null) {
 		        	synchronized (currentApplication.getAlRobotPosture()) {
+		        		move.stop();
 		        		stopPosture();
 				        currentApplication.getAlRobotPosture().goToPosture(posture, speed);
 					}
