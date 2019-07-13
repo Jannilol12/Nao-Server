@@ -7,7 +7,6 @@ import nao.moves.Interface_Controller;
 
 public class Main {
 	public static receiver r;
-	public static commands commands;
 	
 	public static void main(String[] args) {
 		Debugger.setEnable(true);
@@ -15,12 +14,13 @@ public class Main {
 		currentApplication.load("127.0.0.1",9559 );
 		Interface_Controller.load();
 
+		commands.setMaxTryNumber(5);
+		
 	    r = new receiver();
 	    r.start();
 //        say say = new say(args);
 //        say.saytext("Hallo");
 //        speech_recognition speech = new speech_recognition(args);
 //        speech.addvocabulary("Hallo");
-		commands = new commands();
 	}
 }

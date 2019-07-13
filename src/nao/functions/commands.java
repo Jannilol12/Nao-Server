@@ -3,6 +3,8 @@ package nao.functions;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.aldebaran.qi.CallError;
+
 public class commands {
     private static ExecutorService executor;
     
@@ -11,14 +13,39 @@ public class commands {
     }
 
     public static void goToPosture(String posture, float speed){
-        try{
-	        if (currentApplication.getAlRobotPosture() != null){
-	            currentApplication.getAlRobotPosture().goToPosture(posture, speed);
-	        }}
-        catch (Exception e){
-            e.printStackTrace();
-        }
+    	executor.execute(() -> {
+	        try{
+	        	if (currentApplication.getAlRobotPosture() != null) {
+		        	synchronized (currentApplication.getAlRobotPosture()) {
+		        		stopPosture();
+				        currentApplication.getAlRobotPosture().goToPosture(posture, speed);
+					}
+	        	}
+		    }
+	        catch (Exception e){
+	            e.printStackTrace();
+	        }
+    	});
     }
+    
+    public static void stopPosture() {
+		try {
+			if (currentApplication.getAlRobotPosture() != null)
+				currentApplication.getAlRobotPosture().stopMove();
+		} catch (CallError | InterruptedException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public static void setMaxTryNumber(int maxTry) {
+    	try {
+			if (currentApplication.getAlRobotPosture() != null)
+				currentApplication.getAlRobotPosture().setMaxTryNumber(maxTry);
+		} catch (CallError | InterruptedException e) {
+			e.printStackTrace();
+		}
+    }
+    
     public static int getBatteryCharge(){
         try {
             if (currentApplication.getAlBattery() != null){
@@ -41,6 +68,7 @@ public class commands {
             e.printStackTrace();
         }
     }
+    
     public static void shutdown(){
         try {
             if (currentApplication.getAlSystem() != null){
