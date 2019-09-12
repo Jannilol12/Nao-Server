@@ -34,6 +34,9 @@ public class Interface_Controller {
 
         current = new FaceDetect();
         map.put(current.name(), current);
+
+        current = new sonar();
+        map.put(current.name(), current);
     }
 
     public synchronized static void unload(){

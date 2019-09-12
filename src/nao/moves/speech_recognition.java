@@ -8,7 +8,7 @@ import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 
 import components.json.JSONArray;
-import nao.functions.currentApplication;
+import nao.currentApplication;
 
 public class speech_recognition implements SendClassName {
     public ArrayList<String> vocabulary = new ArrayList<>();

@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.aldebaran.qi.CallError;
+import nao.currentApplication;
 
 public class commands {
     private static ExecutorService executor;

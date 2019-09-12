@@ -3,7 +3,7 @@ package nao.moves;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 
 import components.json.JSONArray;
-import nao.functions.currentApplication;
+import nao.currentApplication;
 import nao.functions.motors;
 
 public class winken implements SendClassName{

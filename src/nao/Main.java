@@ -2,7 +2,6 @@ package nao;
 
 import nao.debugger.Debugger;
 import nao.functions.commands;
-import nao.functions.currentApplication;
 import nao.moves.Interface_Controller;
 
 public class Main {
@@ -11,7 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		Debugger.setEnable(true);
 		
-		currentApplication.load("127.0.0.1",9559 );
+		currentApplication.load("127.0.0.1",57903 );
 		Interface_Controller.load();
 
 		commands.setMaxTryNumber(5);

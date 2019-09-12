@@ -3,7 +3,7 @@ package nao.moves;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 
 import components.json.JSONArray;
-import nao.functions.currentApplication;
+import nao.currentApplication;
 import nao.functions.motors;
 
 public class gandamstyle implements SendClassName {
@@ -448,7 +448,6 @@ public class gandamstyle implements SendClassName {
             p.setAngles(motors.LShoulderRoll.name, Math.toRadians(0), speed);
             p.waitUntilMoveIsFinished();
             Thread.sleep(Thread_sleep);
-
         }
     }
 

@@ -32,6 +32,8 @@ public class MainReceiver {
 			return;
 
 		switch (type){
+
+			// -------------------  MOVE  --------------------------------
 			case "Forward":
 				String value = JSONFinder.getString("value", json);
 
@@ -76,9 +78,15 @@ public class MainReceiver {
 				move.stop();
 				Interface_Controller.stop();
 				break;
+
+			// -------------------  Rotate  --------------------------------
+
 			case "Rotate":
 				move.rotate(Integer.parseInt(JSONFinder.getString("value", json)));
 				break;
+
+			// -------------------  LIST  --------------------------------
+
 			case "RunP":
 				if(!(json instanceof JSONObject))return;
 				
@@ -107,6 +115,8 @@ public class MainReceiver {
 					e.printStackTrace();
 				}
 				break;
+
+			// -------------------  MOTORS (like arm,knee etc.)  --------------------------------
 				
 			case "motors":
 				String motorName = JSONFinder.getString("motorname", json);
@@ -242,9 +252,10 @@ public class MainReceiver {
 					
 				
 				break;
-            case "Wakeup":
-                move.wakeup();
-                break;
+
+
+			// -------------------  LEDs  --------------------------------
+
 			case "leds":
 				String ledname = JSONFinder.getString("ledname", json);
 				String method = JSONFinder.getString("method", json);
@@ -277,10 +288,20 @@ public class MainReceiver {
 						break;
 				}
 				break;
+
+
+			// -------------------  POSTURE  --------------------------------
+
 			case "posture":
 				String posture = JSONFinder.getString("position", json);
 				float speed = (float) JSONFinder.getDouble("speed", json);
 				commands.goToPosture(posture, speed);
+				break;
+
+			// -------------------  SYSTEM  --------------------------------
+
+			case "Wakeup":
+				move.wakeup();
 				break;
 			case "reboot":
 				commands.reboot();
@@ -299,6 +320,8 @@ public class MainReceiver {
 					e.printStackTrace();
 				}
 				break;
+
+
 			default:
 				System.out.println("Nothing to do!");
 				break;

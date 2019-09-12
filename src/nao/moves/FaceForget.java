@@ -5,7 +5,7 @@ import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import components.json.JSONArray;
 import components.json.finder.JSONFinder;
 import components.json.parser.JSONParser;
-import nao.functions.currentApplication;
+import nao.currentApplication;
 
 public class FaceForget implements SendClassName {
 

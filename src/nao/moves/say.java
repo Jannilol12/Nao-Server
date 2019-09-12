@@ -5,14 +5,13 @@ import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import components.json.JSONArray;
 import components.json.finder.JSONFinder;
 import components.json.parser.JSONParser;
-import nao.functions.currentApplication;
+import nao.currentApplication;
 
 public class say implements SendClassName {
     @Override
     public void start(JSONArray args){
         try {
-            ALTextToSpeech tts = new ALTextToSpeech(currentApplication.getApplication().session());
-            tts.setLanguage("English");
+            ALTextToSpeech tts = currentApplication.getAlTextToSpeech();
 
             String speechText = JSONFinder.getString("[0].value", args);
         	if(speechText != null)
