@@ -8,10 +8,7 @@ import components.json.JSONObject;
 import components.json.abstractJSON;
 import components.json.finder.JSONFinder;
 import components.json.parser.JSONParser;
-import nao.functions.commands;
-import nao.functions.led;
-import nao.functions.motors;
-import nao.functions.move;
+import nao.functions.*;
 import nao.moves.Interface_Controller;
 import nao.moves.SendClassName;
 
@@ -296,6 +293,116 @@ public class MainReceiver {
 				String posture = JSONFinder.getString("position", json);
 				float speed = (float) JSONFinder.getDouble("speed", json);
 				commands.goToPosture(posture, speed);
+				break;
+
+			//-------------------- AUDIO PLAYER -----------------------------
+
+			case "audioPlayer":
+				String audio = JSONFinder.getString("function", json);
+				int id = -1;
+				switch(audio){
+					case "play":
+						if(id != 1){
+							audioPlayer.playPlayer(id);
+						}
+						break;
+
+					case "playInLoop":
+						if(id != 1){
+							audioPlayer.playinLoop(id);
+						}
+						break;
+
+					case "pause":
+						if(id != 1){
+							audioPlayer.pausePlayer(id);
+						}
+						break;
+
+					case "stop":
+						if(id != 1){
+							audioPlayer.stopPlayer();
+						}
+						break;
+
+					case "jump":
+						if(id != 1){
+							audioPlayer.goToPosition(id, (float)JSONFinder.getDouble("jumpToFloat", json));
+						}
+						break;
+
+					case "volume":
+							audioPlayer.setMasterVolume((float)JSONFinder.getDouble("masterVolume", json));
+						break;
+
+					case "loadFile":
+						id = audioPlayer.loadFile(JSONFinder.getString("file", json));
+
+						//------- SEND LENGTH -----------
+
+						JSONObject myjson = new JSONObject();
+						myjson.add( "type", "audioPlayer");
+						myjson.add( "function", "getLength");
+						myjson.add( "Length",  audioPlayer.getFileLengthInSec(id));
+
+						try {
+							dataOutputStream.writeUTF(myjson.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						break;
+
+					case "unloadFiles":
+						audioPlayer.unloadAllFiles();
+						break;
+
+					case "deleteFiles":
+						break;
+
+
+					case "getLength":
+//						JSONObject myjson3 = new JSONObject();
+//						myjson3.add( "type", "audioPlayer");
+//						myjson3.add( "function", "getLength");
+//						myjson3.add( "Length",  audioPlayer.getFileLengthInSec(id));
+//
+//						try {
+//							dataOutputStream.writeUTF(myjson3.toJSONString());
+//						} catch (IOException e) {
+//							e.printStackTrace();
+//						}
+						break;
+
+					case "getPosition":
+						JSONObject myjson1 = new JSONObject();
+						myjson1.add( "type", "audioPlayer");
+						myjson1.add( "function", "getPosition");
+						myjson1.add( "Position",  audioPlayer.getcurrentPosition(id));
+
+						try {
+							dataOutputStream.writeUTF(myjson1.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						break;
+
+					case "getVolume":
+						JSONObject myjson2 = new JSONObject();
+						myjson2.add( "type", "audioPlayer");
+						myjson2.add( "function", "getVol");
+						myjson2.add( "Vol",  audioPlayer.getMasterVolume());
+
+						try {
+							dataOutputStream.writeUTF(myjson2.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						break;
+
+					default:
+						System.out.println("audioPlayer lief schief");
+						break;
+				}
 				break;
 
 			// -------------------  SYSTEM  --------------------------------

@@ -129,14 +129,15 @@ public class audioPlayer {
 
     //--------------------------- FILE ----------------------------------------------
 
-    public static void loadFile(String filename){
+    public static int loadFile(String filename){
         try {
-            currentApplication.getAlAudioPlayer().loadFile(filename);
+            return currentApplication.getAlAudioPlayer().loadFile(filename);
         } catch (CallError callError) {
             callError.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     public static List<String> getFileList(){
@@ -161,7 +162,7 @@ public class audioPlayer {
         return (float)-2;
     }
 
-    public void unloadAllFiles(){
+    public static void unloadAllFiles(){
         try {
             currentApplication.getAlAudioPlayer().unloadAllFiles();
         } catch (CallError callError) {
