@@ -3,7 +3,7 @@ package nao;
 import java.io.*;
 
 import java.nio.file.Files;
-import java.util.Base64;
+import java.util.*;
 
 import components.json.JSONArray;
 import components.json.JSONObject;
@@ -338,31 +338,34 @@ public class MainReceiver {
 						break;
 
 					case "file":
-						String base64 = "";
-						base64 += JSONFinder.getString("bytes",json);
-						if(JSONFinder.getString("end", json) == "end") {
-							byte[] bytes = Base64.getDecoder().decode(base64);
-							try(FileOutputStream fileOutputStream = new FileOutputStream("../")){
-								fileOutputStream.write(bytes);
-							} catch (FileNotFoundException e) {
-								e.printStackTrace();
+						if(JSONFinder.getString("end", json) != null) {
+							id = audioPlayer.loadFile("./files/" + JSONFinder.getString("name", json));
+
+							//------- SEND LE
+							// NGTH OF FILE -----------
+
+							JSONObject myjson = new JSONObject();
+							myjson.add( "type", "audioPlayer");
+							myjson.add( "function", "getLength");
+							myjson.add( "Length",  audioPlayer.getFileLengthInSec(id));
+							try {
+								dataOutputStream.writeUTF(myjson.toJSONString());
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-
-
-							id = audioPlayer.loadFile("FILEPATH");
-							base64 = "";
-
-
+							break;
 						}
-						//------- SEND LENGTH OF FILE -----------
-						JSONObject myjson = new JSONObject();
-						myjson.add( "type", "audioPlayer");
-						myjson.add( "function", "getLength");
-						myjson.add( "Length",  audioPlayer.getFileLengthInSec(id));
-						try {
-							dataOutputStream.writeUTF(myjson.toJSONString());
+
+						String base64 = JSONFinder.getString("bytes",json);
+						byte[] bytes = Base64.getDecoder().decode(base64);
+						try{
+							File file = new File(new File("./").getParentFile(), "files/" + JSONFinder.getString("name", json));
+							file.getParentFile().mkdirs();
+							FileOutputStream fileOutputStream = new FileOutputStream(file, true);
+							fileOutputStream.write(bytes);
+							fileOutputStream.close();
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -413,6 +416,26 @@ public class MainReceiver {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+						break;
+
+					case "getFiles":
+						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
+						List<String> list = new LinkedList<>();
+						for(int i=0;i<file.length;i++){
+							audioPlayer.loadFile(file[i].getName());
+							list.add(file[i].getName());
+
+						}
+						JSONObject myjson3 = new JSONObject();
+						myjson2.add( "type", "audioPlayer");
+						myjson2.add( "function", "getFiles");
+						myjson2.add( "File", list);
+						try {
+							dataOutputStream.writeUTF(myjson3.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
 						break;
 
 					default:

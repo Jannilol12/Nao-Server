@@ -36,8 +36,8 @@ public class receiver extends Thread {
                     String str = dis.readUTF();
                     if(!str.isEmpty()) {
                         try {
-                        	if(Debugger.isEnable())
-                        		System.out.println(str);
+                        	//if(Debugger.isEnable())
+                        	//	System.out.println(str);
                         	
                             MainReceiver.receiveText(str, dos);
 

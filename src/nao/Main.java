@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		Debugger.setEnable(true);
 		
-		currentApplication.load("127.0.0.1",57903 );
+		currentApplication.load("nao.local",9559 );
 		Interface_Controller.load();
 
 		commands.setMaxTryNumber(5);
