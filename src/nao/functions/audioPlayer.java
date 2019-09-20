@@ -14,10 +14,6 @@ public class audioPlayer {
         executor = Executors.newFixedThreadPool(3);
     }
 
-    //        fileName – Absolute path of the file
-    //        volume – Volume of the sound file [0.0 - 1.0]
-    //        pan – Stereo panorama requested (-1.0 : left / 1.0 : right / 0.0 : center)
-
     public static boolean isRunning(int id){
         try {
             return currentApplication.getAlAudioPlayer().isRunning(id);

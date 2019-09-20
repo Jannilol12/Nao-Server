@@ -1,7 +1,9 @@
 package nao;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
+
+import java.nio.file.Files;
+import java.util.Base64;
 
 import components.json.JSONArray;
 import components.json.JSONObject;
@@ -335,16 +337,30 @@ public class MainReceiver {
 							audioPlayer.setMasterVolume((float)JSONFinder.getDouble("masterVolume", json));
 						break;
 
-					case "loadFile":
-						id = audioPlayer.loadFile(JSONFinder.getString("file", json));
+					case "file":
+						String base64 = "";
+						base64 += JSONFinder.getString("bytes",json);
+						if(JSONFinder.getString("end", json) == "end") {
+							byte[] bytes = Base64.getDecoder().decode(base64);
+							try(FileOutputStream fileOutputStream = new FileOutputStream("../")){
+								fileOutputStream.write(bytes);
+							} catch (FileNotFoundException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 
-						//------- SEND LENGTH -----------
 
+							id = audioPlayer.loadFile("FILEPATH");
+							base64 = "";
+
+
+						}
+						//------- SEND LENGTH OF FILE -----------
 						JSONObject myjson = new JSONObject();
 						myjson.add( "type", "audioPlayer");
 						myjson.add( "function", "getLength");
 						myjson.add( "Length",  audioPlayer.getFileLengthInSec(id));
-
 						try {
 							dataOutputStream.writeUTF(myjson.toJSONString());
 						} catch (IOException e) {
