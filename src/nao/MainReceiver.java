@@ -16,6 +16,7 @@ import nao.moves.SendClassName;
 
 public class MainReceiver {
 	private static int id;
+	private static boolean jump;
 
 	private MainReceiver() {}
 	
@@ -380,10 +381,6 @@ public class MainReceiver {
 						audioPlayer.unloadAllFiles();
 						break;
 
-					case "deleteFiles":
-						break;
-
-
 					case "getLength":
 //						JSONObject myjson3 = new JSONObject();
 //						myjson3.add( "type", "audioPlayer");
@@ -423,6 +420,22 @@ public class MainReceiver {
 						}
 						break;
 
+					case "deleteFiles":
+						File[] fileDelete = new File(new File("./").getParentFile(), "files/").listFiles();
+						for(int i=0;i<fileDelete.length;i++){
+							new File(new File("./").getParentFile(), "files/" + fileDelete[i].getName()).delete();
+						}
+						jump = true;
+
+
+					case "deleteFile":
+						if(!jump) {
+							audioPlayer.unloadAllFiles();
+							String fileName = JSONFinder.getString("fileDelete", json);
+							new File(new File("./").getParentFile(), "files/" + fileName).delete();
+							//NO BREAK!
+						}
+
 					case "getFiles":
 						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
 						List<String> list = new LinkedList<>();
@@ -439,7 +452,7 @@ public class MainReceiver {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-
+						jump = false;
 						break;
 
 					default:
