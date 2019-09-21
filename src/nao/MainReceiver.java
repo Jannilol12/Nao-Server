@@ -424,7 +424,6 @@ public class MainReceiver {
 						for(int i=0;i<file.length;i++){
 							audioPlayer.loadFile(file[i].getName());
 							list.add(file[i].getName());
-
 						}
 						JSONObject myjson3 = new JSONObject();
 						myjson2.add( "type", "audioPlayer");
