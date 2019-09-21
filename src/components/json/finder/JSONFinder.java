@@ -95,7 +95,7 @@ public class JSONFinder {
 	public static List<?> getList(String key, abstractJSON ajson) {
 		Object o = getObject(key, ajson);
 		if (o == null) return null;
-		if (o instanceof List) return (List<?>) o;
+		if (o instanceof JSONArray) return ((JSONArray) o).getList();
 		return null;
 	}
 	
