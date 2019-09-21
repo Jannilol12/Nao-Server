@@ -15,6 +15,8 @@ import nao.moves.Interface_Controller;
 import nao.moves.SendClassName;
 
 public class MainReceiver {
+	private static int id;
+
 	private MainReceiver() {}
 	
 	public static void receiveText(String text, DataOutputStream dataOutputStream){
@@ -301,36 +303,39 @@ public class MainReceiver {
 
 			case "audioPlayer":
 				String audio = JSONFinder.getString("function", json);
-				int id = -1;
 				switch(audio){
+					case "setId":
+						id = JSONFinder.getInt("Id", json);
+						break;
+
 					case "play":
-						if(id != 1){
+						try{
 							audioPlayer.playPlayer(id);
-						}
+						} catch (Exception e){}
 						break;
 
 					case "playInLoop":
-						if(id != 1){
+						if(id != -1){
 							audioPlayer.playinLoop(id);
 						}
 						break;
 
 					case "pause":
-						if(id != 1){
+						try{
 							audioPlayer.pausePlayer(id);
-						}
+						}catch (Exception e){}
 						break;
 
 					case "stop":
-						if(id != 1){
+						try{
 							audioPlayer.stopPlayer();
-						}
+						}catch (Exception e){}
 						break;
 
 					case "jump":
-						if(id != 1){
+						try{
 							audioPlayer.goToPosition(id, (float)JSONFinder.getDouble("jumpToFloat", json));
-						}
+						}catch (Exception e){}
 						break;
 
 					case "volume":
