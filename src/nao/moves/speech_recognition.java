@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
+import com.aldebaran.qi.helper.proxies.ALMotion;
+import com.aldebaran.qi.helper.proxies.ALMotionRecorder;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 
 import components.json.JSONArray;
@@ -25,12 +27,6 @@ public class speech_recognition implements SendClassName {
 
             asr.setVocabulary(vocabulary, false);
 
-            memory.subscribeToEvent("WordRecognized", new EventCallback() {
-                @Override
-                public void onEvent(Object o) throws InterruptedException, CallError {
-
-                }
-            });
         }
         catch (Exception err) {
             err.printStackTrace();

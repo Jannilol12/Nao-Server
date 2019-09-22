@@ -1,5 +1,7 @@
 package nao.moves;
 
+import com.aldebaran.qi.CallError;
+import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 
 import components.json.JSONArray;
@@ -21,6 +23,7 @@ public class FaceDetect implements SendClassName {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }
 

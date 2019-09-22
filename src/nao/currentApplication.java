@@ -42,6 +42,7 @@ public class currentApplication {
 
             try {
                 alMotion = new ALMotion(currentApplication.getApplication().session());
+                alMotion.setFallManagerEnabled(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -77,6 +78,7 @@ public class currentApplication {
             }
 
         }).start();
+
     }
 
     public static Application getApplication(){

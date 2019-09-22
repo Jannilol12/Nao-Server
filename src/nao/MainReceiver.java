@@ -5,6 +5,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
+import com.aldebaran.qi.CallError;
 import components.json.JSONArray;
 import components.json.JSONObject;
 import components.json.abstractJSON;
@@ -444,9 +445,9 @@ public class MainReceiver {
 							list.add(file[i].getName());
 						}
 						JSONObject myjson3 = new JSONObject();
-						myjson2.add( "type", "audioPlayer");
-						myjson2.add( "function", "getFiles");
-						myjson2.add( "File", list);
+						myjson3.add( "type", "audioPlayer");
+						myjson3.add( "function", "getFiles");
+						myjson3.add( "File", list);
 						try {
 							dataOutputStream.writeUTF(myjson3.toJSONString());
 						} catch (IOException e) {
@@ -484,6 +485,49 @@ public class MainReceiver {
 				}
 				break;
 
+			case "temperature":
+				try {
+					JSONObject myjson = new JSONObject();
+
+					myjson.add("type", "temperature");
+
+					myjson.add("HeadYaw", currentApplication.getAlMemory().getData("Device/SubDeviceList/HeadYaw/Temperature/Sensor/Value"));
+					myjson.add("HeadPitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/HeadPitch/Temperature/Sensor/Value"));
+					myjson.add("LElbowYaw", currentApplication.getAlMemory().getData("Device/SubDeviceList/LElbowYaw/Temperature/Sensor/Value"));
+					myjson.add("LElbowRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/LElbowRoll/Temperature/Sensor/Value"));
+					myjson.add("RElbowYaw", currentApplication.getAlMemory().getData("Device/SubDeviceList/RElbowYaw/Temperature/Sensor/Value"));
+					myjson.add("RElbowRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/RElbowRoll/Temperature/Sensor/Value"));
+					myjson.add("LHand", currentApplication.getAlMemory().getData("Device/SubDeviceList/LHand/Temperature/Sensor/Value"));
+					myjson.add("LWristYaw", currentApplication.getAlMemory().getData("Device/SubDeviceList/LWristYaw/Temperature/Sensor/Value"));
+					myjson.add("RHand", currentApplication.getAlMemory().getData("Device/SubDeviceList/RHand/Temperature/Sensor/Value"));
+					myjson.add("RWristYaw", currentApplication.getAlMemory().getData("Device/SubDeviceList/RWristYaw/Temperature/Sensor/Value"));
+					myjson.add("LShoulderPitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/LShoulderPitch/Temperature/Sensor/Value"));
+					myjson.add("LShoulderRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/LShoulderRoll/Temperature/Sensor/Value"));
+					myjson.add("RShoulderPitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/RShoulderPitch/Temperature/Sensor/Value"));
+					myjson.add("RShoulderRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/RShoulderRoll/Temperature/Sensor/Value"));
+					myjson.add("RHipRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/RHipRoll/Temperature/Sensor/Value"));
+					myjson.add("LHipRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/LHipRoll/Temperature/Sensor/Value"));
+					myjson.add("RHipYawPitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/RHipYawPitch/Temperature/Sensor/Value"));
+					myjson.add("LHipYawPitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/LHipYawPitch/Temperature/Sensor/Value"));
+					myjson.add("RHipPitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/RHipPitch/Temperature/Sensor/Value"));
+					myjson.add("LHipPitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/LHipPitch/Temperature/Sensor/Value"));
+					myjson.add("RKneePitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/RKneePitch/Temperature/Sensor/Value"));
+					myjson.add("LKneePitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/LKneePitch/Temperature/Sensor/Value"));
+					myjson.add("RAnklePitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/RAnklePitch/Temperature/Sensor/Value"));
+					myjson.add("LAnklePitch", currentApplication.getAlMemory().getData("Device/SubDeviceList/LAnklePitch/Temperature/Sensor/Value"));
+					myjson.add("RAnkleRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/RAnkleRoll/Temperature/Sensor/Value"));
+					myjson.add("LAnkleRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/LAnkleRoll/Temperature/Sensor/Value"));
+					myjson.add("HeadCPU", currentApplication.getAlMemory().getData("Device/SubDeviceList/Head/Temperature/Sensor/Value"));
+					myjson.add("Battery", currentApplication.getAlMemory().getData("Device/SubDeviceList/Battery/Temperature/Sensor/Value"));
+
+					dataOutputStream.writeUTF(myjson.toJSONString());
+				} catch (CallError callError) {
+					callError.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 
 			default:
 				System.out.println("Nothing to do!");
