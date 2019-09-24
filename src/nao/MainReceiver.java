@@ -308,6 +308,17 @@ public class MainReceiver {
 				switch(audio){
 					case "setId":
 						id = JSONFinder.getInt("Id", json);
+						//------- SEND LENGTH OF FILE -----------
+
+						JSONObject myjson = new JSONObject();
+						myjson.add( "type", "audioPlayer");
+						myjson.add( "function", "getLength");
+						myjson.add( "Length",  audioPlayer.getFileLengthInSec(id));
+						try {
+							dataOutputStream.writeUTF(myjson.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 						break;
 
 					case "play":
@@ -317,9 +328,9 @@ public class MainReceiver {
 						break;
 
 					case "playInLoop":
-						if(id != -1){
+						try{
 							audioPlayer.playinLoop(id);
-						}
+						} catch(Exception e){}
 						break;
 
 					case "pause":
@@ -345,24 +356,6 @@ public class MainReceiver {
 						break;
 
 					case "file":
-						if(JSONFinder.getString("end", json) != null) {
-							id = audioPlayer.loadFile("./files/" + JSONFinder.getString("name", json));
-
-							//------- SEND LE
-							// NGTH OF FILE -----------
-
-							JSONObject myjson = new JSONObject();
-							myjson.add( "type", "audioPlayer");
-							myjson.add( "function", "getLength");
-							myjson.add( "Length",  audioPlayer.getFileLengthInSec(id));
-							try {
-								dataOutputStream.writeUTF(myjson.toJSONString());
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							break;
-						}
-
 						String base64 = JSONFinder.getString("bytes",json);
 						byte[] bytes = Base64.getDecoder().decode(base64);
 						try{
