@@ -14,6 +14,7 @@ public class currentApplication {
     private static ALTextToSpeech alTextToSpeech;
     private static ALMemory alMemory;
     private static ALAudioPlayer alAudioPlayer;
+    private static ALSpeechRecognition alSpeechRecognition;
 
 
 
@@ -79,6 +80,12 @@ public class currentApplication {
                 e.printStackTrace();
             }
 
+            try {
+                alSpeechRecognition = new ALSpeechRecognition(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }).start();
 
     }
@@ -102,6 +109,8 @@ public class currentApplication {
     public static ALTextToSpeech getAlTextToSpeech(){ return alTextToSpeech;}
 
     public static ALMemory getAlMemory(){ return alMemory;}
+
+    public static ALSpeechRecognition getAlSpeechRecognition(){return alSpeechRecognition;}
 
     public static ALAudioPlayer getAlAudioPlayer(){ return alAudioPlayer;}
 }

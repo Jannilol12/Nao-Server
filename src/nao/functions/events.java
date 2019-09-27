@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 public class events {
     private static ExecutorService executor;
     private static Thread footContact;
+    private static Thread speechRecognition;
 
     static {
         executor = Executors.newFixedThreadPool(3);
@@ -53,5 +54,62 @@ public class events {
         }
         footContact.interrupt();
         footContact = null;
+    }
+
+    public static void startSpeechRecognition() {
+        try {
+            currentApplication.getAlSpeechRecognition().subscribe("Test");
+        } catch (CallError callError) {
+            callError.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        if (speechRecognition != null) {
+            return;
+        }
+        speechRecognition = new Thread() {
+            @Override
+            public void run() {
+                while (!this.isInterrupted()) {
+                    try {
+                        currentApplication.getAlMemory().subscribeToEvent("WordRecognized", new EventCallback() {
+                            @Override
+                            public void onEvent(Object o) throws InterruptedException, CallError {
+                                System.out.println(o.toString());
+                                currentApplication.getAlMemory().getData("WordRecognized");
+                                currentApplication.getAlMemory().getData("Test");
+
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        speechRecognition.start();
+    }
+
+    public static void stopSpeechRecognition(){
+        try {
+            currentApplication.getAlSpeechRecognition().unsubscribe("Test");
+        } catch (CallError callError) {
+            callError.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(speechRecognition == null){
+            return;
+        }
+        speechRecognition.interrupt();
+        speechRecognition = null;
     }
 }

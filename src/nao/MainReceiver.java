@@ -459,15 +459,27 @@ public class MainReceiver {
 
 			case "Events":
 				String Events = JSONFinder.getString("function", json);
+				Boolean bolean = JSONFinder.getBoolean("boolean", json);
+
 				switch (Events){
 					case "FootContact":
-						Boolean bolean = JSONFinder.getBoolean("boolean", json);
 						if(bolean){
 							events.startFootContactChanged();
 						}
 						if(!bolean){
 							events.stopFootContactChanged();
 						}
+						break;
+					case "SpeechRecognition":
+						if(bolean){
+							events.startSpeechRecognition();
+						}
+						if(!bolean){
+							events.stopSpeechRecognition();
+						}
+						break;
+					default:
+						System.out.println("Events lief schief!");
 						break;
 				}
 				break;
