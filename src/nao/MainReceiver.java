@@ -455,6 +455,23 @@ public class MainReceiver {
 				}
 				break;
 
+			// ---------------------- EVENTS ------------------------------
+
+			case "Events":
+				String Events = JSONFinder.getString("function", json);
+				switch (Events){
+					case "FootContact":
+						Boolean bolean = JSONFinder.getBoolean("boolean", json);
+						if(bolean){
+							events.startFootContactChanged();
+						}
+						if(!bolean){
+							events.stopFootContactChanged();
+						}
+						break;
+				}
+				break;
+
 			// -------------------  SYSTEM  --------------------------------
 
 			case "Wakeup":

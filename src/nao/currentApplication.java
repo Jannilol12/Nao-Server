@@ -15,6 +15,8 @@ public class currentApplication {
     private static ALMemory alMemory;
     private static ALAudioPlayer alAudioPlayer;
 
+
+
     public synchronized static void load(String ip, int port){
     	new Thread(() -> {
 	        String[] args = new String[0];

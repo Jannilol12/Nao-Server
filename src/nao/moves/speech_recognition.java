@@ -27,6 +27,16 @@ public class speech_recognition implements SendClassName {
 
             asr.setVocabulary(vocabulary, false);
 
+            memory.subscribeToEvent("WordRecognized", new EventCallback() {
+                @Override
+                public void onEvent(Object o) throws InterruptedException, CallError {
+                    String word = o.toString();
+                }
+            });
+
+            memory.getData("WordRecognized");
+            memory.getData("Test");
+
         }
         catch (Exception err) {
             err.printStackTrace();
