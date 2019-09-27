@@ -12,6 +12,7 @@ public class events {
     private static ExecutorService executor;
     private static Thread footContact;
     private static Thread speechRecognition;
+    private static Thread sonar;
 
     static {
         executor = Executors.newFixedThreadPool(3);
@@ -56,6 +57,7 @@ public class events {
         footContact = null;
     }
 
+
     public static void startSpeechRecognition() {
         try {
             currentApplication.getAlSpeechRecognition().subscribe("Test");
@@ -74,15 +76,15 @@ public class events {
             public void run() {
                 while (!this.isInterrupted()) {
                     try {
+                        System.out.println(currentApplication.getAlMemory().getData("WordRecognized") + "" +  currentApplication.getAlMemory().getData("Test"));
+
                         currentApplication.getAlMemory().subscribeToEvent("WordRecognized", new EventCallback() {
                             @Override
                             public void onEvent(Object o) throws InterruptedException, CallError {
                                 System.out.println(o.toString());
-                                currentApplication.getAlMemory().getData("WordRecognized");
-                                currentApplication.getAlMemory().getData("Test");
-
                             }
                         });
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -111,5 +113,54 @@ public class events {
         }
         speechRecognition.interrupt();
         speechRecognition = null;
+    }
+
+    public static void startSonar(){
+
+        //http://doc.aldebaran.com/2-1/family/nao_dcm/actuator_sensor_names.html#term-us-sensor-m
+        //The results of the first echo detected on each receiver are in Value, the 9 following echoes are from Value1 to Value9.
+        //
+        //Value of 0 means an error. A value of Max Detection range means no echo.
+        //
+        //For example, if Value contains 0,40, Value1 1,2 and Value2 Max Detection range, the following values (3 to 9) will contain Max Detection range too.
+        // It probably means you have the echo of the ground at 0,40m and another object at 1,2m. Left and Right sensors work the same way and allow you to locate objects.
+        if (sonar != null) {
+            return;
+        }
+        sonar = new Thread() {
+            @Override
+            public void run() {
+                while (!this.isInterrupted()) {
+                    try {
+                        String distanceLeft = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Left/Sensor/Value").toString();
+                        String distanceRight = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Right/Sensor/Value").toString();
+
+                        currentApplication.getAlMemory().subscribeToEvent("SonarLeftDetected", new EventCallback() {
+                            @Override
+                            public void onEvent(Object o) throws InterruptedException, CallError {
+                                System.out.println("Sonar Left Detected");
+                            }
+                        });
+                        System.out.println(distanceLeft + "|" + distanceRight);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        sonar.start();
+    }
+
+    public static void stopSonar(){
+        if(sonar == null){
+            return;
+        }
+        sonar.interrupt();
+        sonar = null;
     }
 }

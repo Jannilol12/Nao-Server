@@ -478,6 +478,13 @@ public class MainReceiver {
 							events.stopSpeechRecognition();
 						}
 						break;
+					case "Sonar":
+						if(bolean){
+							events.startSonar();
+						}
+						if(!bolean){
+							events.stopSonar();
+						}
 					default:
 						System.out.println("Events lief schief!");
 						break;
