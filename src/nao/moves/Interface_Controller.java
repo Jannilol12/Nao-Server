@@ -22,9 +22,6 @@ public class Interface_Controller {
         SendClassName current = new gandamstyle();
         map.put(current.name(), current);
 
-        current = new speech_recognition();
-        map.put(current.name(), current);
-
         current = new say();
         map.put(current.name(), current);
 
