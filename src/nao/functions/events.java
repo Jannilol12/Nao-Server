@@ -5,6 +5,8 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import nao.currentApplication;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,6 +15,7 @@ public class events {
     private static long footContact;
     private static long speechRecognition;
     private static long sonar;
+
 
     static {
         executor = Executors.newFixedThreadPool(3);
@@ -43,13 +46,24 @@ public class events {
         }
     }
 
+    public static void startMotionRecording(){
+        currentApplication.getAlMot
+    }
+
 
     public static void startSpeechRecognition() {
+        System.out.println("startSpeechRecognition method");
+        List<String> vocabulary = new LinkedList<>();
+        vocabulary.add("Hello");
         try {
+            System.out.println("Try");
+            currentApplication.getAlSpeechRecognition().setWordListAsVocabulary(vocabulary);
             currentApplication.getAlSpeechRecognition().subscribe("Test");
             speechRecognition =  currentApplication.getAlMemory().subscribeToEvent("WordRecognized", new EventCallback() {
                 @Override
                 public void onEvent(Object o) throws InterruptedException, CallError {
+                    System.out.println("On Events");
+
                     System.out.println(o.toString());
                     System.out.println(currentApplication.getAlMemory().getData("WordRecognized") + "" +  currentApplication.getAlMemory().getData("Test"));
                 }
@@ -83,11 +97,16 @@ public class events {
         //
         //For example, if Value contains 0,40, Value1 1,2 and Value2 Max Detection range, the following values (3 to 9) will contain Max Detection range too.
         // It probably means you have the echo of the ground at 0,40m and another object at 1,2m. Left and Right sensors work the same way and allow you to locate objects.
+        System.out.println("Start Sonar method");
 
         try {
+            System.out.println("Try method");
+
             sonar = currentApplication.getAlMemory().subscribeToEvent("SonarLeftDetected", new EventCallback() {
                 @Override
                 public void onEvent(Object o) throws InterruptedException, CallError {
+                    System.out.println("Sonar Event");
+
                     System.out.println("Sonar Left Detected");
                     String distanceLeft = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Left/Sensor/Value").toString();
                     String distanceRight = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Right/Sensor/Value").toString();

@@ -307,7 +307,11 @@ public class MainReceiver {
 				String audio = JSONFinder.getString("function", json);
 				switch(audio){
 					case "setId":
-						id = JSONFinder.getInt("Id", json);
+						String name = JSONFinder.getString("filename", json);
+						System.out.println(name);
+						String file1 = new File(new File("./").getParentFile(), "files/").getAbsolutePath();
+						id = audioPlayer.loadFile(file1 + "/" + name);
+
 						//------- SEND LENGTH OF FILE -----------
 
 						JSONObject myjson = new JSONObject();
@@ -323,7 +327,14 @@ public class MainReceiver {
 
 					case "play":
 						try{
-							audioPlayer.playPlayer(id);
+							Thread a = new Thread(){
+								@Override
+								public void run() {
+										audioPlayer.playPlayer(id);
+								}
+							};
+							a.start();
+
 						} catch (Exception e){}
 						break;
 
@@ -335,6 +346,7 @@ public class MainReceiver {
 
 					case "pause":
 						try{
+							System.out.println("pause");
 							audioPlayer.pausePlayer(id);
 						}catch (Exception e){}
 						break;
@@ -352,7 +364,9 @@ public class MainReceiver {
 						break;
 
 					case "volume":
-							audioPlayer.setMasterVolume((float)JSONFinder.getDouble("masterVolume", json));
+							float volume = (float)JSONFinder.getDouble("masterVolume", json);
+							audioPlayer.setMasterVolume(volume);
+							System.out.println(volume);
 						break;
 
 					case "file":
@@ -369,6 +383,10 @@ public class MainReceiver {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+						break;
+
+					case "loadFile":
+
 						break;
 
 					case "unloadFiles":
@@ -430,11 +448,11 @@ public class MainReceiver {
 							//NO BREAK!
 						}
 
+
 					case "getFiles":
 						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
 						List<String> list = new LinkedList<>();
 						for(int i=0;i<file.length;i++){
-							audioPlayer.loadFile(file[i].getName());
 							list.add(file[i].getName());
 						}
 						JSONObject myjson3 = new JSONObject();
@@ -460,7 +478,7 @@ public class MainReceiver {
 			case "Events":
 				String Events = JSONFinder.getString("function", json);
 				Boolean bolean = JSONFinder.getBoolean("boolean", json);
-
+				System.out.println("Events case");
 				switch (Events){
 					case "FootContact":
 						if(bolean){
@@ -471,20 +489,26 @@ public class MainReceiver {
 						}
 						break;
 					case "SpeechRecognition":
-						if(bolean){
+						System.out.println("SpeechRecognition case");
+
+//						if(bolean){
+							System.out.println("IF case");
+
 							events.startSpeechRecognition();
-						}
-						if(!bolean){
-							events.stopSpeechRecognition();
-						}
+//						}
+//						if(!bolean){
+//							events.stopSpeechRecognition();
+//						}
 						break;
 					case "Sonar":
-						if(bolean){
+						System.out.println("Sonar case");
+
+//						if(bolean){
 							events.startSonar();
-						}
-						if(!bolean){
-							events.stopSonar();
-						}
+//						}
+//						if(!bolean){
+//							events.stopSonar();
+//						}
 					default:
 						System.out.println("Events lief schief!");
 						break;

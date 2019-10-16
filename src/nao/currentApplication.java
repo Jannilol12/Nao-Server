@@ -15,6 +15,7 @@ public class currentApplication {
     private static ALMemory alMemory;
     private static ALAudioPlayer alAudioPlayer;
     private static ALSpeechRecognition alSpeechRecognition;
+    private static ALMotionRecorder alMotionRecorder;
 
 
 
@@ -23,6 +24,12 @@ public class currentApplication {
 	        String[] args = new String[0];
 	        application = new Application(args, "tcp://" + ip + ":" + port);
 	        application.start();
+
+	        try{
+	            alMotionRecorder = new ALMotionRecorder(currentApplication.getApplication().session());
+            }catch(Exception e){
+	            e.printStackTrace();
+            }
 
             try{
                 alAudioPlayer = new ALAudioPlayer(currentApplication.getApplication().session());
@@ -113,4 +120,6 @@ public class currentApplication {
     public static ALSpeechRecognition getAlSpeechRecognition(){return alSpeechRecognition;}
 
     public static ALAudioPlayer getAlAudioPlayer(){ return alAudioPlayer;}
+
+    public static ALMotionRecorder getAlMotionRecorder(){ return alMotionRecorder;}
 }
