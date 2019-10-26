@@ -2,6 +2,7 @@ package nao;
 
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.*;
+import nao.functions.ReactToEvents;
 
 public class currentApplication {
     private static Application application;
@@ -16,6 +17,8 @@ public class currentApplication {
     private static ALAudioPlayer alAudioPlayer;
     private static ALSpeechRecognition alSpeechRecognition;
     private static ALMotionRecorder alMotionRecorder;
+    private static ALFaceDetection alFaceDetection;
+    private static ReactToEvents react;
 
 
 
@@ -24,6 +27,7 @@ public class currentApplication {
 	        String[] args = new String[0];
 	        application = new Application(args, "tcp://" + ip + ":" + port);
 	        application.start();
+	        react = new ReactToEvents();
 
 	        try{
 	            alMotionRecorder = new ALMotionRecorder(currentApplication.getApplication().session());
@@ -93,6 +97,11 @@ public class currentApplication {
                 e.printStackTrace();
             }
 
+            try {
+                alFaceDetection = new ALFaceDetection(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }).start();
 
     }
@@ -122,4 +131,8 @@ public class currentApplication {
     public static ALAudioPlayer getAlAudioPlayer(){ return alAudioPlayer;}
 
     public static ALMotionRecorder getAlMotionRecorder(){ return alMotionRecorder;}
+
+    public static ALFaceDetection getAlFaceDetection(){ return alFaceDetection;}
+
+    public static ReactToEvents getReact(){ return react;}
 }

@@ -16,7 +16,6 @@ public class events {
     private static long speechRecognition;
     private static long sonar;
 
-
     static {
         executor = Executors.newFixedThreadPool(3);
     }
@@ -45,11 +44,6 @@ public class events {
             callError.printStackTrace();
         }
     }
-
-    public static void startMotionRecording(){
-        currentApplication.getAlMot
-    }
-
 
     public static void startSpeechRecognition() {
         System.out.println("startSpeechRecognition method");
@@ -98,6 +92,16 @@ public class events {
         //For example, if Value contains 0,40, Value1 1,2 and Value2 Max Detection range, the following values (3 to 9) will contain Max Detection range too.
         // It probably means you have the echo of the ground at 0,40m and another object at 1,2m. Left and Right sensors work the same way and allow you to locate objects.
         System.out.println("Start Sonar method");
+        String distanceLeft = null;
+        try {
+            distanceLeft = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Left/Sensor/Value").toString();
+            String distanceRight = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Right/Sensor/Value").toString();
+            System.out.println(distanceLeft + "|" + distanceRight);
+        } catch (CallError callError) {
+            callError.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         try {
             System.out.println("Try method");

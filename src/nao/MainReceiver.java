@@ -490,11 +490,11 @@ public class MainReceiver {
 						break;
 					case "SpeechRecognition":
 						System.out.println("SpeechRecognition case");
-
+						ReactToEvents.unsubscribe();
 //						if(bolean){
-							System.out.println("IF case");
-
-							events.startSpeechRecognition();
+//							System.out.println("IF case");
+//
+//							events.startSpeechRecognition();
 //						}
 //						if(!bolean){
 //							events.stopSpeechRecognition();
@@ -502,9 +502,13 @@ public class MainReceiver {
 						break;
 					case "Sonar":
 						System.out.println("Sonar case");
-
+						try {
+							currentApplication.getReact().run(currentApplication.getApplication().session());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 //						if(bolean){
-							events.startSonar();
+//							events.startSonar();
 //						}
 //						if(!bolean){
 //							events.stopSonar();

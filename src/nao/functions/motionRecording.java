@@ -19,7 +19,7 @@ public class motionRecording {
 
     private static void startMotionRecording(){
         try {
-            currentApplication.getAlMotionRecorder()
+            currentApplication.getAlMotionRecorder();
             currentApplication.getAlMotionRecorder().startInteractiveRecording(motor,99,true,2 );
         } catch (CallError callError) {
             callError.printStackTrace();

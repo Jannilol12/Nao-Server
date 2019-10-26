@@ -81,4 +81,8 @@ public class commands {
             e.printStackTrace();
         }
     }
+
+    public static void setMastervolume(){
+
+    }
 }
