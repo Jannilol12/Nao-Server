@@ -4,6 +4,7 @@ import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import nao.debugger.Debugger;
 import nao.functions.commands;
+import nao.functions.events;
 import nao.moves.Interface_Controller;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public class Main {
 
 	    r = new receiver();
 	    r.start();
+
+		events.loadVocabulary();
 //        say say = new say(args);
 //        say.saytext("Hallo");
 //        speech_recognition speech = new speech_recognition(args);

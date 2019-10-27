@@ -1,21 +1,16 @@
 package components.json;
 
+import components.classes.Files;
+import components.json.parser.JSONParser;
+
 import java.io.File;
-import java.security.Key;
 
 public class JSONReader {
 	public static abstractJSON read(File file) {
-		//TODO THIS FUNCTION WAS STOLEN BY ANONYMOUSJKEHRTOUIAESHJIOHFAEOSIHFGIOESHOIGSHIOEGHIOSEIOUGEHSIOU
-		return null;
-	}
-	
-	public static abstractJSON read(File file, String key) {
-		//TODO THIS FUNCTION WAS STOLEN BY ANONYMOUSJKEHRTOUIAESHJIOHFAEOSIHFGIOESHOIGSHIOEGHIOSEIOUGEHSIOU
-		return null;
-	}
+		if(!file.exists()) return null;
 
-	public static abstractJSON read(File file, Key key) {
-		//TODO THIS FUNCTION WAS STOLEN BY ANONYMOUSJKEHRTOUIAESHJIOHFAEOSIHFGIOESHOIGSHIOEGHIOSEIOUGEHSIOU
-		return null;
+		String content = Files.readFile(file.getAbsolutePath());
+		if(content == null || content.isEmpty()) return null;
+		return JSONParser.parse(content);
 	}
 }

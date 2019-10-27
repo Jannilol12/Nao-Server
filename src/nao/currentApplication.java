@@ -19,8 +19,7 @@ public class currentApplication {
     private static ALMotionRecorder alMotionRecorder;
     private static ALFaceDetection alFaceDetection;
     private static ReactToEvents react;
-
-
+    private static ALSonar alSonar;
 
     public synchronized static void load(String ip, int port){
     	new Thread(() -> {
@@ -102,6 +101,12 @@ public class currentApplication {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            try {
+                alSonar = new ALSonar(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }).start();
 
     }
@@ -135,4 +140,6 @@ public class currentApplication {
     public static ALFaceDetection getAlFaceDetection(){ return alFaceDetection;}
 
     public static ReactToEvents getReact(){ return react;}
+
+    public static ALSonar getAlSonar(){ return alSonar;}
 }

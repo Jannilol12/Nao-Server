@@ -477,42 +477,41 @@ public class MainReceiver {
 
 			case "Events":
 				String Events = JSONFinder.getString("function", json);
-				Boolean bolean = JSONFinder.getBoolean("boolean", json);
+				String bolean = JSONFinder.getString("boolean", json);
 				System.out.println("Events case");
 				switch (Events){
 					case "FootContact":
-						if(bolean){
+						if(bolean.equalsIgnoreCase("true")){
 							events.startFootContactChanged();
 						}
-						if(!bolean){
+						if(bolean.equalsIgnoreCase("false")){
 							events.stopFootContactChanged();
 						}
 						break;
+					case "AddVocabulary":
+						String vocabularAdd = JSONFinder.getString("String", json);
+						events.addVocabulary(vocabularAdd);
+						break;
+					case "DeleteVocabulary":
+						String vocabularDel = JSONFinder.getString("String", json);
+						events.delVocabulary(vocabularDel);
+						break;
 					case "SpeechRecognition":
 						System.out.println("SpeechRecognition case");
-						ReactToEvents.unsubscribe();
-//						if(bolean){
-//							System.out.println("IF case");
-//
-//							events.startSpeechRecognition();
-//						}
-//						if(!bolean){
-//							events.stopSpeechRecognition();
-//						}
+						if(bolean.equalsIgnoreCase("true")){
+							events.startSpeechRecognition();
+						}
+						if(bolean.equalsIgnoreCase("false")){
+							events.stopSpeechRecognition();
+						}
 						break;
 					case "Sonar":
-						System.out.println("Sonar case");
-						try {
-							currentApplication.getReact().run(currentApplication.getApplication().session());
-						} catch (Exception e) {
-							e.printStackTrace();
+						if(bolean.equalsIgnoreCase("true")){
+							events.startSonar();
 						}
-//						if(bolean){
-//							events.startSonar();
-//						}
-//						if(!bolean){
-//							events.stopSonar();
-//						}
+						if(bolean.equalsIgnoreCase("false")){
+							events.stopSonar();
+						}
 					default:
 						System.out.println("Events lief schief!");
 						break;
