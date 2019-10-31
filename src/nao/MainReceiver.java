@@ -17,7 +17,8 @@ import nao.moves.SendClassName;
 
 public class MainReceiver {
 	private static int id;
-	private static boolean jump;
+	private static boolean jump = false;
+	private static boolean jumpVoc = false;
 
 	private MainReceiver() {}
 	
@@ -489,15 +490,26 @@ public class MainReceiver {
 						}
 						break;
 					case "AddVocabulary":
+						jumpVoc = true;
 						String vocabularAdd = JSONFinder.getString("String", json);
 						events.addVocabulary(vocabularAdd);
-						break;
 					case "DeleteVocabulary":
-						String vocabularDel = JSONFinder.getString("String", json);
-						events.delVocabulary(vocabularDel);
+						if(!jumpVoc) {
+							String vocabularDel = JSONFinder.getString("String", json);
+							events.delVocabulary(vocabularDel);
+						}
+					case "getVocabulary":
+						JSONObject myjson4 = new JSONObject();
+						myjson4.add( "type", "SpeechRecognition");
+						myjson4.add( "Voc", events.getVocabulary());
+						try {
+							dataOutputStream.writeUTF(myjson4.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						jumpVoc = false;
 						break;
 					case "SpeechRecognition":
-						System.out.println("SpeechRecognition case");
 						if(bolean.equalsIgnoreCase("true")){
 							events.startSpeechRecognition();
 						}
@@ -512,6 +524,33 @@ public class MainReceiver {
 						if(bolean.equalsIgnoreCase("false")){
 							events.stopSonar();
 						}
+						break;
+					case "LearnFace":
+						String addName = JSONFinder.getString("String",json);
+						events.learnFace(addName);
+						break;
+					case "DeleteFace":
+						String delName = JSONFinder.getString("Face",json);
+						events.deleteFace(delName);
+						break;
+					case "FaceDetection":
+						if(bolean.equalsIgnoreCase("true")){
+							events.startFaceDectection();
+						}
+						if(bolean.equalsIgnoreCase("false")){
+							events.stopFaceDetection();
+						}
+						break;
+					case "getFaces":
+						JSONObject myjson5 = new JSONObject();
+						myjson5.add( "type", "FaceDetection");
+						myjson5.add( "Faces", events.getLearnedFaced());
+						try {
+							dataOutputStream.writeUTF(myjson5.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						break;
 					default:
 						System.out.println("Events lief schief!");
 						break;

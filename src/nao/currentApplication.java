@@ -9,7 +9,6 @@ public class currentApplication {
     private static ALMotion alMotion;
     private static ALLeds alLeds;
     private static ALBattery alBattery;
-    private static ALLauncher alLauncher;
     private static ALRobotPosture alRobotPosture;
     private static ALSystem alSystem;
     private static ALTextToSpeech alTextToSpeech;
@@ -18,15 +17,16 @@ public class currentApplication {
     private static ALSpeechRecognition alSpeechRecognition;
     private static ALMotionRecorder alMotionRecorder;
     private static ALFaceDetection alFaceDetection;
-    private static ReactToEvents react;
     private static ALSonar alSonar;
+    private static ALBarcodeReader alBarcodeReader;
+    private static ALLaser alLaser;
+    private static ALBehaviorManager alBehaviorManager;
 
     public synchronized static void load(String ip, int port){
     	new Thread(() -> {
 	        String[] args = new String[0];
 	        application = new Application(args, "tcp://" + ip + ":" + port);
 	        application.start();
-	        react = new ReactToEvents();
 
 	        try{
 	            alMotionRecorder = new ALMotionRecorder(currentApplication.getApplication().session());
@@ -73,12 +73,6 @@ public class currentApplication {
             }
 
             try {
-                alLauncher = new ALLauncher(currentApplication.getApplication().session());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
                 alRobotPosture = new ALRobotPosture(currentApplication.getApplication().session());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -107,6 +101,24 @@ public class currentApplication {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            try {
+                alBarcodeReader = new ALBarcodeReader(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                alLaser = new ALLaser(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                alBehaviorManager = new ALBehaviorManager(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }).start();
 
     }
@@ -120,8 +132,6 @@ public class currentApplication {
     public static ALLeds getAlLeds(){ return alLeds;}
 
     public static ALBattery getAlBattery() {return alBattery;}
-
-    public static ALLauncher getAlLauncher() {return alLauncher;}
 
     public static ALRobotPosture getAlRobotPosture() {return alRobotPosture;}
 
@@ -139,7 +149,11 @@ public class currentApplication {
 
     public static ALFaceDetection getAlFaceDetection(){ return alFaceDetection;}
 
-    public static ReactToEvents getReact(){ return react;}
-
     public static ALSonar getAlSonar(){ return alSonar;}
+
+    public static ALBarcodeReader getAlBarcodeReader(){ return alBarcodeReader;}
+
+    public static ALLaser getAlLaser(){ return alLaser;}
+
+    public static ALBehaviorManager getAlBehaviorManager(){ return alBehaviorManager;}
 }
