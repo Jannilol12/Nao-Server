@@ -551,8 +551,103 @@ public class MainReceiver {
 							e.printStackTrace();
 						}
 						break;
+					case "FaceTracking":
+						if(bolean.equalsIgnoreCase("true")){
+							events.startFaceTracking();
+						}
+						if(bolean.equalsIgnoreCase("false")){
+							events.stopFaceTracking();
+						}
+						break;
+					case "Barcode":
+						if(bolean.equalsIgnoreCase("true")){
+							events.startBarcodeReader();
+						}
+						if(bolean.equalsIgnoreCase("false")){
+							events.stopBarcodeReader();
+						}
+						break;
+					case "Landmark":
+						if(bolean.equalsIgnoreCase("true")){
+						events.startLandMark();
+					}
+						if(bolean.equalsIgnoreCase("false")){
+							events.stopLandMark();
+						}
+						break;
+					case "Laser":
+						if(bolean.equalsIgnoreCase("true")){
+							events.startLaser();
+						}
+						if(bolean.equalsIgnoreCase("false")){
+							events.stopLaser();
+						}
+						break;
 					default:
 						System.out.println("Events lief schief!");
+						break;
+
+				}
+				break;
+
+			case "Behavior":
+				String behavior = JSONFinder.getString("function", json);
+				switch(behavior) {
+					case "setId":
+						String name = JSONFinder.getString("behaviorname", json);
+						System.out.println(name);
+						String file1 = new File(new File("./").getParentFile(), "behaviors/").getAbsolutePath();
+						nao.functions.behavior.loadBehavior(file1 + "/" + name);
+						break;
+
+					case "play":
+						String BehaviorName = JSONFinder.getString("name",json);
+						nao.functions.behavior.runBehavior(BehaviorName);
+						break;
+
+					case "stop":
+						nao.functions.behavior.stopBehavior();
+						break;
+
+					case "removeBehavior":
+						String BehaviorRemoveName = JSONFinder.getString("behaviorname",json);
+						nao.functions.behavior.removeBehavior(BehaviorRemoveName);
+						break;
+
+					case "file":
+						String base64 = JSONFinder.getString("bytes", json);
+						byte[] bytes = Base64.getDecoder().decode(base64);
+						try {
+							File file = new File(new File("./").getParentFile(), "behaviors/" + JSONFinder.getString("Bname", json));
+							file.getParentFile().mkdirs();
+							FileOutputStream fileOutputStream = new FileOutputStream(file, true);
+							fileOutputStream.write(bytes);
+							fileOutputStream.close();
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						break;
+
+					case "getFiles":
+						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
+						List<String> list = new LinkedList<>();
+						for (int i = 0; i < file.length; i++) {
+							list.add(file[i].getName());
+						}
+						JSONObject myjson3 = new JSONObject();
+						myjson3.add("type", "Behavior");
+						myjson3.add("Behaviors", list);
+						try {
+							dataOutputStream.writeUTF(myjson3.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						break;
+
+					default:
+						System.out.println("Behavior lief schief");
 						break;
 				}
 				break;
