@@ -21,6 +21,8 @@ public class currentApplication {
     private static ALBarcodeReader alBarcodeReader;
     private static ALLaser alLaser;
     private static ALBehaviorManager alBehaviorManager;
+    private static ALAutonomousLife alAutonomousLife;
+    private static ALAutonomousMoves alAutonomousMoves;
 
     public synchronized static void load(String ip, int port){
     	new Thread(() -> {
@@ -119,6 +121,18 @@ public class currentApplication {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            try {
+                alAutonomousLife = new ALAutonomousLife(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                alAutonomousMoves = new ALAutonomousMoves(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }).start();
 
     }
@@ -156,4 +170,8 @@ public class currentApplication {
     public static ALLaser getAlLaser(){ return alLaser;}
 
     public static ALBehaviorManager getAlBehaviorManager(){ return alBehaviorManager;}
+
+    public static ALAutonomousLife getAlAutonomousLife(){ return alAutonomousLife;}
+
+    public static ALAutonomousMoves getAlAutonomousMoves(){ return alAutonomousMoves;}
 }

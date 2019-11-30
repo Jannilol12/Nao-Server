@@ -116,11 +116,14 @@ public class events {
     public static void loadVocabulary(){
             File file = new File(new File("./").getParentFile(), "setup/" + "vocabulary");
             JSONArray array = (JSONArray) JSONReader.read(file);
-            List<?> vList = array.toObjectList();
-            System.out.println(vList.size());
+            if(array == null) return;
 
-            ArrayList<String> arrayList = new ArrayList(vList);
-            vocabulary = arrayList;
+            ArrayList<String> sList = new ArrayList<>();
+            for(Object obj : array.toObjectList()) {
+                sList.add(obj.toString());
+            }
+
+            vocabulary = sList;
     }
 
     public static void startSpeechRecognition() {

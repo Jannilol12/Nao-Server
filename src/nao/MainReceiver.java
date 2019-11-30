@@ -630,8 +630,8 @@ public class MainReceiver {
 						}
 						break;
 
-					case "getFiles":
-						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
+					case "getBehaviors":
+						File[] file = new File(new File("./").getParentFile(), "behaviors/").listFiles();
 						List<String> list = new LinkedList<>();
 						for (int i = 0; i < file.length; i++) {
 							list.add(file[i].getName());
