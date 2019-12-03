@@ -1,6 +1,7 @@
 package nao.functions;
 
 import com.aldebaran.qi.CallError;
+import components.json.finder.JSONFinder;
 import nao.currentApplication;
 
 import java.util.concurrent.ExecutorService;

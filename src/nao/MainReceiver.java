@@ -652,6 +652,32 @@ public class MainReceiver {
 				}
 				break;
 
+			case "AutoLife":
+				String AutoLife = JSONFinder.getString("function", json);
+				switch(AutoLife) {
+					case "BackgroundStrategy":
+						autoLifeOfRobot.setBackgroundStrategy(JSONFinder.getString("Strategy", json));
+						break;
+					case "ExpressiveListening":
+						String bolean1 = JSONFinder.getString("boolean", json);
+						if(bolean1.equalsIgnoreCase("true")){
+							autoLifeOfRobot.setExpressiveListeningEnabled(true);
+						}
+						if(bolean1.equalsIgnoreCase("false")){
+							autoLifeOfRobot.setExpressiveListeningEnabled(false);
+						}
+						break;
+					case "LifeMode":
+						autoLifeOfRobot.setLife(JSONFinder.getString("Mode",json));
+						break;
+					case "RobotOffsetFromFloor":
+						autoLifeOfRobot.setRobotOffsetFromFloor(JSONFinder.getFloat("Offset",json));
+						break;
+					default:
+						System.out.println("AutoLife no function found!");
+				}
+				break;
+
 			// -------------------  SYSTEM  --------------------------------
 
 			case "Wakeup":
