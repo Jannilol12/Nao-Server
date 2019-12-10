@@ -22,7 +22,7 @@ public class MainReceiver {
 
 	private MainReceiver() {}
 	
-	public static void receiveText(String text, DataOutputStream dataOutputStream){
+	public static void receiveText(String text, DataOutputStream dataOutputStream) throws Exception {
 		abstractJSON json;
 		try {
 			json = JSONParser.parse(text);
@@ -675,6 +675,72 @@ public class MainReceiver {
 						break;
 					default:
 						System.out.println("AutoLife no function found!");
+				}
+				break;
+
+			case "Touch":
+				String TouchEvent = JSONFinder.getString("function", json);
+				switch (TouchEvent){
+					case "startRightBumperPressed":
+						Touch.startRightBumperPressed();
+						break;
+					case "startLeftBumperPressed":
+						Touch.startLeftBumperPressed();
+						break;
+					case "startFrontTactilTouched":
+						Touch.startFrontTactilTouched();
+						break;
+					case "startRearTactilTouched":
+						Touch.startRearTactilTouched();
+						break;
+					case "startHandRightBackTouched":
+						Touch.startHandRightBackTouched();
+						break;
+					case "startHandRightLeftTouched":
+						Touch.startHandRightLeftTouched();
+						break;
+					case "startHandRightRightTouched":
+						Touch.startHandRightRightTouched();
+						break;
+					case "startHandLeftBackTouched":
+						Touch.startHandLeftBackTouched();
+						break;
+					case "startHandLeftLeftTouched":
+						Touch.startHandLeftLeftTouched();
+						break;
+					case "startHandLeftRightTouched":
+						Touch.startHandLeftRightTouched();
+						break;
+					case "stopRightBumperPressed":
+						Touch.stopRightBumperPressed();
+						break;
+					case "stopLeftBumperPressed":
+						Touch.stopLeftBumperPressed();
+						break;
+					case "stopFrontTactilTouched":
+						Touch.stopFrontTactilTouched();
+						break;
+					case "stopRearTactilTouched":
+						Touch.stopRearTactilTouched();
+						break;
+					case "stopHandRightBackTouched":
+						Touch.stopHandRightBackTouched();
+						break;
+					case "stopHandRightLeftTouched":
+						Touch.stopHandRightLeftTouched();
+						break;
+					case "stopHandRightRightTouched":
+						Touch.stopHandRightRightTouched();
+						break;
+					case "stopHandLeftBackTouched":
+						Touch.stopHandLeftBackTouched();
+						break;
+					case "stopHandLeftLeftTouched":
+						Touch.stopHandLeftLeftTouched();
+						break;
+					case "stopHandLeftRightTouched":
+						Touch.stopHandLeftRightTouched();
+						break;
 				}
 				break;
 

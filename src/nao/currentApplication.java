@@ -133,6 +133,7 @@ public class currentApplication {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }).start();
 
     }
