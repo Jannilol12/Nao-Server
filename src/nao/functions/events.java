@@ -136,6 +136,7 @@ public class events {
                     System.out.println("SubscribeToEevent Raised:");
                     System.out.println(o.toString());
                     System.out.println(currentApplication.getAlMemory().getData("WordRecognized") + "" +  currentApplication.getAlMemory().getData("Test"));
+                    System.out.println("Wort: " + o.get(0));
                 }
             });
         } catch (CallError callError) {
@@ -253,7 +254,14 @@ public class events {
                 public void onEvent(ArrayList o) throws InterruptedException, CallError {
                     System.out.println("SubscribeToEevent Raised: ");
                     System.out.println(o);
+                    ArrayList<String> FaceInfo = new ArrayList<>();
+                    FaceInfo = (ArrayList<String>) o.get(1);
+                    ArrayList<String> ExtraInfo = new ArrayList<>();
+                    ExtraInfo = (ArrayList<String>) o.get(1);
+                    String name = ExtraInfo.get(0);
+                    System.out.println("Name: " + name);
                     System.out.println("-------------------------------------");
+
                 }
             });
         } catch (Exception e) {
