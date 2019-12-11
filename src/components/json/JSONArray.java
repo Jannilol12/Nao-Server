@@ -36,15 +36,17 @@ public class JSONArray extends abstractJSON{
 	 */
 	public List<?> toObjectList() {
 		List<Object> list = new LinkedList<>();
-
-		if(array != null) {
-			for (Object obj : array) {
-				if (obj instanceof JSONValue) {
-					list.add(((JSONValue) obj).getValue());
-				} else {
-					list.add(obj);
-				}
-			}
+		if(array == null)
+			return list;
+		
+		for (Object obj : array) {
+			Object input = obj;
+			
+			if (obj instanceof JSONValue)
+				input = ((JSONValue) obj).getValue();
+			
+			if(input != null)
+				list.add(obj);
 		}
 
 		return list;

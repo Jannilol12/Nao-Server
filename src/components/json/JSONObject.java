@@ -27,6 +27,50 @@ public class JSONObject extends abstractJSON{
 		map.clear();
 	}
 	
+	//-----------------------------------------Extra Getter and Setter------------------------------
+	public String getString(String key) {
+		abstractJSON json = get(key);
+		if(json instanceof JSONValue)
+			return ((JSONValue) json).getString();
+		return null;
+	}
+	
+	public Boolean getBoolean(String key) {
+		abstractJSON json = get(key);
+		if(json instanceof JSONValue)
+			return ((JSONValue) json).getBoolean();
+		return false;
+	}
+	
+	public int getInt(String key) {
+		abstractJSON json = get(key);
+		if(json instanceof JSONValue)
+			return ((JSONValue) json).getInt();
+		return 0;
+	}
+	
+	public long getLong(String key) {
+		abstractJSON json = get(key);
+		if(json instanceof JSONValue)
+			return ((JSONValue) json).getLong();
+		return 0;
+	}
+	
+	public double getDouble(String key) {
+		abstractJSON json = get(key);
+		if(json instanceof JSONValue)
+			return ((JSONValue) json).getDouble();
+		return 0;
+	}
+	
+	public float getFloat(String key) {
+		abstractJSON json = get(key);
+		if(json instanceof JSONValue)
+			return ((JSONValue) json).getFloat();
+		return 0;
+	}
+	//-----------------------------------------Until here------------------------------
+	
 	@Override
 	protected void write(JSONWriter writer, int height, boolean shouldUseSpace) throws IOException {
 		writer.write("{", height);
