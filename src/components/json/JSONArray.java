@@ -32,9 +32,9 @@ public class JSONArray extends abstractJSON{
 
 	/**
 	 *
-	 * @return jsonarray list, but all jsonvalue will be set to his object value
+	 * @return jsonarray list, but all jsonvalue will be set to his object value. List didn't contains null Objects
 	 */
-	public List<?> toObjectList() {
+	public List<Object> toObjectList() {
 		List<Object> list = new LinkedList<>();
 		if(array == null)
 			return list;

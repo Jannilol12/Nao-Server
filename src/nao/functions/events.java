@@ -130,7 +130,9 @@ public class events {
 		}
 		
 		//As for
-//		for (Object obj : array.toObjectList()) {
+//		List<Object> list = array.toObjectList();
+//		for(int i = 0; i < list.size(); i++) {
+//			Object obj = list.get(i);
 //			sList.add(obj.toString());
 //		}
 
