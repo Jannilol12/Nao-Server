@@ -115,21 +115,27 @@ public class events {
     }
 
     public static void loadVocabulary(){
-            File file = new File(new File("./").getParentFile(), "setup/" + "vocabulary");
-            JSONArray array = (JSONArray) JSONReader.read(file);
-            if(array == null) return;
+        File file = new File(new File("./").getParentFile(), "setup/" + "vocabulary");
+        JSONArray array = (JSONArray) JSONReader.read(file);
+        if (array == null)
+            return;
 
-            ArrayList<String> sList = new ArrayList<>();
-//            for(Object obj : array.toObjectList()) {
-//                sList.add(obj.toString());
-//            }
-            List<Object> list = array.toObjectList();
-            for(int i=0;i<list.size();i++){
-                Object obj =list.get(i);
-                sList.add(obj.toString());
-            }
+        ArrayList<String> sList = new ArrayList<>();
 
-            vocabulary = sList;
+        //Foreach
+        for (Object obj : array.toObjectList()) {
+            sList.add(obj.toString());
+        }
+
+        //As for
+//		List<Object> list = array.toObjectList();
+//		for(int i = 0; i < list.size(); i++) {
+//			Object obj = list.get(i);
+//			sList.add(obj.toString());
+//		}
+
+        vocabulary = sList;
+
     }
 
     public static void startSpeechRecognition() {
