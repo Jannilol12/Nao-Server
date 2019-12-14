@@ -17,6 +17,7 @@ public class events {
     private static long footContact;
     private static long speechRecognition;
     private static ArrayList<String> vocabulary = new ArrayList<>();
+    private static ArrayList<String> faces = new ArrayList<>();
     private static long sonar;
     private static long faceDetection;
     private static long barcodeReader;
@@ -119,7 +120,12 @@ public class events {
             if(array == null) return;
 
             ArrayList<String> sList = new ArrayList<>();
-            for(Object obj : array.toObjectList()) {
+//            for(Object obj : array.toObjectList()) {
+//                sList.add(obj.toString());
+//            }
+            List<Object> list = array.toObjectList();
+            for(int i=0;i<list.size();i++){
+                Object obj =list.get(i);
                 sList.add(obj.toString());
             }
 
@@ -135,8 +141,13 @@ public class events {
                 public void onEvent(ArrayList o) throws InterruptedException, CallError {
                     System.out.println("SubscribeToEevent Raised:");
                     System.out.println(o.toString());
-                    System.out.println(currentApplication.getAlMemory().getData("WordRecognized") + "" +  currentApplication.getAlMemory().getData("Test"));
-                    System.out.println("Wort: " + o.get(0));
+                    String Wort = o.get(0).toString();
+//                    System.out.println("Wort: " + o.get(0));
+                    if(Wort.equalsIgnoreCase("Hello")){
+                        System.out.println("You said Hello");
+                    }
+                    //System.out.println(currentApplication.getAlMemory().getData("WordRecognized") + "" +  currentApplication.getAlMemory().getData("Test"));
+
                 }
             });
         } catch (CallError callError) {
@@ -170,7 +181,7 @@ public class events {
         // It probably means you have the echo of the ground at 0,40m and another object at 1,2m. Left and Right sensors work the same way and allow you to locate objects.
         try {
             currentApplication.getAlSonar().subscribe("ALSonar");
-            
+
             String distanceLeft = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Left/Sensor/Value").toString();
             String distanceRight = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Right/Sensor/Value").toString();
             System.out.println("Sonar Keys from ALMEMORY: ");
@@ -208,8 +219,44 @@ public class events {
         }
     }
 
+    public static void writeFace(){
+        JSONArray array = new JSONArray(vocabulary);
+        try{
+            File file = new File(new File("./").getParentFile(), "setup/" + "vocabulary");
+            file.getParentFile().mkdirs();
+            FileWriter fileWriter = new FileWriter(file, false);
+            fileWriter.write(array.toJSONString());
+            fileWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<String> getFaces(){ return faces;}
+
+    public static void loadFaces(){
+        File file = new File(new File("./").getParentFile(), "setup/" + "faces");
+        JSONArray array = (JSONArray) JSONReader.read(file);
+        if(array == null) return;
+
+        ArrayList<String> sList = new ArrayList<>();
+//            for(Object obj : array.toObjectList()) {
+//                sList.add(obj.toString());
+//            }
+        for(int i=0;i<array.size();i++){
+            Object objectList = array.get(i);
+            sList.add(objectList.toString());
+        }
+
+        faces = sList;
+    }
+
     public static boolean learnFace(String name){
         boolean learnFace = false;
+        faces.add(name);
+        writeFace();
         try {
             learnFace = currentApplication.getAlFaceDetection().learnFace(name);
         } catch (CallError callError) {
@@ -221,6 +268,8 @@ public class events {
     }
 
     public static void deleteFace(String name){
+        faces.remove(name);
+        writeFace();
         try {
             currentApplication.getAlFaceDetection().forgetPerson(name);
         } catch (CallError callError) {
@@ -252,16 +301,33 @@ public class events {
             faceDetection = currentApplication.getAlMemory().subscribeToEvent("FaceDetected", new EventCallback<ArrayList>() {
                 @Override
                 public void onEvent(ArrayList o) throws InterruptedException, CallError {
-                    System.out.println("SubscribeToEevent Raised: ");
-                    System.out.println(o);
-                    ArrayList<String> FaceInfo = new ArrayList<>();
-                    FaceInfo = (ArrayList<String>) o.get(1);
-                    ArrayList<String> ExtraInfo = new ArrayList<>();
-                    ExtraInfo = (ArrayList<String>) o.get(1);
-                    String name = ExtraInfo.get(0);
-                    System.out.println("Name: " + name);
-                    System.out.println("-------------------------------------");
+                    System.out.println( "-------------------------------------");
 
+                    //System.out.println("SubscribeToEevent Raised: ");
+                    ArrayList<ArrayList> FaceInfo = new ArrayList<>();
+                    FaceInfo = (ArrayList<ArrayList>) o.get(1);
+                    ArrayList<ArrayList> ExtraInfo = new ArrayList<>();
+                    ExtraInfo = (ArrayList<ArrayList>) FaceInfo.get(0);
+                    ArrayList<String> Info2 = new ArrayList<>();
+                    Info2 = (ArrayList<String>) ExtraInfo.get(1);
+//                    ArrayList<ArrayList> Info3 = new ArrayList<>();
+//                    Info3 = (ArrayList<ArrayList>) Info2.get(0);
+//                    String name = ExtraInfo.get(0);
+                    //System.out.println("Name: " + FaceInfo);
+                    //System.out.println("Extra Info: " + ExtraInfo);
+                    //System.out.println("Info 2: " + Info2);
+                    //System.out.println("Info 3: " + Info2.get(1));
+                    //System.out.println("Info 4: " + Info2.get(2));
+                    String nameB = Info2.get(2);
+                    //System.out.println(nameB);
+                    if(nameB.equalsIgnoreCase("Jannik")){
+                        System.out.println("Hello Jannik");
+                    }
+
+                    System.out.println( "-------------------------------------");
+                    //System.out.println(o);
+
+                    System.out.println("-------------------------------------");
                 }
             });
         } catch (Exception e) {

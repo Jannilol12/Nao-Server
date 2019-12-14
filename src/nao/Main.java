@@ -24,6 +24,7 @@ public class Main {
 	    r.start();
 
 		events.loadVocabulary();
+		events.loadFaces();
 //        say say = new say(args);
 //        say.saytext("Hallo");
 //        speech_recognition speech = new speech_recognition(args);

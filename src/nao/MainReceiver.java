@@ -309,7 +309,7 @@ public class MainReceiver {
 				switch(audio){
 					case "setId":
 						String name = JSONFinder.getString("filename", json);
-						System.out.println(name);
+						//System.out.println(name);
 						String file1 = new File(new File("./").getParentFile(), "files/").getAbsolutePath();
 						id = audioPlayer.loadFile(file1 + "/" + name);
 
@@ -544,7 +544,7 @@ public class MainReceiver {
 					case "getFaces":
 						JSONObject myjson5 = new JSONObject();
 						myjson5.add( "type", "FaceDetection");
-						myjson5.add( "Faces", events.getLearnedFaced());
+						myjson5.add( "Faces", events.getFaces());
 						try {
 							dataOutputStream.writeUTF(myjson5.toJSONString());
 						} catch (IOException e) {
@@ -594,15 +594,19 @@ public class MainReceiver {
 				String behavior = JSONFinder.getString("function", json);
 				switch(behavior) {
 					case "setId":
-						String name = JSONFinder.getString("behaviorname", json);
+//						String name = JSONFinder.getString("behaviorname", json);
+						String name = "behavior.xar";
 						System.out.println(name);
 						String file1 = new File(new File("./").getParentFile(), "behaviors/").getAbsolutePath();
 						nao.functions.behavior.loadBehavior(file1 + "/" + name);
+						//nao.functions.behavior.startBehavior(file1 + "/" + name);
 						break;
 
 					case "play":
 						String BehaviorName = JSONFinder.getString("name",json);
-						nao.functions.behavior.runBehavior(BehaviorName);
+						String BehaviorIdName = "jannik-065e6f/behavior_1";
+						System.out.println(currentApplication.getAlBehaviorManager().getInstalledBehaviors());
+						nao.functions.behavior.runBehavior(BehaviorIdName);
 						break;
 
 					case "stop":
@@ -631,20 +635,24 @@ public class MainReceiver {
 						break;
 
 					case "getBehaviors":
-						File[] file = new File(new File("./").getParentFile(), "behaviors/").listFiles();
-						List<String> list = new LinkedList<>();
-						for (int i = 0; i < file.length; i++) {
-							list.add(file[i].getName());
-						}
-						JSONObject myjson3 = new JSONObject();
-						myjson3.add("type", "Behavior");
-						myjson3.add("Behaviors", list);
-						try {
-							dataOutputStream.writeUTF(myjson3.toJSONString());
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						break;
+                        File[] file = new File(new File("./").getParentFile(), "behaviors/").listFiles();
+                        List<String> list = new LinkedList<>();
+                        for(int i=0;i<file.length;i++){
+                            list.add(file[i].getName());
+                            System.out.println("Step 4, adding list");
+                            System.out.println("List:" + list);
+                        }
+                        JSONObject myjson3 = new JSONObject();
+                        myjson3.add( "type", "Behavior");
+                        myjson3.add( "Behaviors", list);
+                        try {
+                            dataOutputStream.writeUTF(myjson3.toJSONString());
+                            System.out.println("Step 5, sending list");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        break;
 
 					default:
 						System.out.println("Behavior lief schief");
@@ -654,9 +662,11 @@ public class MainReceiver {
 
 			case "AutoLife":
 				String AutoLife = JSONFinder.getString("function", json);
+				String JsonFinderString;
 				switch(AutoLife) {
 					case "BackgroundStrategy":
-						autoLifeOfRobot.setBackgroundStrategy(JSONFinder.getString("Strategy", json));
+						JsonFinderString = JSONFinder.getString("Strategy", json);
+						autoLifeOfRobot.setBackgroundStrategy(JsonFinderString);
 						break;
 					case "ExpressiveListening":
 						String bolean1 = JSONFinder.getString("boolean", json);
@@ -668,81 +678,83 @@ public class MainReceiver {
 						}
 						break;
 					case "LifeMode":
-						autoLifeOfRobot.setLife(JSONFinder.getString("Mode",json));
+						JsonFinderString = JSONFinder.getString("Mode",json);
+						autoLifeOfRobot.setLife(JsonFinderString);
 						break;
 					case "RobotOffsetFromFloor":
-						autoLifeOfRobot.setRobotOffsetFromFloor(JSONFinder.getFloat("Offset",json));
+						float JsonFinderFloat = (float) JSONFinder.getDouble("Offset",json);
+						autoLifeOfRobot.setRobotOffsetFromFloor(JsonFinderFloat);
 						break;
 					default:
 						System.out.println("AutoLife no function found!");
 				}
 				break;
 
-			case "Touch":
-				String TouchEvent = JSONFinder.getString("function", json);
-				switch (TouchEvent){
-					case "startRightBumperPressed":
-						Touch.startRightBumperPressed();
-						break;
-					case "startLeftBumperPressed":
-						Touch.startLeftBumperPressed();
-						break;
-					case "startFrontTactilTouched":
-						Touch.startFrontTactilTouched();
-						break;
-					case "startRearTactilTouched":
-						Touch.startRearTactilTouched();
-						break;
-					case "startHandRightBackTouched":
-						Touch.startHandRightBackTouched();
-						break;
-					case "startHandRightLeftTouched":
-						Touch.startHandRightLeftTouched();
-						break;
-					case "startHandRightRightTouched":
-						Touch.startHandRightRightTouched();
-						break;
-					case "startHandLeftBackTouched":
-						Touch.startHandLeftBackTouched();
-						break;
-					case "startHandLeftLeftTouched":
-						Touch.startHandLeftLeftTouched();
-						break;
-					case "startHandLeftRightTouched":
-						Touch.startHandLeftRightTouched();
-						break;
-					case "stopRightBumperPressed":
-						Touch.stopRightBumperPressed();
-						break;
-					case "stopLeftBumperPressed":
-						Touch.stopLeftBumperPressed();
-						break;
-					case "stopFrontTactilTouched":
-						Touch.stopFrontTactilTouched();
-						break;
-					case "stopRearTactilTouched":
-						Touch.stopRearTactilTouched();
-						break;
-					case "stopHandRightBackTouched":
-						Touch.stopHandRightBackTouched();
-						break;
-					case "stopHandRightLeftTouched":
-						Touch.stopHandRightLeftTouched();
-						break;
-					case "stopHandRightRightTouched":
-						Touch.stopHandRightRightTouched();
-						break;
-					case "stopHandLeftBackTouched":
-						Touch.stopHandLeftBackTouched();
-						break;
-					case "stopHandLeftLeftTouched":
-						Touch.stopHandLeftLeftTouched();
-						break;
-					case "stopHandLeftRightTouched":
-						Touch.stopHandLeftRightTouched();
-						break;
-				}
-				break;
+            case "Touch":
+                String TouchEvent = JSONFinder.getString("function", json);
+                switch (TouchEvent){
+                    case "startRightBumperPressed":
+                        Touch.startRightBumperPressed();
+                        break;
+                    case "startLeftBumperPressed":
+                        Touch.startLeftBumperPressed();
+                        break;
+                    case "startFrontTactilTouched":
+                        Touch.startFrontTactilTouched();
+                        break;
+                    case "startRearTactilTouched":
+                        Touch.startRearTactilTouched();
+                        break;
+                    case "startHandRightBackTouched":
+                        Touch.startHandRightBackTouched();
+                        break;
+                    case "startHandRightLeftTouched":
+                        Touch.startHandRightLeftTouched();
+                        break;
+                    case "startHandRightRightTouched":
+                        Touch.startHandRightRightTouched();
+                        break;
+                    case "startHandLeftBackTouched":
+                        Touch.startHandLeftBackTouched();
+                        break;
+                    case "startHandLeftLeftTouched":
+                        Touch.startHandLeftLeftTouched();
+                        break;
+                    case "startHandLeftRightTouched":
+                        Touch.startHandLeftRightTouched();
+                        break;
+                    case "stopRightBumperPressed":
+                        Touch.stopRightBumperPressed();
+                        break;
+                    case "stopLeftBumperPressed":
+                        Touch.stopLeftBumperPressed();
+                        break;
+                    case "stopFrontTactilTouched":
+                        Touch.stopFrontTactilTouched();
+                        break;
+                    case "stopRearTactilTouched":
+                        Touch.stopRearTactilTouched();
+                        break;
+                    case "stopHandRightBackTouched":
+                        Touch.stopHandRightBackTouched();
+                        break;
+                    case "stopHandRightLeftTouched":
+                        Touch.stopHandRightLeftTouched();
+                        break;
+                    case "stopHandRightRightTouched":
+                        Touch.stopHandRightRightTouched();
+                        break;
+                    case "stopHandLeftBackTouched":
+                        Touch.stopHandLeftBackTouched();
+                        break;
+                    case "stopHandLeftLeftTouched":
+                        Touch.stopHandLeftLeftTouched();
+                        break;
+                    case "stopHandLeftRightTouched":
+                        Touch.stopHandLeftRightTouched();
+                        break;
+                }
+                break;
 
 			// -------------------  SYSTEM  --------------------------------
 
@@ -801,6 +813,8 @@ public class MainReceiver {
 					myjson.add("LAnkleRoll", currentApplication.getAlMemory().getData("Device/SubDeviceList/LAnkleRoll/Temperature/Sensor/Value"));
 					myjson.add("HeadCPU", currentApplication.getAlMemory().getData("Device/SubDeviceList/Head/Temperature/Sensor/Value"));
 					myjson.add("Battery", currentApplication.getAlMemory().getData("Device/SubDeviceList/Battery/Temperature/Sensor/Value"));
+
+					System.out.println("GetTemperatures");
 
 					dataOutputStream.writeUTF(myjson.toJSONString());
 				} catch (CallError callError) {

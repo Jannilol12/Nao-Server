@@ -51,5 +51,15 @@ public class behavior {
             e.printStackTrace();
         }
     }
+	
+	public static void startBehavior(String path){
+		try{
+			currentApplication.getAlBehaviorManager().startBehavior(path);
+		} catch (CallError callError){
+			callError.printStackTrace();
+		} catch (InterruptedException e){
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -33,11 +33,11 @@ public class JSONValue extends abstractJSON{
 		if(v == null)value = null;
 		else if(v instanceof String || v instanceof Double || v instanceof Integer || v instanceof Long || v instanceof Float) {
 			value = v;
-		}else if(v instanceof Boolean) {
+		} else if(v instanceof Boolean) {
 			value = v;
-		}else if(v instanceof List<?>) {
+		} else if(v instanceof List<?>) {
 			this.value = new JSONArray((List<?>) v);
-		}else{
+		} else {
 			//Object
 		}
 	}
@@ -50,8 +50,32 @@ public class JSONValue extends abstractJSON{
 		return value.toString();
 	}
 	
+	public boolean getBoolean() {
+		if(value instanceof Boolean)return (boolean) value;
+		return false;
+	}
+	
 	public int getInt() {
-		if(value instanceof Integer)return (int) value;
+		return (int) getLong();
+	}
+	
+	public long getLong() {
+		if(value instanceof Integer)
+			return (int) value;
+		else if(value instanceof Long)
+			return (long) value;
+		return 0;
+	}
+	
+	public float getFloat() {
+		return (float) getDouble();
+	}
+	
+	public double getDouble() {
+		if(value instanceof Double)
+			return (double) value;
+		else if(value instanceof Float)
+			return (float) value;
 		return 0;
 	}
 	
@@ -96,7 +120,7 @@ public class JSONValue extends abstractJSON{
 			
 			switch(c) {
 				case '"':
-					builder.append("\"");
+					builder.append("\\\"");
 					break;
 				case '\\':
 					builder.append("\\\\");
