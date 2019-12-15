@@ -3,6 +3,7 @@ package nao.functions;
 import com.aldebaran.qi.CallError;
 import nao.currentApplication;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -10,16 +11,6 @@ public class behavior {
     private static ExecutorService executor;
     static {
         executor = Executors.newFixedThreadPool(3);
-    }
-
-    public static void loadBehavior(String path){
-        try {
-            currentApplication.getAlBehaviorManager().installBehavior(path);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void removeBehavior(String name){
@@ -51,15 +42,16 @@ public class behavior {
             e.printStackTrace();
         }
     }
-	
-	public static void startBehavior(String path){
-		try{
-			currentApplication.getAlBehaviorManager().startBehavior(path);
-		} catch (CallError callError){
-			callError.printStackTrace();
-		} catch (InterruptedException e){
-			e.printStackTrace();
-		}
-	}
+
+    public static List<String> getBehaviors(){
+        try {
+            return currentApplication.getAlBehaviorManager().getInstalledBehaviors();
+        } catch (CallError callError) {
+            callError.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

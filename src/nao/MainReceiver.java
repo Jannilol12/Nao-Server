@@ -2,7 +2,6 @@ package nao;
 
 import java.io.*;
 
-import java.nio.file.Files;
 import java.util.*;
 
 import com.aldebaran.qi.CallError;
@@ -37,7 +36,39 @@ public class MainReceiver {
 
 		switch (type){
 
+			// -------------------  LIST  --------------------------------
+
+			case "RunP":
+				if(!(json instanceof JSONObject))return;
+
+				abstractJSON abstractArgs = ((JSONObject) json).get("inputs");
+				if(abstractArgs != null && !(abstractArgs instanceof JSONArray)) return;
+
+				Interface_Controller.ausfuehren(JSONFinder.getString("value", json), (JSONArray) abstractArgs);
+				break;
+			case "StopP":
+				Interface_Controller.stop();
+				break;
+			case "ListP":
+				try {
+					for(SendClassName prog : Interface_Controller.getSendClassNames()) {
+						JSONObject myjson = new JSONObject();
+						myjson.add("type", "ProgAdd");
+						myjson.add("name", prog.name());
+
+						JSONArray args = prog.getArgsRequest();
+						if(args != null)
+							myjson.add("inputs", args);
+
+						dataOutputStream.writeUTF(myjson.toJSONString());
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+
 			// -------------------  MOVE  --------------------------------
+
 			case "Forward":
 				String value = JSONFinder.getString("value", json);
 
@@ -68,7 +99,7 @@ public class MainReceiver {
 					move.steps(0, Float.parseFloat(value)*-1);
 				}
 				break;
-			case "Backwards":
+			case "Backward":
 				value = JSONFinder.getString("value", json);
 
 				if(value.equals("0")){
@@ -89,40 +120,17 @@ public class MainReceiver {
 				move.rotate(Integer.parseInt(JSONFinder.getString("value", json)));
 				break;
 
-			// -------------------  LIST  --------------------------------
+			// -------------------  POSTURE  --------------------------------
 
-			case "RunP":
-				if(!(json instanceof JSONObject))return;
-				
-				abstractJSON abstractArgs = ((JSONObject) json).get("inputs");
-				if(abstractArgs != null && !(abstractArgs instanceof JSONArray)) return;
-				
-				Interface_Controller.ausfuehren(JSONFinder.getString("value", json), (JSONArray) abstractArgs);
-				break;
-			case "StopP":
-				Interface_Controller.stop();
-				break;
-			case "ListP":
-				try {
-					for(SendClassName prog : Interface_Controller.getSendClassNames()) {
-						JSONObject myjson = new JSONObject();
-						myjson.add("type", "ProgAdd");
-						myjson.add("name", prog.name());
-						
-						JSONArray args = prog.getArgsRequest();
-						if(args != null)
-							myjson.add("inputs", args);
-						
-						dataOutputStream.writeUTF(myjson.toJSONString());
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			case "Posture":
+				String posture = JSONFinder.getString("position", json);
+				float speed = (float) JSONFinder.getDouble("speed", json);
+				commands.goToPosture(posture, speed);
 				break;
 
 			// -------------------  MOTORS (like arm,knee etc.)  --------------------------------
 				
-			case "motors":
+			case "Motors":
 				String motorName = JSONFinder.getString("motorname", json);
 				float speed_value = (float)JSONFinder.getDouble("value",json);
 				byte addSub = 0;
@@ -260,7 +268,7 @@ public class MainReceiver {
 
 			// -------------------  LEDs  --------------------------------
 
-			case "leds":
+			case "Leds":
 				String ledname = JSONFinder.getString("ledname", json);
 				String method = JSONFinder.getString("method", json);
 				float red = (float)JSONFinder.getDouble("red",json);
@@ -294,14 +302,6 @@ public class MainReceiver {
 				break;
 
 
-			// -------------------  POSTURE  --------------------------------
-
-			case "posture":
-				String posture = JSONFinder.getString("position", json);
-				float speed = (float) JSONFinder.getDouble("speed", json);
-				commands.goToPosture(posture, speed);
-				break;
-
 			//-------------------- AUDIO PLAYER -----------------------------
 
 			case "audioPlayer":
@@ -325,7 +325,6 @@ public class MainReceiver {
 							e.printStackTrace();
 						}
 						break;
-
 					case "play":
 						try{
 							Thread a = new Thread(){
@@ -338,38 +337,32 @@ public class MainReceiver {
 
 						} catch (Exception e){}
 						break;
-
 					case "playInLoop":
 						try{
 							audioPlayer.playinLoop(id);
 						} catch(Exception e){}
 						break;
-
 					case "pause":
 						try{
 							System.out.println("pause");
 							audioPlayer.pausePlayer(id);
 						}catch (Exception e){}
 						break;
-
 					case "stop":
 						try{
 							audioPlayer.stopPlayer();
 						}catch (Exception e){}
 						break;
-
 					case "jump":
 						try{
 							audioPlayer.goToPosition(id, (float)JSONFinder.getDouble("jumpToFloat", json));
 						}catch (Exception e){}
 						break;
-
 					case "volume":
 							float volume = (float)JSONFinder.getDouble("masterVolume", json);
 							audioPlayer.setMasterVolume(volume);
 							System.out.println(volume);
 						break;
-
 					case "file":
 						String base64 = JSONFinder.getString("bytes",json);
 						byte[] bytes = Base64.getDecoder().decode(base64);
@@ -385,28 +378,9 @@ public class MainReceiver {
 							e.printStackTrace();
 						}
 						break;
-
-					case "loadFile":
-
-						break;
-
 					case "unloadFiles":
 						audioPlayer.unloadAllFiles();
 						break;
-
-					case "getLength":
-//						JSONObject myjson3 = new JSONObject();
-//						myjson3.add( "type", "audioPlayer");
-//						myjson3.add( "function", "getLength");
-//						myjson3.add( "Length",  audioPlayer.getFileLengthInSec(id));
-//
-//						try {
-//							dataOutputStream.writeUTF(myjson3.toJSONString());
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-						break;
-
 					case "getPosition":
 						JSONObject myjson1 = new JSONObject();
 						myjson1.add( "type", "audioPlayer");
@@ -419,7 +393,6 @@ public class MainReceiver {
 							e.printStackTrace();
 						}
 						break;
-
 					case "getVolume":
 						JSONObject myjson2 = new JSONObject();
 						myjson2.add( "type", "audioPlayer");
@@ -432,15 +405,12 @@ public class MainReceiver {
 							e.printStackTrace();
 						}
 						break;
-
 					case "deleteFiles":
 						File[] fileDelete = new File(new File("./").getParentFile(), "files/").listFiles();
 						for(int i=0;i<fileDelete.length;i++){
 							new File(new File("./").getParentFile(), "files/" + fileDelete[i].getName()).delete();
 						}
 						jump = true;
-
-
 					case "deleteFile":
 						if(!jump) {
 							audioPlayer.unloadAllFiles();
@@ -448,8 +418,6 @@ public class MainReceiver {
 							new File(new File("./").getParentFile(), "files/" + fileName).delete();
 							//NO BREAK!
 						}
-
-
 					case "getFiles":
 						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
 						List<String> list = new LinkedList<>();
@@ -467,7 +435,6 @@ public class MainReceiver {
 						}
 						jump = false;
 						break;
-
 					default:
 						System.out.println("audioPlayer lief schief");
 						break;
@@ -544,7 +511,7 @@ public class MainReceiver {
 					case "getFaces":
 						JSONObject myjson5 = new JSONObject();
 						myjson5.add( "type", "FaceDetection");
-						myjson5.add( "Faces", events.getFaces());
+						myjson5.add( "Faces", events.getLearnedFaced());
 						try {
 							dataOutputStream.writeUTF(myjson5.toJSONString());
 						} catch (IOException e) {
@@ -591,69 +558,29 @@ public class MainReceiver {
 				break;
 
 			case "Behavior":
-				String behavior = JSONFinder.getString("function", json);
-				switch(behavior) {
-					case "setId":
-//						String name = JSONFinder.getString("behaviorname", json);
-						String name = "behavior.xar";
-						System.out.println(name);
-						String file1 = new File(new File("./").getParentFile(), "behaviors/").getAbsolutePath();
-						nao.functions.behavior.loadBehavior(file1 + "/" + name);
-						//nao.functions.behavior.startBehavior(file1 + "/" + name);
-						break;
-
+				String behaviorFunction = JSONFinder.getString("function", json);
+				switch(behaviorFunction) {
 					case "play":
 						String BehaviorName = JSONFinder.getString("name",json);
-						String BehaviorIdName = "jannik-065e6f/behavior_1";
-						System.out.println(currentApplication.getAlBehaviorManager().getInstalledBehaviors());
-						nao.functions.behavior.runBehavior(BehaviorIdName);
+						behavior.runBehavior(BehaviorName);
 						break;
-
 					case "stop":
-						nao.functions.behavior.stopBehavior();
+						behavior.stopBehavior();
 						break;
-
 					case "removeBehavior":
 						String BehaviorRemoveName = JSONFinder.getString("behaviorname",json);
-						nao.functions.behavior.removeBehavior(BehaviorRemoveName);
+						behavior.removeBehavior(BehaviorRemoveName);
 						break;
-
-					case "file":
-						String base64 = JSONFinder.getString("bytes", json);
-						byte[] bytes = Base64.getDecoder().decode(base64);
-						try {
-							File file = new File(new File("./").getParentFile(), "behaviors/" + JSONFinder.getString("Bname", json));
-							file.getParentFile().mkdirs();
-							FileOutputStream fileOutputStream = new FileOutputStream(file, true);
-							fileOutputStream.write(bytes);
-							fileOutputStream.close();
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						break;
-
 					case "getBehaviors":
-                        File[] file = new File(new File("./").getParentFile(), "behaviors/").listFiles();
-                        List<String> list = new LinkedList<>();
-                        for(int i=0;i<file.length;i++){
-                            list.add(file[i].getName());
-                            System.out.println("Step 4, adding list");
-                            System.out.println("List:" + list);
-                        }
                         JSONObject myjson3 = new JSONObject();
                         myjson3.add( "type", "Behavior");
-                        myjson3.add( "Behaviors", list);
+                        myjson3.add( "Behaviors", behavior.getBehaviors());
                         try {
                             dataOutputStream.writeUTF(myjson3.toJSONString());
-                            System.out.println("Step 5, sending list");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                         break;
-
 					default:
 						System.out.println("Behavior lief schief");
 						break;
@@ -761,10 +688,10 @@ public class MainReceiver {
 			case "Wakeup":
 				move.wakeup();
 				break;
-			case "reboot":
+			case "Reboot":
 				commands.reboot();
 				break;
-			case "shutdown":
+			case "Shutdown":
 				commands.shutdown();
 				break;
 			case "battery":

@@ -119,23 +119,18 @@ public class events {
         JSONArray array = (JSONArray) JSONReader.read(file);
         if (array == null)
             return;
-
         ArrayList<String> sList = new ArrayList<>();
-
         //Foreach
         for (Object obj : array.toObjectList()) {
             sList.add(obj.toString());
         }
-
         //As for
 //		List<Object> list = array.toObjectList();
 //		for(int i = 0; i < list.size(); i++) {
 //			Object obj = list.get(i);
 //			sList.add(obj.toString());
 //		}
-
         vocabulary = sList;
-
     }
 
     public static void startSpeechRecognition() {
@@ -225,44 +220,8 @@ public class events {
         }
     }
 
-    public static void writeFace(){
-        JSONArray array = new JSONArray(vocabulary);
-        try{
-            File file = new File(new File("./").getParentFile(), "setup/" + "vocabulary");
-            file.getParentFile().mkdirs();
-            FileWriter fileWriter = new FileWriter(file, false);
-            fileWriter.write(array.toJSONString());
-            fileWriter.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static List<String> getFaces(){ return faces;}
-
-    public static void loadFaces(){
-        File file = new File(new File("./").getParentFile(), "setup/" + "faces");
-        JSONArray array = (JSONArray) JSONReader.read(file);
-        if(array == null) return;
-
-        ArrayList<String> sList = new ArrayList<>();
-//            for(Object obj : array.toObjectList()) {
-//                sList.add(obj.toString());
-//            }
-        for(int i=0;i<array.size();i++){
-            Object objectList = array.get(i);
-            sList.add(objectList.toString());
-        }
-
-        faces = sList;
-    }
-
     public static boolean learnFace(String name){
         boolean learnFace = false;
-        faces.add(name);
-        writeFace();
         try {
             learnFace = currentApplication.getAlFaceDetection().learnFace(name);
         } catch (CallError callError) {
@@ -274,8 +233,6 @@ public class events {
     }
 
     public static void deleteFace(String name){
-        faces.remove(name);
-        writeFace();
         try {
             currentApplication.getAlFaceDetection().forgetPerson(name);
         } catch (CallError callError) {
