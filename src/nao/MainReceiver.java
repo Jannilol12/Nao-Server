@@ -334,7 +334,6 @@ public class MainReceiver {
 								}
 							};
 							a.start();
-
 						} catch (Exception e){}
 						break;
 					case "playInLoop":
@@ -562,7 +561,15 @@ public class MainReceiver {
 				switch(behaviorFunction) {
 					case "play":
 						String BehaviorName = JSONFinder.getString("name",json);
-						behavior.runBehavior(BehaviorName);
+						try{
+							Thread b = new Thread(){
+								@Override
+								public void run() {
+									behavior.runBehavior(BehaviorName);
+								}
+							};
+							b.start();
+						} catch (Exception e){}
 						break;
 					case "stop":
 						behavior.stopBehavior();
@@ -589,11 +596,11 @@ public class MainReceiver {
 
 			case "AutoLife":
 				String AutoLife = JSONFinder.getString("function", json);
-				String JsonFinderString;
+				String LifeModeString;
 				switch(AutoLife) {
 					case "BackgroundStrategy":
-						JsonFinderString = JSONFinder.getString("Strategy", json);
-						autoLifeOfRobot.setBackgroundStrategy(JsonFinderString);
+						LifeModeString = JSONFinder.getString("Strategy", json);
+						autoLifeOfRobot.setBackgroundStrategy(LifeModeString);
 						break;
 					case "ExpressiveListening":
 						String bolean1 = JSONFinder.getString("boolean", json);
@@ -605,8 +612,8 @@ public class MainReceiver {
 						}
 						break;
 					case "LifeMode":
-						JsonFinderString = JSONFinder.getString("Mode",json);
-						autoLifeOfRobot.setLife(JsonFinderString);
+						LifeModeString = JSONFinder.getString("Mode",json);
+						autoLifeOfRobot.setLife(LifeModeString);
 						break;
 					case "RobotOffsetFromFloor":
 						float JsonFinderFloat = (float) JSONFinder.getDouble("Offset",json);
@@ -614,6 +621,21 @@ public class MainReceiver {
 						break;
 					default:
 						System.out.println("AutoLife no function found!");
+				}
+				break;
+
+			case "Recorder":
+				String Recorder = JSONFinder.getString("function",json);
+				switch (Recorder){
+					case "start":
+						String recorderFileName = JSONFinder.getString("filename",json);
+						audioRecorder.startRecording(recorderFileName);
+						break;
+					case "stop":
+						audioRecorder.stopRecording();
+						break;
+					default:
+						System.out.println("Recorder no function found!");
 				}
 				break;
 
