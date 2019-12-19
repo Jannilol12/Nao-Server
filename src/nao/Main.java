@@ -3,6 +3,7 @@ package nao;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import nao.debugger.Debugger;
+import nao.functions.Recorder;
 import nao.functions.commands;
 import nao.functions.events;
 import nao.moves.Interface_Controller;
@@ -24,10 +25,6 @@ public class Main {
 	    r.start();
 
 		events.loadVocabulary();
-		events.loadFaces();
-//        say say = new say(args);
-//        say.saytext("Hallo");
-//        speech_recognition speech = new speech_recognition(args);
-//        speech.addvocabulary("Hallo");
+		Recorder.setCameraStats();
 	}
 }

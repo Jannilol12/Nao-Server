@@ -24,6 +24,8 @@ public class currentApplication {
     private static ALAutonomousLife alAutonomousLife;
     private static ALAutonomousMoves alAutonomousMoves;
     private static ALAudioRecorder alAudioRecorder;
+    private static ALPhotoCapture alPhotoCapture;
+    private static ALVideoRecorder alVideoRecorder;
 
     public synchronized static void load(String ip, int port){
     	new Thread(() -> {
@@ -140,6 +142,18 @@ public class currentApplication {
             } catch(Exception e){
                 e.printStackTrace();
             }
+
+            try{
+                alPhotoCapture = new ALPhotoCapture(currentApplication.getApplication().session());
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+
+            try{
+                alVideoRecorder = new ALVideoRecorder(currentApplication.getApplication().session());
+            } catch(Exception e){
+                e.printStackTrace();
+            }
         }).start();
 
     }
@@ -183,4 +197,8 @@ public class currentApplication {
     public static ALAutonomousMoves getAlAutonomousMoves(){ return alAutonomousMoves;}
 
     public static ALAudioRecorder getAlAudioRecorder(){ return alAudioRecorder;}
+
+    public static ALPhotoCapture getAlPhotoCapture(){ return alPhotoCapture;}
+
+    public static ALVideoRecorder getAlVideoRecorder(){ return alVideoRecorder;}
 }

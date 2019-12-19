@@ -421,7 +421,9 @@ public class MainReceiver {
 						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
 						List<String> list = new LinkedList<>();
 						for(int i=0;i<file.length;i++){
-							list.add(file[i].getName());
+							if(!(file[i].getName().contains("Picture") || file[i].getName().contains("Video"))) {
+								list.add(file[i].getName());
+							}
 						}
 						JSONObject myjson3 = new JSONObject();
 						myjson3.add( "type", "audioPlayer");
@@ -627,12 +629,20 @@ public class MainReceiver {
 			case "Recorder":
 				String Recorder = JSONFinder.getString("function",json);
 				switch (Recorder){
-					case "start":
-						String recorderFileName = JSONFinder.getString("filename",json);
-						audioRecorder.startRecording(recorderFileName);
+					case "startAudioRecorder":
+						nao.functions.Recorder.startAudioRecording();
 						break;
-					case "stop":
-						audioRecorder.stopRecording();
+					case "stopAudioRecorder":
+						nao.functions.Recorder.stopAudioRecording();
+						break;
+					case "takePicture":
+						nao.functions.Recorder.takePicture();
+						break;
+					case "startVideoRecorder":
+						nao.functions.Recorder.startVideoRecording();
+						break;
+					case "stopVideoRecorder":
+						nao.functions.Recorder.stopVideoRecording();
 						break;
 					default:
 						System.out.println("Recorder no function found!");
@@ -704,6 +714,66 @@ public class MainReceiver {
                         break;
                 }
                 break;
+
+			case "Files":
+				String FilesEvent = JSONFinder.getString("function", json);
+				switch (FilesEvent) {
+					case "getAllFiles":
+						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
+						List<String> list = new LinkedList<>();
+						for (int i = 0; i < file.length; i++) {
+							list.add(file[i].getName());
+						}
+						JSONObject myjson5 = new JSONObject();
+						myjson5.add("type", "getAllFiles");
+						myjson5.add("File", list);
+						try {
+							dataOutputStream.writeUTF(myjson5.toJSONString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						break;
+					case "deleteFile":
+						String fileNameDelete = JSONFinder.getString("deleteFile", json);
+						new File(new File("./").getParentFile(), "files/" + fileNameDelete).delete();
+						break;
+					case "downloadFile":
+						String fileNameDownload = JSONFinder.getString("deleteFile", json);
+						File fileDownload = new File(new File("./").getParentFile(), "files/" + fileNameDownload);
+						String path = fileDownload.getAbsolutePath();
+						JSONObject jsonObject = new JSONObject();
+						try {
+							FileInputStream fileInputStream = new FileInputStream(path);
+							byte[] bytes = new byte[30000];
+							int length = 0;
+							while((length = fileInputStream.read(bytes)) != -1){
+								byte[] base64 = Base64.getEncoder().encode(Arrays.copyOf(bytes, length));
+								jsonObject.add("type", "downloadFile");
+								jsonObject.add("function", "file");
+								jsonObject.add("name", fileNameDownload);
+								jsonObject.add("bytes", new String(base64, "UTF-8"));
+								dataOutputStream.writeUTF(jsonObject.toJSONString());
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						break;
+					case "uploadFile":
+						String base64 = JSONFinder.getString("bytes",json);
+						byte[] bytes = Base64.getDecoder().decode(base64);
+						try{
+							File fileUpload = new File(new File("./").getParentFile(), "files/" + JSONFinder.getString("name", json));
+							fileUpload.getParentFile().mkdirs();
+							FileOutputStream fileOutputStream = new FileOutputStream(fileUpload, true);
+							fileOutputStream.write(bytes);
+							fileOutputStream.close();
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+				}
+				break;
 
 			// -------------------  SYSTEM  --------------------------------
 

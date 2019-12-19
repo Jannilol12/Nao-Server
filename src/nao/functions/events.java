@@ -311,7 +311,7 @@ public class events {
 
     public static void startFaceTracking(){
         try {
-            currentApplication.getAlFaceDetection().setTrackingEnabled(true);
+            currentApplication.getAlFaceDetection().enableTracking(true);
         } catch (CallError callError) {
             callError.printStackTrace();
         } catch (InterruptedException e) {
@@ -321,7 +321,7 @@ public class events {
 
     public static void stopFaceTracking(){
         try {
-            currentApplication.getAlFaceDetection().setTrackingEnabled(false);
+            currentApplication.getAlFaceDetection().enableTracking(false);
         } catch (CallError callError) {
             callError.printStackTrace();
         } catch (InterruptedException e) {
