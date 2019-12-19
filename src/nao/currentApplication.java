@@ -26,6 +26,7 @@ public class currentApplication {
     private static ALAudioRecorder alAudioRecorder;
     private static ALPhotoCapture alPhotoCapture;
     private static ALVideoRecorder alVideoRecorder;
+    private static ALVideoDevice alVideoDevice;
 
     public synchronized static void load(String ip, int port){
     	new Thread(() -> {
@@ -154,6 +155,12 @@ public class currentApplication {
             } catch(Exception e){
                 e.printStackTrace();
             }
+
+            try{
+                alVideoDevice = new ALVideoDevice(currentApplication.getApplication().session());
+            } catch(Exception e){
+                e.printStackTrace();
+            }
         }).start();
 
     }
@@ -201,4 +208,7 @@ public class currentApplication {
     public static ALPhotoCapture getAlPhotoCapture(){ return alPhotoCapture;}
 
     public static ALVideoRecorder getAlVideoRecorder(){ return alVideoRecorder;}
+
+    public static ALVideoDevice getAlVideoDevice(){ return alVideoDevice;}
+
 }

@@ -4,10 +4,7 @@ import com.aldebaran.qi.CallError;
 import components.json.JSONArray;
 import nao.currentApplication;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -90,6 +87,26 @@ public class Recorder {
             currentApplication.getAlVideoRecorder().stopRecording();
         } catch (CallError | InterruptedException callError) {
             callError.printStackTrace();
+        }
+    }
+
+    public static void getVideo(){
+        try {
+            currentApplication.getAlVideoDevice().subscribeCamera("VideoDevice", 0,2,11,5);
+            Object image = currentApplication.getAlVideoDevice().getDirectRawImageRemote("VideoDevice");
+            int[] array = (int[]) image;
+
+            FileOutputStream stream = new FileOutputStream(new File("./test.txt"));
+            stream.write(array[0]);
+            stream.write('\n');
+            stream.write(array[1]);
+            stream.write('\n');
+
+            stream.close();
+        } catch (CallError | InterruptedException | FileNotFoundException callError) {
+            callError.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
