@@ -29,6 +29,7 @@ public class currentApplication {
     private static ALVideoDevice alVideoDevice;
 
     public synchronized static void load(String ip, int port){
+
     	new Thread(() -> {
 	        String[] args = new String[0];
 	        application = new Application(args, "tcp://" + ip + ":" + port);
@@ -161,6 +162,8 @@ public class currentApplication {
             } catch(Exception e){
                 e.printStackTrace();
             }
+
+
         }).start();
 
     }

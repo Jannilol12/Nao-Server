@@ -7,6 +7,7 @@ import nao.currentApplication;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
@@ -20,12 +21,16 @@ public class Recorder {
     }
 
     public static void startAudioRecording(){
-        String fileName = "Audio: " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        String fileName = "Audio " + new SimpleDateFormat("dd-MM-yyyy___HH-mm").format(Calendar.getInstance().getTime()) + ".wav";
         File file = new File(new File("./").getParentFile(), "files/" + fileName );
-        file.getParentFile().mkdirs();
         String path = file.getAbsolutePath();
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(0);
+        list.add(1);
+        list.add(0);
         try {
-            currentApplication.getAlAudioRecorder().startMicrophonesRecording(path,"wav", 16000, Arrays.asList(0,0,1,0).toArray());
+            currentApplication.getAlAudioRecorder().startMicrophonesRecording(path,"wav", 16000, list);
         } catch (CallError | InterruptedException callError) {
             callError.printStackTrace();
         }
@@ -51,9 +56,8 @@ public class Recorder {
 
     public static void takePicture(){
         File file = new File(new File("./").getParentFile(), "files/");
-        file.getParentFile().mkdirs();
         String path = file.getAbsolutePath();
-        String fileName = "Picture: " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        String fileName = "Picture " + new SimpleDateFormat("dd-MM-yyyy___HH-mm").format(Calendar.getInstance().getTime());
         try {
             currentApplication.getAlPhotoCapture().takePicture(path,fileName,false);
         } catch (CallError | InterruptedException callError) {
@@ -72,9 +76,8 @@ public class Recorder {
 
     public static void startVideoRecording(){
         File file = new File(new File("./").getParentFile(), "files/");
-        file.getParentFile().mkdirs();
         String path = file.getAbsolutePath();
-        String fileName = "Video: " + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        String fileName = "Video " + new SimpleDateFormat("dd-MM-yyyy___HH-mm").format(Calendar.getInstance().getTime());
         try {
             currentApplication.getAlVideoRecorder().startRecording(path,fileName,true);
         } catch (CallError | InterruptedException callError) {

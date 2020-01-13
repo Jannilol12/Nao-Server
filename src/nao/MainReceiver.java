@@ -148,111 +148,111 @@ public class MainReceiver {
 				}
 				
 				switch (motorName) {
-					case "LShoulderPitch_Up":
-					case "LShoulderPitch_Down":
+					case "lShoulderPitchUp":
+					case "lShoulderPitchDown":
 						motorRealName = motors.LShoulderPitch.name;
 						break;
 						
-					case "HeadPitch_Up":
-					case "HeadPitch_Down":
+					case "headPitchUp":
+					case "headPitchDown":
 						motorRealName = motors.HeadPitch.name;
 						break;
-					case "HeadYaw_Left":
-					case "HeadYaw_Right":
+					case "headYawLeft":
+					case "headYawRight":
 						motorRealName = motors.HeadYaw.name;
 						break;
 						
-					case "LShoulderRoll_Left":
-					case "LShoulderRoll_Right":
+					case "lShoulderRollLeft":
+					case "lShoulderRollRight":
 						motorRealName = motors.LShoulderRoll.name;
 						break;
-					case "RShoulderPitch_Up":
-					case "RShoulderPitch_Down":
+					case "rShoulderPitchUp":
+					case "rShoulderPitchDown":
 						motorRealName = motors.RShoulderPitch.name;
 						break;
-					case "RShoulderRoll_Left":
-					case "RShoulderRoll_Right":
+					case "rShoulderRollLeft":
+					case "rShoulderRollRight":
 						motorRealName = motors.RShoulderRoll.name;
 						break;
 						
-					case "LElbowYaw_Left":
-					case "LElbowYaw_Right":
+					case "lElbowYawLeft":
+					case "lElbowYawRight":
 						motorRealName = motors.LElbowYaw.name;
 						break;
-					case "LElbowRoll_Up":
-					case "LElbowRoll_Down":
+					case "lElbowRollUp":
+					case "lElbowRollDown":
 						motorRealName = motors.LElbowRoll.name;
 						break;
-					case "RElbowYaw_Left":
-					case "RElbowYaw_Right":
+					case "rElbowYawLeft":
+					case "rElbowYawRight":
 						motorRealName = motors.RElbowYaw.name;
 						break;
-					case "RElbowRoll_Up":
-					case "RElbowRoll_Down":
+					case "rElbowRollUp":
+					case "rElbowRollDown":
 						motorRealName = motors.RElbowRoll.name;
 						break;
 						
-					case "LWristYaw_Up":
-					case "LWristYaw_Down":
+					case "lWristYawUp":
+					case "lWristYawDown":
 						motorRealName = motors.LWristYaw.name;
 						break;
-					case "LHand_Up":
+					case "lHandUp":
 						move.handopenclose("LHand", "O");
 						break;
-					case "LHand_Down":
+					case "lHandDown":
 						move.handopenclose("LHand", "C");
 						break;
-					case "RWristYaw_Up":
-					case "RWristYaw_Down":
+					case "rWristYawUp":
+					case "rWristYawDown":
 						motorRealName = motors.RWristYaw.name;
 						break;
-					case "RHand_Up":
+					case "rHandUp":
 						move.handopenclose("RHand", "O");
 						break;
-					case "RHand_Down":
+					case "rHandDown":
 						move.handopenclose("RHand", "C");
 						break;
 						
-					case "LHipPitch_Up":
-					case "LHipPitch_Down":
+					case "lHipPitchUp":
+					case "lHipPitchDown":
 						motorRealName = motors.LHipPitch.name;
 						break;
-					case "LHipRoll_Left":
-					case "LHipRoll_Right":
+					case "lHipRollLeft":
+					case "lHipRollRight":
 						motorRealName = motors.LHipRoll.name;
 						break;
-					case "RHipPitch_Up":
-					case "RHipPitch_Down":
+					case "rHipPitchUp":
+					case "rHipPitchDown":
 						motorRealName = motors.RHipPitch.name;
 						break;
-					case "RHipRoll_Left":
-					case "RHipRoll_Right":
+					case "rHipRollLeft":
+					case "rHipRollRight":
 						motorRealName = motors.RHipRoll.name;
 						break;
 						
-					case "LKneePitch_Up":
-					case "LKneePitch_Down":
+					case "lKneePitchUp":
+					case "lKneePitchDown":
 						motorRealName = motors.LKneePitch.name;
 						break;
-					case "RKneePitch_Up":
-					case "RKneePitch_Down":
+					case "rKneePitchUp":
+					case "rKneePitchDown":
 						motorRealName = motors.RKneePitch.name;
 						break;
 						
-					case "LAnklePitch_Up":
-					case "LAnklePitch_Down":
+					case "lAnklePitchUp":
+					case "lAnklePitchDown":
 						motorRealName = motors.LAnklePitch.name;
 						break;
-					case "LAnkleRoll_Left":
-					case "LAnkleRoll_Right":
+					case "lAnkleRollLeft":
+					case "lAnkleRollRight":
 						motorRealName = motors.LAnkleRoll.name;
 						break;
-					case "RAnklePitch_Up":
-					case "RAnklePitch_Down":
+					case "rAnklePitchUp":
+					case "rAnklePitchDown":
 						motorRealName = motors.RAnklePitch.name;
 						break;
-					case "RAnkleRoll_Left":
-					case "RAnkleRoll_Right":
+					case "rAnkleRollLeft":
+					case "rAnkleRollRight":
 						motorRealName = motors.RAnkleRoll.name;
 						break;
 				}
@@ -734,11 +734,12 @@ public class MainReceiver {
 						}
 						break;
 					case "deleteFile":
-						String fileNameDelete = JSONFinder.getString("deleteFile", json);
+						String fileNameDelete = JSONFinder.getString("filename", json);
 						new File(new File("./").getParentFile(), "files/" + fileNameDelete).delete();
 						break;
 					case "downloadFile":
-						String fileNameDownload = JSONFinder.getString("deleteFile", json);
+						String fileNameDownload = JSONFinder.getString("filename", json);
+						System.out.println("File:" + fileNameDownload);
 						File fileDownload = new File(new File("./").getParentFile(), "files/" + fileNameDownload);
 						String path = fileDownload.getAbsolutePath();
 						JSONObject jsonObject = new JSONObject();

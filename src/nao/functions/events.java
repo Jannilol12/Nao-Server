@@ -285,6 +285,10 @@ public class events {
                     //System.out.println(nameB);
                     if(nameB.equalsIgnoreCase("Jannik")){
                         System.out.println("Hello Jannik");
+                    }else if(nameB.equalsIgnoreCase("Nick")){
+                        behavior.runBehavior("nickmove-828ed6/behavior_1");
+                    }else{
+                        System.out.println("Nothing detected!");
                     }
 
                     System.out.println( "-------------------------------------");
