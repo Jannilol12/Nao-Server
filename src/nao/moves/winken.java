@@ -6,13 +6,23 @@ import components.json.JSONArray;
 import nao.currentApplication;
 import nao.functions.motors;
 
+/**
+ * a class, just started and never finished
+ */
 public class winken implements SendClassName{
 
+    /**
+     * @return getting the name of the class
+     */
     @Override
     public String name() {
         return this.getClass().getSimpleName();
     }
 
+    /**
+     *
+     * @param args what the class need to start, see {@link say} where a String is needed.
+     */
     @Override
     public void start(JSONArray args) {
         try{
@@ -26,6 +36,10 @@ public class winken implements SendClassName{
         }
     }
 
+    /**
+     * Resetting al motors from the robot to one position...ATTENTION the robot may fall
+     * @throws Exception
+     */
     public void resetMotion() throws Exception {
         ALMotion p = currentApplication.getAlMotion();
         for(motors nMotors : motors.values()) {
@@ -37,9 +51,12 @@ public class winken implements SendClassName{
 
     @Override
     public void stop() {
-
     }
 
+    /**
+     *
+     * @return this class need nothing, so null....for example {@link say} need a String
+     */
     @Override
     public JSONArray getArgsRequest() {
         return null;

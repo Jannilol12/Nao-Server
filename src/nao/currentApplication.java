@@ -2,9 +2,28 @@ package nao;
 
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.*;
-import nao.functions.ReactToEvents;
 
 public class currentApplication {
+    /**
+     * currentApplication is creating every library from the robot used in the project.
+     * Instead of creating them every time, i need them, just summerize them here.
+     *
+     * For creating a new one:
+     * 1. create a new variable:
+     *     private static API api;
+     * 2. in {@link #load} create a new try/catch:
+     *    try {
+     *       api = new API(currentApplication.getApplication().session());
+     *    } catch (Exception e) {
+     *       e.printStackTrace();
+     *    }
+     * 3. make a new getter
+     *   public static ALMotion getAlMotion(){ return alMotion;}
+     *
+     * If you want to use the API, simple make
+     *   currentApplication.getAPI().whatFunctionYouNeed();
+     * in the class you need it.
+     */
     private static Application application;
     private static ALMotion alMotion;
     private static ALLeds alLeds;
@@ -28,17 +47,22 @@ public class currentApplication {
     private static ALVideoRecorder alVideoRecorder;
     private static ALVideoDevice alVideoDevice;
 
-    public synchronized static void load(String ip, int port){
 
+    /**
+     * starting every API needed for the project
+     * @param ip getting the loacl ip from the nao
+     * @param port getting the local port from the nao
+     */
+    public synchronized static void load (String ip, int port){
     	new Thread(() -> {
 	        String[] args = new String[0];
 	        application = new Application(args, "tcp://" + ip + ":" + port);
 	        application.start();
 
-	        try{
-	            alMotionRecorder = new ALMotionRecorder(currentApplication.getApplication().session());
-            }catch(Exception e){
-	            e.printStackTrace();
+            try {
+                alMotionRecorder = new ALMotionRecorder(currentApplication.getApplication().session());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             try{
@@ -168,10 +192,17 @@ public class currentApplication {
 
     }
 
+    /**
+     * @return the session
+     */
     public static Application getApplication(){
         return application;
     }
 
+    /**
+     * a simple getter for the APIs
+     * @return the API for other classes
+     */
     public static ALMotion getAlMotion(){ return alMotion;}
 
     public static ALLeds getAlLeds(){ return alLeds;}

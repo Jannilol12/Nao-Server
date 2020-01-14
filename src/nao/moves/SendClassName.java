@@ -6,7 +6,7 @@ public abstract interface SendClassName {
     public String name();
     
     /**
-     * @param input Arguements from the Client: ["id":"a", "value":?]
+     * @param args Arguements from the Client: ["id":"a", "value":?]
      * 			a: Einzeige Name (beim Client) und eindeutige ID zur identifizierung
      * 			b: Value der vom Client eingegeben wurde. Kann ein String, Int, Double, etc. sein
      */

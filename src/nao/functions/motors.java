@@ -1,5 +1,8 @@
 package nao.functions;
 
+/**
+ * saved the names of the motors as an enum so they can be easily called and you can't prescribe yourself
+ */
 public enum motors {
 	HeadYaw("HeadYaw"),
 	HeadPitch("HeadPitch"),

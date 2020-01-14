@@ -3,168 +3,125 @@ package nao.functions;
 import com.aldebaran.qi.CallError;
 import nao.currentApplication;
 
-import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+/**
+ * AudioPlayer from the robot, for playing music and audio files
+ */
 public class audioPlayer {
-    private static ExecutorService executor;
 
+    //the maximum of threads the nao could use
     static {
-        executor = Executors.newFixedThreadPool(3);
-    }
-
-    public static boolean isRunning(int id){
-        try {
-            return currentApplication.getAlAudioPlayer().isRunning(id);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
+        Executors.newFixedThreadPool(3);
     }
 
     //------------------------- PLAY, PAUSE, STOP ---------------------
 
-    public static void playPlayer(int id){
+    /**
+     * Play a file
+     * @param id the id of the file which is running, you get it when loading the file
+     */
+    public static void playPlayer(int id) {
         try {
             currentApplication.getAlAudioPlayer().play(id);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | CallError err){
+            err.printStackTrace();
         }
+
     }
 
-    public static void playinLoop(int id){
+    /**
+     * Play a file in a continuous loop
+     * @param id the id of the file which is running, you get it when loading the file
+     */
+    public static void playinLoop(int id) {
         try {
             currentApplication.getAlAudioPlayer().playInLoop(id);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | CallError err){
+            err.printStackTrace();
         }
     }
 
-    public static void playSine(int frequencec, int gain, int pan, float duration){
-        try {
-            currentApplication.getAlAudioPlayer().playSine(frequencec, gain, pan, duration);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    /**
+     * stop the audioPlayer
+     */
+    public static void stopPlayer() throws InterruptedException, CallError {
+        currentApplication.getAlAudioPlayer().stopAll();
     }
 
-    public static void stopPlayer(){
-        try {
-            currentApplication.getAlAudioPlayer().stopAll();
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void pausePlayer(int id){
-        try {
-            currentApplication.getAlAudioPlayer().pause(id);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    /**
+     * Pause the audioPlayer
+     * @param id the id of the file which is running, you get it when loading the file
+     */
+    public static void pausePlayer(int id) throws CallError, InterruptedException {
+        currentApplication.getAlAudioPlayer().pause(id);
     }
 
     //----------------------- POSITION ----------------------------------------------
 
-    public static float getcurrentPosition(int id){
-        try {
-            return currentApplication.getAlAudioPlayer().getCurrentPosition(id);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return (float) -2;
+
+    /**
+     * Get the current position of the file, which is actually played
+     * @param id the id of the file which is running, you get it when loading the file
+     * @return return the current position, in seconds
+     */
+    public static float getcurrentPosition(int id) throws CallError, InterruptedException {
+        return currentApplication.getAlAudioPlayer().getCurrentPosition(id);
     }
 
-    public static void goToPosition(int id, float position){
-        try {
-            currentApplication.getAlAudioPlayer().goTo(id,position);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    /**
+     * jump to the position of the file acutally played
+     * @param id the id of the file which is running, you get it when loading the file
+     * @param position jump to the position, in seconds, of the file acutally played
+     */
+    public static void goToPosition(int id, float position) throws CallError, InterruptedException {
+        currentApplication.getAlAudioPlayer().goTo(id,position);
     }
 
     //------------------------ VOLUME -------------------------------------------------
 
-    public static void setMasterVolume(float volume){
-        try {
-            currentApplication.getAlAudioPlayer().setMasterVolume(volume);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    /**
+     * Set the volume of the AudioPlayer, not of the robot. This is only in the internet browser possible
+     * @param volume set the volume of the audioPlayer, between 0 and 1
+     */
+    public static void setMasterVolume(float volume) throws CallError, InterruptedException {
+        currentApplication.getAlAudioPlayer().setMasterVolume(volume);
     }
 
-    public static float getMasterVolume(){
-        try {
-            return currentApplication.getAlAudioPlayer().getMasterVolume();
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return (float)-2;
+
+    /**
+     * get the Volume of the AudioPlayer
+     * @return get the Volume of the AudioPlayer, between 0 and 1
+     */
+    public static float getMasterVolume() throws CallError, InterruptedException {
+        return currentApplication.getAlAudioPlayer().getMasterVolume();
     }
 
     //--------------------------- FILE ----------------------------------------------
 
-    public static int loadFile(String filename){
-        try {
-            return currentApplication.getAlAudioPlayer().loadFile(filename);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return -1;
+    /**
+     * Load a file into the audioPlayer, to actually play it
+     * @param filename get the path of the file, which shell be loaded
+     * @return the id of the file, used for other methods, like {@link #playPlayer}
+     */
+    public static int loadFile(String filename) throws InterruptedException, CallError {
+        return currentApplication.getAlAudioPlayer().loadFile(filename);
     }
 
-    public static List<String> getFileList(){
-        try {
-            return currentApplication.getAlAudioPlayer().getLoadedFilesNames();
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+    /**
+     * Get the length of the file
+     * @param id the id of the file which is running, you get it when loading the file
+     * @return Get the length of the file, in seconds
+     */
+    public static float getFileLengthInSec(int id) throws InterruptedException, CallError {
+        return currentApplication.getAlAudioPlayer().getFileLength(id);
     }
 
-    public static float getFileLengthInSec(int id){
-        try {
-            return currentApplication.getAlAudioPlayer().getFileLength(id);
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return (float)-2;
-    }
-
-    public static void unloadAllFiles(){
-        try {
-            currentApplication.getAlAudioPlayer().unloadAllFiles();
-        } catch (CallError callError) {
-            callError.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    /**
+     * unload all files
+     */
+    public static void unloadAllFiles() throws CallError, InterruptedException {
+        currentApplication.getAlAudioPlayer().unloadAllFiles();
     }
 }

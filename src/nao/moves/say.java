@@ -8,9 +8,14 @@ import components.json.parser.JSONParser;
 import nao.currentApplication;
 
 public class say implements SendClassName {
+
+    /**
+     * @param args getting the String, what Nao should say
+     */
     @Override
     public void start(JSONArray args){
         try {
+            //getting the API from currentApplication
             ALTextToSpeech tts = currentApplication.getAlTextToSpeech();
 
             String speechText = JSONFinder.getString("[0].value", args);
@@ -21,6 +26,12 @@ public class say implements SendClassName {
             err.printStackTrace();
         }
     }
+
+    /**
+     *
+     * @param tts getting the API of the robot
+     * @param text what the robot will say
+     */
     public void saytext(ALTextToSpeech tts, String text){
         try{
            tts.say(text);
@@ -31,6 +42,9 @@ public class say implements SendClassName {
 
     }
 
+    /**
+     * @return name of the class
+     */
     @Override
     public String name() {
         return this.getClass().getSimpleName();
@@ -41,6 +55,9 @@ public class say implements SendClassName {
 
     }
 
+    /**
+     * @return sending that the user must type in a text what the robot will say, with a prompt for the user, what this is
+     */
 	@Override
 	public JSONArray getArgsRequest() {
 		// ["id":"say", "type":"text", "prompt":"speech message"]

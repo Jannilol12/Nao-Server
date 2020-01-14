@@ -1,41 +1,53 @@
 package nao.functions;
 
 import com.aldebaran.qi.CallError;
-import components.json.JSONArray;
 import nao.currentApplication;
 
-import java.io.*;
+import java.io.File;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * make an audio or video recording or take a picture
+ */
 public class Recorder {
-    private static ExecutorService executor;
-
+    //the maximum of threads the nao could use
     static {
-        executor = Executors.newFixedThreadPool(3);
+        Executors.newFixedThreadPool(3);
     }
 
+    /**
+     * start the Recording of an Audio
+     */
     public static void startAudioRecording(){
+        //make a new File with a DateFormat, so you can easily read when this record was made...and also as a .wmv, otherwise it won't have an specification
         String fileName = "Audio " + new SimpleDateFormat("dd-MM-yyyy___HH-mm").format(Calendar.getInstance().getTime()) + ".wav";
         File file = new File(new File("./").getParentFile(), "files/" + fileName );
         String path = file.getAbsolutePath();
+        //Configure the Channels which are needed
         ArrayList<Integer> list = new ArrayList<>();
-        list.add(0);
-        list.add(0);
-        list.add(1);
-        list.add(0);
+        list.add(0); //left
+        list.add(0); //right
+        list.add(1); //front
+        list.add(0); //rear
         try {
-            currentApplication.getAlAudioRecorder().startMicrophonesRecording(path,"wav", 16000, list);
+            /*
+            four channels 48000Hz in OGG.
+            four channels 48000Hz in WAV uncompressed.
+            one channels (front, rear, left or right), 16000Hz, in OGG.
+            one channels (front, rear, left or right), 16000Hz, in WAV.
+             */
+             currentApplication.getAlAudioRecorder().startMicrophonesRecording(path,"wav", 16000, list);
         } catch (CallError | InterruptedException callError) {
             callError.printStackTrace();
         }
     }
 
+    /**
+     * stop the Recording, file is automatically saved
+     */
     public static void stopAudioRecording(){
         try {
             currentApplication.getAlAudioRecorder().stopMicrophonesRecording();
@@ -44,17 +56,24 @@ public class Recorder {
         }
     }
 
+    /**
+     * upset the camera
+     */
     public static void setCameraStats(){
         try {
-            currentApplication.getAlPhotoCapture().setColorSpace(0);
-            currentApplication.getAlPhotoCapture().setPictureFormat("png");
-            currentApplication.getAlPhotoCapture().setResolution(2);
+            currentApplication.getAlPhotoCapture().setColorSpace(0); //0 = kYuvColorSpace, 13 = kBGRColorSpace
+            currentApplication.getAlPhotoCapture().setPictureFormat("png"); //bmp,dib,jpeg,jpg,jpe,png,pbm,pgm,ppm,sr,ras,tiff,tif
+            currentApplication.getAlPhotoCapture().setResolution(2); //0 = kQQVGA, 1 = kQVGA, 2 = kVGA
         } catch (CallError | InterruptedException callError) {
             callError.printStackTrace();
         }
     }
 
+    /**
+     * take a picture
+     */
     public static void takePicture(){
+        //make a new File with a DateFormat, so you can easily read when this record was made
         File file = new File(new File("./").getParentFile(), "files/");
         String path = file.getAbsolutePath();
         String fileName = "Picture " + new SimpleDateFormat("dd-MM-yyyy___HH-mm").format(Calendar.getInstance().getTime());
@@ -65,16 +84,11 @@ public class Recorder {
         }
     }
 
-    public static void setVideoStats(){
-        try {
-            currentApplication.getAlVideoRecorder().setResolution(2);
-            currentApplication.getAlVideoRecorder().setVideoFormat("MJPG");
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
-    }
-
+    /**
+     * start Video Recording
+     */
     public static void startVideoRecording(){
+        //make a new File with a DateFormat, so you can easily read when this record was made
         File file = new File(new File("./").getParentFile(), "files/");
         String path = file.getAbsolutePath();
         String fileName = "Video " + new SimpleDateFormat("dd-MM-yyyy___HH-mm").format(Calendar.getInstance().getTime());
@@ -85,31 +99,14 @@ public class Recorder {
         }
     }
 
+    /**
+     * stop Video Recording, File is automatically saved
+     */
     public static void stopVideoRecording(){
         try {
             currentApplication.getAlVideoRecorder().stopRecording();
         } catch (CallError | InterruptedException callError) {
             callError.printStackTrace();
-        }
-    }
-
-    public static void getVideo(){
-        try {
-            currentApplication.getAlVideoDevice().subscribeCamera("VideoDevice", 0,2,11,5);
-            Object image = currentApplication.getAlVideoDevice().getDirectRawImageRemote("VideoDevice");
-            int[] array = (int[]) image;
-
-            FileOutputStream stream = new FileOutputStream(new File("./test.txt"));
-            stream.write(array[0]);
-            stream.write('\n');
-            stream.write(array[1]);
-            stream.write('\n');
-
-            stream.close();
-        } catch (CallError | InterruptedException | FileNotFoundException callError) {
-            callError.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

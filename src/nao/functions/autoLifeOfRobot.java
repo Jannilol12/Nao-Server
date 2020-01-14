@@ -1,88 +1,58 @@
 package nao.functions;
 
 import com.aldebaran.qi.CallError;
-import components.json.finder.JSONFinder;
 import nao.currentApplication;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * setting the autonomous life strategy of the nao
+ */
 public class autoLifeOfRobot {
-    private static ExecutorService executor;
 
+    //the maximum of threads the nao could use
     static {
-        executor = Executors.newFixedThreadPool(3);
+        Executors.newFixedThreadPool(3);
     }
 
-    public static void setLife(String name){
-        //solitary, interactive , disabled , safeguard
-        try {
-            currentApplication.getAlAutonomousLife().setState(name);
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
+    /**
+     * setting a life mode
+     * @param name either solitary, interactive , disabled or safeguard
+     * @throws CallError error
+     * @throws InterruptedException error
+     */
+    public static void setLife(String name) throws CallError, InterruptedException {
+        currentApplication.getAlAutonomousLife().setState(name);
     }
 
-    public static String getLife(){
-        try {
-            return currentApplication.getAlAutonomousLife().getState();
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
-        return "Self-destruction";
+    /**
+     * setting how high, the nao is standing, for example on the floor or on the table, that he knows if he have to look up or down
+     * @param height in meters, how high he is standing
+     * @throws CallError error
+     * @throws InterruptedException error
+     */
+    public static void setRobotOffsetFromFloor(float height) throws CallError, InterruptedException {
+        currentApplication.getAlAutonomousLife().setRobotOffsetFromFloor(height);
     }
 
-    public static void setRobotOffsetFromFloor(float height){
-        try {
-            currentApplication.getAlAutonomousLife().setRobotOffsetFromFloor(height);
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
+    /**
+     * Switch the Expressive Listening on or off, don't know what it really does, but hey, here it is!
+     * @param bol on or off
+     * @throws CallError error
+     * @throws InterruptedException error
+     */
+    public static void setExpressiveListeningEnabled(boolean bol) throws CallError, InterruptedException {
+        currentApplication.getAlAutonomousMoves().setExpressiveListeningEnabled(bol);
     }
 
-    public static float getRobotOffsetFromFloor(){
-        try {
-            return currentApplication.getAlAutonomousLife().getRobotOffsetFromFloor();
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
-        return (float) -1;
+    /**
+     * Setting the background strategy of the nao
+     * @param strategy either none or backToNeutral
+     * @throws CallError error
+     * @throws InterruptedException error
+     */
+    public static void setBackgroundStrategy(String strategy) throws CallError, InterruptedException {
+        currentApplication.getAlAutonomousMoves().setBackgroundStrategy(strategy);
     }
 
-    //----------------- AL Autonomous Moves ---------------------
-
-    public static void setExpressiveListeningEnabled(boolean bol){
-        try {
-            currentApplication.getAlAutonomousMoves().setExpressiveListeningEnabled(bol);
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
-    }
-
-    public static boolean getExpressiveListeningEnabled(){
-        try {
-            return currentApplication.getAlAutonomousMoves().getExpressiveListeningEnabled();
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
-        return false;
-    }
-
-    public static void setBackgroundStrategy(String strategy){
-        //none or backToNeutral
-        try {
-            currentApplication.getAlAutonomousMoves().setBackgroundStrategy(strategy);
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
-    }
-
-    public static String getBackgroundStrategy(){
-        try {
-            return currentApplication.getAlAutonomousMoves().getBackgroundStrategy();
-        } catch (CallError | InterruptedException callError) {
-            callError.printStackTrace();
-        }
-        return "Self-destruction";
-    }
 }

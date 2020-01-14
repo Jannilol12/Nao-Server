@@ -4,13 +4,15 @@ import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.EventCallback;
 import nao.currentApplication;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * read the touch sensors, this class is prepared, but I never used it
+ */
 public class Touch {
-    private static ExecutorService executor;
+    //the maximum of threads the nao could use
     static {
-        executor = Executors.newFixedThreadPool(3);
+        Executors.newFixedThreadPool(3);
     }
 
     private static long TouchChanged;

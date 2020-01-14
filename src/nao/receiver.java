@@ -6,16 +6,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import nao.debugger.Debugger;
-
 public class receiver extends Thread {
-    private Socket s;
-    private DataOutputStream dos;
 
+    /**
+     * run the server-socket -> connection between robot and pc
+     */
     public void run(){
-        final ServerSocket ss;//port auf den Server hoert
+        final ServerSocket ss;
 
         try {
+              //for the port, you can select everything you want...
         	int port = 7777;
             ss = new ServerSocket(port);
             System.out.println("Start Server on port: " + port);
@@ -28,22 +28,22 @@ public class receiver extends Thread {
 
         while(running) {
             try {
-                s = ss.accept();
+                //For the connection from the robot and the client i am using ServerSockets and sending JSON compiled Strings
+                Socket s = ss.accept();
                 DataInputStream dis = new DataInputStream(s.getInputStream());
-                dos = new DataOutputStream(s.getOutputStream());
+                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
                 while (running) {
                     String str = dis.readUTF();
                     if(!str.isEmpty()) {
                         try {
-                        	//if(Debugger.isEnable())
-                        	//	System.out.println(str);
-                        	
+                            //every String received is going to the MainReceiver
                             MainReceiver.receiveText(str, dos);
 
                             if (str.equalsIgnoreCase("end"))
                                 break;
 
+                            //stopping running, and close connection
                             if (str.equalsIgnoreCase("finalEnd"))
                                 running = false;
                         }catch (Exception err){
@@ -52,7 +52,9 @@ public class receiver extends Thread {
                         }
                     }
                 }
-            } catch (IOException e) {}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         
         System.out.println("Stop Server");
