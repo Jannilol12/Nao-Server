@@ -207,6 +207,7 @@ public class currentApplication {
 
     public static ALLeds getAlLeds(){ return alLeds;}
 
+
     public static ALBattery getAlBattery() {return alBattery;}
 
     public static ALRobotPosture getAlRobotPosture() {return alRobotPosture;}

@@ -1,5 +1,7 @@
 package nao;
 
+import com.aldebaran.qi.CallError;
+import com.aldebaran.qi.helper.EventCallback;
 import nao.debugger.Debugger;
 import nao.functions.Recorder;
 import nao.functions.commands;
@@ -39,10 +41,10 @@ public class Main {
 		commands.setMaxTryNumber(5);
 
 		// starting server-sockets
-	    r = new receiver();
-	    r.start();
+		r = new receiver();
+		r.start();
 
-		events.loadVocabulary();
-		Recorder.setCameraStats();
+		//events.loadVocabulary();
+
 	}
 }

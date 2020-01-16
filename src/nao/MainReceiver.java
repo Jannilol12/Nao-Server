@@ -785,6 +785,7 @@ public class MainReceiver {
 				String FilesEvent = JSONFinder.getString("function", json);
 				switch (Objects.requireNonNull(FilesEvent)) {
 					case "getAllFiles": //reloading the name of all files on the client
+						System.out.println("---------");
 						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
 						List<String> list = new LinkedList<>();
 						//write every filename into a List
@@ -802,10 +803,12 @@ public class MainReceiver {
 						}
 						break;
 					case "deleteFile": //delete a file
+						System.out.println("---------");
 						String fileNameDelete = JSONFinder.getString("filename", json);
 						new File(new File("./").getParentFile(), "files/" + fileNameDelete).delete();
 						break;
 					case "downloadFile": //download a file from the nao
+						System.out.println("---------");
 						String fileNameDownload = JSONFinder.getString("filename", json);
 						File fileDownload = new File(new File("./").getParentFile(), "files/" + fileNameDownload);
 						String path = fileDownload.getAbsolutePath();
@@ -833,6 +836,7 @@ public class MainReceiver {
 						}
 						break;
 					case "uploadFile": //uploading a file to the nao
+						System.out.println("---------");
 						String base64 = JSONFinder.getString("bytes",json);
 						byte[] bytes = Base64.getDecoder().decode(Objects.requireNonNull(base64));
 						/*

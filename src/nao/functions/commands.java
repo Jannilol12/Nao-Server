@@ -57,11 +57,11 @@ public class commands {
      * @param maxTry how many tries the robot has....in {@link nao.Main} 5 are given
      */
     public static void setMaxTryNumber(int maxTry) {
-    	try {
-				currentApplication.getAlRobotPosture().setMaxTryNumber(maxTry);
-		} catch (CallError | InterruptedException e) {
-			e.printStackTrace();
-		}
+//    	try {
+//                currentApplication.getAlRobotPosture().setMaxTryNumber(maxTry);
+//		} catch (CallError | InterruptedException e) {
+//			e.printStackTrace();
+//		}
     }
 
     /**

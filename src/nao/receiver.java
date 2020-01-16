@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class receiver extends Thread {
+    private CustomOutputStream customOutputStream = null;
 
     /**
      * run the server-socket -> connection between robot and pc
@@ -32,7 +33,10 @@ public class receiver extends Thread {
                 Socket s = ss.accept();
                 DataInputStream dis = new DataInputStream(s.getInputStream());
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-
+                if(customOutputStream == null){
+                    customOutputStream = new CustomOutputStream();
+                }
+                customOutputStream.setDataOutputStream(dos);
                 while (running) {
                     String str = dis.readUTF();
                     if(!str.isEmpty()) {
@@ -65,5 +69,4 @@ public class receiver extends Thread {
             e.printStackTrace();
         }
     }
-
 }
