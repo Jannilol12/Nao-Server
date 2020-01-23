@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class receiver extends Thread {
-    private CustomOutputStream customOutputStream = null;
+    private ConsoleOutputStream customOutputStream = null;
 
     /**
      * run the server-socket -> connection between robot and pc
@@ -34,7 +34,7 @@ public class receiver extends Thread {
                 DataInputStream dis = new DataInputStream(s.getInputStream());
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());
                 if(customOutputStream == null){
-                    customOutputStream = new CustomOutputStream();
+                    customOutputStream = new ConsoleOutputStream();
                 }
                 customOutputStream.setDataOutputStream(dos);
                 while (running) {

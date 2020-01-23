@@ -15,6 +15,10 @@ import nao.functions.*;
 import nao.moves.Interface_Controller;
 import nao.moves.SendClassName;
 
+/**
+ * Main thing from the server.
+ * Receiving the messages and sort them.
+ */
 public class MainReceiver {
 	private static int id;
 	private static boolean jump = false;
@@ -359,7 +363,6 @@ public class MainReceiver {
 						id = audioPlayer.loadFile(file1 + "/" + name);
 
 						//------- SEND LENGTH OF FILE -----------
-
 						JSONObject myjson = new JSONObject();
 						myjson.add( "type", "audioPlayer");
 						myjson.add( "function", "getLength");

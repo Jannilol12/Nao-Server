@@ -3,9 +3,12 @@ package nao;
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.*;
 
+/**
+ * currentApplication is creating every library from the robot used in the project.
+ */
 public class currentApplication {
     /**
-     * currentApplication is creating every library from the robot used in the project.
+     *
      * Instead of creating them every time, i need them, just summerize them here.
      *
      * For creating a new one:
