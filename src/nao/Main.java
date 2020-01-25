@@ -44,7 +44,6 @@ public class Main {
 		r = new receiver();
 		r.start();
 
-		//events.loadVocabulary();
-
+		events.loadVocabulary();
 	}
 }
