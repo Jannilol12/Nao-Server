@@ -46,6 +46,7 @@ public class ConsoleOutputStream extends OutputStream {
         }else{
             stream.write(c);
             String stringToSend = builder.toString(); //make a new String out of the chars
+
             JSONObject myjson1 = new JSONObject();
             if(!stringToSend.isEmpty()) {
                 myjson1.add("type", "Console");

@@ -23,16 +23,38 @@ public class MainReceiver {
 	private static int id;
 	private static boolean jump = false;
 	private static boolean jumpVoc = false;
+	private static DataOutputStream dataOutputStream;
 
 	private MainReceiver() {}
 
 	/**
+	 * Sending a message to the Client
+	 * @param message Message which shell be send to the Client
+	 * @throws IOException Throws errors
+	 */
+	public static void sendMessage(String message) throws IOException {
+		if(dataOutputStream != null) {
+			System.out.println(message);
+			dataOutputStream.writeUTF(message);
+		}else{
+			System.out.println("No dataOutputStream set!");
+		}
+	}
+
+	/**
+	 * Set the DataOutputStream
+	 * @param dataOutputS get the DataOutputStream for sending messages to the Client
+	 */
+	public static void setDataOutputStream(DataOutputStream dataOutputS){
+		dataOutputStream = dataOutputS;
+	}
+
+	/**
 	 * This function is receiving and distributing the messages from the client
 	 * @param text Input, which the client sent as JSON
-	 * @param dataOutputStream reference, where to send the Messages for the client
-	 * @throws Exception Throw Apples, er...i meant Exceptions
+	 * @throws Exception Throws Apples, er...i meant Exceptions
 	 */
-	public static void receiveText(String text, DataOutputStream dataOutputStream) throws Exception {
+	public static void receiveText(String text) throws Exception {
 		abstractJSON json;
 		try {
 			//jsonParser is converting the JSON in something useful
@@ -44,8 +66,23 @@ public class MainReceiver {
 		}
 
 		String type = JSONFinder.getString("type", json);
-		if(type == null)
+
+		if(type == null) {
 			return;
+		}
+		//When receiving a file the there are multiple Strings with over 30000 bytes,
+		// so just System.out.println that there is a file which is received
+		if(type.compareToIgnoreCase("audioPlayer") == 0){
+			if(Objects.requireNonNull(JSONFinder.getString("function", json)).compareToIgnoreCase("file") == 0){
+				System.out.println("Receive: Receiving a file! (audio Player)");
+			}
+		} else if(type.compareToIgnoreCase("Files") == 0){
+			if(Objects.requireNonNull(JSONFinder.getString("function", json)).compareToIgnoreCase("uploadFile") == 0){
+				System.out.println("Receive: Receiving a file! (files)");
+			}
+		} else{
+			System.out.println(text);
+		}
 
 		/*
 		This HUGE Switch-Case (874 lines) is the brain of this program, it is receiving everything from the client and distribute the message to the classes which need it
@@ -87,7 +124,7 @@ public class MainReceiver {
 							myjson.add("inputs", args);
 
 						//sending the programs
-						dataOutputStream.writeUTF(myjson.toJSONString());
+						sendMessage(myjson.toJSONString());
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -367,11 +404,8 @@ public class MainReceiver {
 						myjson.add( "type", "audioPlayer");
 						myjson.add( "function", "getLength");
 						myjson.add( "Length",  audioPlayer.getFileLengthInSec(id));
-						try {
-							dataOutputStream.writeUTF(myjson.toJSONString());
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						sendMessage(myjson.toJSONString());
+
 						break;
 					case "play": //play file in a need Thread because if you don't start a Thread you can't do anything anymore
 						try{
@@ -454,12 +488,7 @@ public class MainReceiver {
 						myjson2.add( "type", "audioPlayer");
 						myjson2.add( "function", "getVol");
 						myjson2.add( "Vol",  audioPlayer.getMasterVolume());
-
-						try {
-							dataOutputStream.writeUTF(myjson2.toJSONString());
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						sendMessage(myjson2.toJSONString());
 						break;
 					case "deleteFiles": //delete all files
 						File[] fileDelete = new File(new File("./").getParentFile(), "files/").listFiles();
@@ -488,11 +517,7 @@ public class MainReceiver {
 						myjson3.add( "type", "audioPlayer");
 						myjson3.add( "function", "getFiles");
 						myjson3.add( "File", list);
-						try {
-							dataOutputStream.writeUTF(myjson3.toJSONString());
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						sendMessage(myjson3.toJSONString());
 						jump = false; //set the jumper for deleteFiles to default = false
 						break;
 					default:
@@ -531,11 +556,7 @@ public class MainReceiver {
 						JSONObject myjson4 = new JSONObject();
 						myjson4.add( "type", "SpeechRecognition");
 						myjson4.add( "Voc", events.getVocabulary());
-						try {
-							dataOutputStream.writeUTF(myjson4.toJSONString());
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						sendMessage(myjson4.toJSONString());
 						jumpVoc = false; //resetting the jumper for AddVocabulary to default = false
 						break;
 					case "SpeechRecognition": //start/stop speech recognition
@@ -575,11 +596,7 @@ public class MainReceiver {
 						JSONObject myjson5 = new JSONObject();
 						myjson5.add( "type", "FaceDetection");
 						myjson5.add( "Faces", events.getLearnedFaced());
-						try {
-							dataOutputStream.writeUTF(myjson5.toJSONString());
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						sendMessage(myjson5.toJSONString());
 						break;
 					case "FaceTracking": //start/stop face tracking
 						if(Objects.requireNonNull(bolean).equalsIgnoreCase("true")){
@@ -645,11 +662,7 @@ public class MainReceiver {
                         JSONObject myjson3 = new JSONObject();
                         myjson3.add( "type", "Behavior");
                         myjson3.add( "Behaviors", behavior.getBehaviors());
-                        try {
-                            dataOutputStream.writeUTF(myjson3.toJSONString());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        sendMessage(myjson3.toJSONString());
                         break;
 					default: //default
 						System.out.println("Behavior, no case found!");
@@ -788,7 +801,6 @@ public class MainReceiver {
 				String FilesEvent = JSONFinder.getString("function", json);
 				switch (Objects.requireNonNull(FilesEvent)) {
 					case "getAllFiles": //reloading the name of all files on the client
-						System.out.println("---------");
 						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
 						List<String> list = new LinkedList<>();
 						//write every filename into a List
@@ -799,19 +811,13 @@ public class MainReceiver {
 						JSONObject myjson5 = new JSONObject();
 						myjson5.add("type", "getAllFiles");
 						myjson5.add("File", list);
-						try {
-							dataOutputStream.writeUTF(myjson5.toJSONString());
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						sendMessage(myjson5.toJSONString());
 						break;
 					case "deleteFile": //delete a file
-						System.out.println("---------");
 						String fileNameDelete = JSONFinder.getString("filename", json);
 						new File(new File("./").getParentFile(), "files/" + fileNameDelete).delete();
 						break;
 					case "downloadFile": //download a file from the nao
-						System.out.println("---------");
 						String fileNameDownload = JSONFinder.getString("filename", json);
 						File fileDownload = new File(new File("./").getParentFile(), "files/" + fileNameDownload);
 						String path = fileDownload.getAbsolutePath();
@@ -839,7 +845,6 @@ public class MainReceiver {
 						}
 						break;
 					case "uploadFile": //uploading a file to the nao
-						System.out.println("---------");
 						String base64 = JSONFinder.getString("bytes",json);
 						byte[] bytes = Base64.getDecoder().decode(Objects.requireNonNull(base64));
 						/*
@@ -876,15 +881,10 @@ public class MainReceiver {
 				commands.shutdown();
 				break;
 			case "battery": //getting the battery level
-				try {
-					JSONObject myjson = new JSONObject();
-					myjson.add("type", "battery");
-					myjson.add("battery", commands.getBatteryCharge());
-
-					dataOutputStream.writeUTF(myjson.toJSONString());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+					JSONObject myjsonBattery = new JSONObject();
+					myjsonBattery.add("type", "battery");
+					myjsonBattery.add("battery", commands.getBatteryCharge());
+					sendMessage(myjsonBattery.toJSONString());
 				break;
 
 			case "temperature": //getting all temperatures of the motors in  degrees
@@ -922,9 +922,7 @@ public class MainReceiver {
 					myjson.add("HeadCPU", currentApplication.getAlMemory().getData("Device/SubDeviceList/Head/Temperature/Sensor/Value"));
 					myjson.add("Battery", currentApplication.getAlMemory().getData("Device/SubDeviceList/Battery/Temperature/Sensor/Value"));
 
-					System.out.println("GetTemperatures");
-
-					dataOutputStream.writeUTF(myjson.toJSONString());
+					sendMessage(myjson.toJSONString());
 				} catch (CallError | InterruptedException | IOException callError) {
 					callError.printStackTrace();
 				}

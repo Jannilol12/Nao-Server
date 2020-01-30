@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
+/**
+ * connect the Server with the client with ServerSockets
+ */
 public class receiver extends Thread {
     private ConsoleOutputStream customOutputStream = null;
 
@@ -33,16 +37,19 @@ public class receiver extends Thread {
                 Socket s = ss.accept();
                 DataInputStream dis = new DataInputStream(s.getInputStream());
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+
+                //this is for writing something into the Console
                 if(customOutputStream == null){
                     customOutputStream = new ConsoleOutputStream();
                 }
                 customOutputStream.setDataOutputStream(dos);
+                MainReceiver.setDataOutputStream(dos);
                 while (running) {
                     String str = dis.readUTF();
                     if(!str.isEmpty()) {
                         try {
                             //every String received is going to the MainReceiver
-                            MainReceiver.receiveText(str, dos);
+                            MainReceiver.receiveText(str);
 
                             if (str.equalsIgnoreCase("end"))
                                 break;
