@@ -35,10 +35,9 @@ public class ConsoleOutputStream extends OutputStream {
     /**
      * Writing the bytes from the console into a String and sending it to the client
      * @param b char from the console as an int
-     * @throws IOException Exception
      */
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b){
         char c = (char) b;
         if(c != '\n'){ //if not a "new Line"
             stream.write(c); //write into the Console from the nao, because otherwise there isn't anything because of the System.setOut in line 23
