@@ -94,7 +94,7 @@ public class events {
 
     /**
      * add a vocabulary for the speech recognition
-     * @param voc the voc which shell be added
+     * @param voc the voc which shall be added
      */
     public static void addVocabulary(String voc){
         vocabulary.add(voc);
@@ -104,7 +104,7 @@ public class events {
 
     /**
      * delete a vocabulary
-     * @param voc the voc which shell be deleted
+     * @param voc the voc which shall be deleted
      */
     public static void delVocabulary(String voc){
         vocabulary.remove(voc);
@@ -160,14 +160,14 @@ public class events {
      */
     public static void startSpeechRecognition() {
         try {
-            //load the voc
+            //load the vocabulary
             currentApplication.getAlSpeechRecognition().setWordListAsVocabulary(vocabulary);
 
             currentApplication.getAlSpeechRecognition().subscribe("SpeechRecognition");
             speechRecognition =  currentApplication.getAlMemory().subscribeToEvent("WordRecognized", new EventCallback<ArrayList>() {
                 @Override
                 public void onEvent(ArrayList o) throws InterruptedException, CallError {
-                    System.out.println("SubscribeToEevent Raised:");
+                    System.out.println("Speech detected:");
                     System.out.println(o.toString());
                     //o[0] is the actual word, and o[1] is how likely the word said is the actual word (between 0 and 1 as a float)
                 }
@@ -205,7 +205,7 @@ public class events {
             sonar = currentApplication.getAlMemory().subscribeToEvent("SonarLeftDetected", new EventCallback<Float>() {
                 @Override
                 public void onEvent(Float o) throws InterruptedException, CallError {
-                    System.out.println("SubscribeToEevent Raised:");
+                    System.out.println("Sonar Raised:");
                     System.out.println("Float raised: " + o);
                     //just getting some information from the Memory, don't know if it's useful
                     String distanceLeft = currentApplication.getAlMemory().getData("Device/SubDeviceList/US/Left/Sensor/Value").toString();
@@ -233,7 +233,7 @@ public class events {
 
     /**
      * learn a new face
-     * @param name the name of the face which shell be learned
+     * @param name the name of the face which shall be learned
      */
     public static void learnFace(String name){
         try {
@@ -245,7 +245,7 @@ public class events {
 
     /**
      * delete a face from the system
-     * @param name the name of the face which shell be deleted
+     * @param name the name of the face which shall be deleted
      */
     public static void deleteFace(String name){
         try {
@@ -279,7 +279,7 @@ public class events {
                 public void onEvent(ArrayList FaceDetected) throws InterruptedException, CallError {
 
                     //I named this Arrays like them on the website from Aldebaran except ArrayInFaceDetected!
-
+                    //http://doc.aldebaran.com/2-4/naoqi/peopleperception/alfacedetection.html
                     ArrayList<ArrayList> ArrayInFaceDetected = new ArrayList<>();
                     ArrayInFaceDetected = (ArrayList<ArrayList>) FaceDetected.get(1);
                     ArrayList<ArrayList> FaceInfo = new ArrayList<>();
@@ -288,6 +288,7 @@ public class events {
                     ExtraInfo = (ArrayList<String>) FaceInfo.get(1);
                     String nameB = ExtraInfo.get(2);
 
+                    System.out.println("Face detected: ");
                     System.out.println(nameB);
 
                     if(nameB.equalsIgnoreCase("Jannik")){
@@ -347,7 +348,7 @@ public class events {
             barcodeReader = currentApplication.getAlMemory().subscribeToEvent("BarcodeReader/BarcodeDetected", new EventCallback<ArrayList>() {
                 @Override
                 public void onEvent(ArrayList o) {
-                    System.out.println("SubscribeToEevent Raised: ");
+                    System.out.println("Barcode Raised: ");
                     System.out.println(o);
                     System.out.println("-------------------------------------");
                 }
@@ -377,7 +378,7 @@ public class events {
             landMark = currentApplication.getAlMemory().subscribeToEvent("LandmarkDetected", new EventCallback<ArrayList>() {
                 @Override
                 public void onEvent(ArrayList o) {
-                    System.out.println("LandmarkDetected Raised: ");
+                    System.out.println("Landmark Detected: ");
                     System.out.println(o);
                     System.out.println("-------------------------------------");
                 }
@@ -418,13 +419,14 @@ public class events {
         }
 
         //start the laser as a thread, so it is reading permanent
+        //because there is no EventListener!
         laserThread = new Thread(){
             @Override
             public void run() {
                 while (!this.isInterrupted()) {
                     try {
                         Object laser = currentApplication.getAlMemory().getData("Device/Laser/Value");
-                        System.out.println("FaceDection Keys from ALMEMORY: ");
+                        System.out.println("Distance of the Laser: ");
                         System.out.println(laser);
                         System.out.println("---------------------------");
 

@@ -19,7 +19,7 @@ public class commands {
 
     /**
      * Go into a posture
-     * @param posture in which posture the nao shell go
+     * @param posture in which posture the nao shall go
      * @param speed with which speed the nao should do this
      */
     public static void goToPosture(String posture, float speed){

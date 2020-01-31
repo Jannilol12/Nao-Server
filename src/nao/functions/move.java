@@ -82,9 +82,9 @@ public class move {
 
     /**
      * Move a motor of the robot
-     * @param motor the name of the motor which shell be moved
-     * @param angle as far the motor shell be rotated, in degrees
-     * @param speed how fast he shell turn his motors
+     * @param motor the name of the motor which shall be moved
+     * @param angle as far the motor shall be rotated, in degrees
+     * @param speed how fast he shall turn his motors
      */
     public static void motors(String motor, float angle, float speed){
     	executor.execute(() -> {

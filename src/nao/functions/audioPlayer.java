@@ -102,7 +102,7 @@ public class audioPlayer {
 
     /**
      * Load a file into the audioPlayer, to actually play it
-     * @param filename get the path of the file, which shell be loaded
+     * @param filename get the path of the file, which shall be loaded
      * @return the id of the file, used for other methods, like {@link #playPlayer}
      */
     public static int loadFile(String filename) throws InterruptedException, CallError {

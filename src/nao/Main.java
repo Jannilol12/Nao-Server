@@ -1,9 +1,6 @@
 package nao;
 
-import com.aldebaran.qi.CallError;
-import com.aldebaran.qi.helper.EventCallback;
 import nao.debugger.Debugger;
-import nao.functions.Recorder;
 import nao.functions.commands;
 import nao.functions.events;
 import nao.moves.Interface_Controller;
@@ -21,9 +18,6 @@ import nao.moves.Interface_Controller;
  * Why didn't I wrote it in German?
  * Because I'm serious! No...I am dumb
  */
-
-
-
 
 public class Main {
 	public static receiver r;

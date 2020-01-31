@@ -501,7 +501,7 @@ public class MainReceiver {
 							audioPlayer.unloadAllFiles();
 							String fileName = JSONFinder.getString("fileDelete", json);
 							new File(new File("./").getParentFile(), "files/" + fileName).delete();
-							//NO BREAK! because files shell be reloaded at the client
+							//NO BREAK! because files shall be reloaded at the client
 						}
 					case "getFiles": //load the files which can be played with the player
 						//creating a list with all files and send it to the client
@@ -531,7 +531,7 @@ public class MainReceiver {
 			case "Events": //starting, stopping or sending information the Events like SpeechRecognition etc.
 
 				String Events = JSONFinder.getString("function", json);
-				//if it shell start or stop, i tried using real boolean, but it didn't worked, so String
+				//if it shall start or stop, i tried using real boolean, but it didn't worked, so String
 				String bolean = JSONFinder.getString("boolean", json);
 				switch (Objects.requireNonNull(Events)){
 					case "FootContact": //start/stop footContact
@@ -681,7 +681,7 @@ public class MainReceiver {
 						autoLifeOfRobot.setBackgroundStrategy(LifeModeString);
 						break;
 					case "ExpressiveListening": //switch the expressive listening on or off
-						//if it shell start or stop, i tried using real boolean, but it didn't worked, so String
+						//if it shall start or stop, i tried using real boolean, but it didn't worked, so String
 						String bolean1 = JSONFinder.getString("boolean", json);
 						if(Objects.requireNonNull(bolean1).equalsIgnoreCase("true")){
 							autoLifeOfRobot.setExpressiveListeningEnabled(true);
