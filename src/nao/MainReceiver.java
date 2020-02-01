@@ -21,7 +21,6 @@ import nao.moves.SendClassName;
  */
 public class MainReceiver {
 	private static int id;
-	private static boolean jump = false;
 	private static boolean jumpVoc = false;
 	private static DataOutputStream dataOutputStream;
 
@@ -448,7 +447,7 @@ public class MainReceiver {
 							float volume = (float)JSONFinder.getDouble("masterVolume", json);
 							audioPlayer.setMasterVolume(volume);
 						break;
-					case "file": //getting the file
+					case "file": //upload a file to the robot
 						/*
 						how this works:
 						The File is decoded in Base64 and is split into many Messages
@@ -490,19 +489,6 @@ public class MainReceiver {
 						myjson2.add( "Vol",  audioPlayer.getMasterVolume());
 						sendMessage(myjson2.toJSONString());
 						break;
-					case "deleteFiles": //delete all files
-						File[] fileDelete = new File(new File("./").getParentFile(), "files/").listFiles();
-						for(int i = 0; i< Objects.requireNonNull(fileDelete).length; i++){
-							new File(new File("./").getParentFile(), "files/" + fileDelete[i].getName()).delete();
-						}
-						jump = true; //Jump is needed here, to reload the files on the client
-					case "deleteFile": //delete one file
-						if(!jump) {
-							audioPlayer.unloadAllFiles();
-							String fileName = JSONFinder.getString("fileDelete", json);
-							new File(new File("./").getParentFile(), "files/" + fileName).delete();
-							//NO BREAK! because files shall be reloaded at the client
-						}
 					case "getFiles": //load the files which can be played with the player
 						//creating a list with all files and send it to the client
 						File[] file = new File(new File("./").getParentFile(), "files/").listFiles();
@@ -518,7 +504,6 @@ public class MainReceiver {
 						myjson3.add( "function", "getFiles");
 						myjson3.add( "File", list);
 						sendMessage(myjson3.toJSONString());
-						jump = false; //set the jumper for deleteFiles to default = false
 						break;
 					default:
 						System.out.println("Audioplayer, no case found!");
