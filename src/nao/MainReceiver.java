@@ -84,7 +84,7 @@ public class MainReceiver {
 		}
 
 		/*
-		This HUGE Switch-Case (874 lines) is the brain of this program, it is receiving everything from the client and distribute the message to the classes which need it
+		This HUGE Switch-Case (825 lines) is the brain of this program, it is receiving everything from the client and distribute the message to the classes which need it
 		It is sorting in this steps:
 		1. Main thing, roughly each tab of the client is one case
 		2. There are more switch-cases :D
